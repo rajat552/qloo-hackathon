@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Network, Plus, Calendar, Sparkles, Filter, Info, ArrowRight, Check } from 'lucide-react';
+import { Network, Plus, Calendar, Sparkles, Info, ArrowRight } from 'lucide-react';
 import { apiService } from '../../services/api';
-import { TasteGraphData, TasteNode, TasteEdge } from '../../types';
-import { Card } from '../UI/Card';
+import { TasteGraphData, TasteNode } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 const domainColors: Record<string, { bg: string; text: string; border: string; glow: string }> = {

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Layers, Sparkles, Film, Music, BookOpen, Utensils, Shirt, Globe, ArrowRight } from 'lucide-react';
+import { Layers, Sparkles, Film, Music, BookOpen, Utensils, Shirt, Globe } from 'lucide-react';
 import { apiService } from '../../services/api';
 import { CrossDomainSynthesisResponse } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 const domainsList = [
-  { id: 'film', label: 'Cinema / Film', icon: Film, color: 'text-amber-400 border-amber-500/30' },
-  { id: 'music', label: 'Music / Audio', icon: Music, color: 'text-purple-400 border-purple-500/30' },
-  { id: 'literature', label: 'Literature / Sci-Fi', icon: BookOpen, color: 'text-emerald-400 border-emerald-500/30' },
-  { id: 'dining', label: 'Dining / Wine', icon: Utensils, color: 'text-rose-400 border-rose-500/30' },
-  { id: 'fashion', label: 'Fashion & Design', icon: Shirt, color: 'text-pink-400 border-pink-500/30' },
-  { id: 'travel', label: 'Architecture & Travel', icon: Globe, color: 'text-cyan-400 border-cyan-500/30' },
+  { id: 'film', label: 'Cinema / Film', icon: Film },
+  { id: 'music', label: 'Music / Audio', icon: Music },
+  { id: 'literature', label: 'Literature / Sci-Fi', icon: BookOpen },
+  { id: 'dining', label: 'Dining / Wine', icon: Utensils },
+  { id: 'fashion', label: 'Fashion & Design', icon: Shirt },
+  { id: 'travel', label: 'Architecture & Travel', icon: Globe },
 ];
 
 export const CrossDomainSynthesis: React.FC = () => {
@@ -82,7 +82,7 @@ export const CrossDomainSynthesis: React.FC = () => {
         </span>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {domainsList.map(({ id, label, icon: Icon, color }) => {
+          {domainsList.map(({ id, label, icon: Icon }) => {
             const isSelected = selectedDomains.includes(id);
             return (
               <button

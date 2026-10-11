@@ -1,6 +1,5 @@
 import {
   FashionItem,
-  UserProfile,
   FashionPlace,
   ChoiceApprovalRequest,
   ChoiceApprovalResponse,
@@ -225,7 +224,7 @@ export const apiService = {
     return fallbackGraphData;
   },
 
-  async addTasteNode(node: { name: string; domain: string; timestamp?: string; notes?: string; tags?: string[] }): Promise<any> {
+  async addTasteNode(node: { name: string; domain: string; timestamp?: string; notes?: string; tags?: string[] }): Promise<Record<string, unknown>> {
     try {
       const res = await fetch(`${API_BASE_URL}/api/memory/add-node`, {
         method: 'POST',
@@ -254,7 +253,7 @@ export const apiService = {
   },
 
   // 2. Concierge Chat with Memory Recall
-  async chatWithConcierge(message: string, history: any[] = []): Promise<{
+  async chatWithConcierge(message: string, history: Array<Record<string, string>> = []): Promise<{
     reply: string;
     memory_recalled: MemoryRecalled[];
     qloo_confidence_score: number;
@@ -399,7 +398,8 @@ export const apiService = {
     };
   },
 
-  async getActionableSuggestions(userId: string): Promise<SuggestionsResponse> {
+  async getActionableSuggestions(_userId?: string): Promise<SuggestionsResponse> {
+    void _userId;
     return { suggestions: mockPlaces };
   },
 
@@ -410,7 +410,8 @@ export const apiService = {
     };
   },
 
-  async findTwin(userId: string): Promise<TwinResponse> {
+  async findTwin(_userId?: string): Promise<TwinResponse> {
+    void _userId;
     return {
       twin_user_id: `user_${Math.floor(1000 + Math.random() * 9000)}`,
       similarity_score: 0.94,
@@ -418,7 +419,8 @@ export const apiService = {
     };
   },
 
-  async getAntiRecommendations(data: { user_id: string; current_item_id: string; style_preferences?: string }): Promise<AntiRecommendationResponse> {
+  async getAntiRecommendations(_data?: { user_id: string; current_item_id: string; style_preferences?: string }): Promise<AntiRecommendationResponse> {
+    void _data;
     return {
       places: mockPlaces,
       uniqueness_score: 0.89

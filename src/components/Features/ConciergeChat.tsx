@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Bot, User, Sparkles, Brain, Compass, Clock, CheckCircle2 } from 'lucide-react';
+import { Send, Bot, User, Brain, Compass, Clock, CheckCircle2 } from 'lucide-react';
 import { apiService } from '../../services/api';
 import { ConciergeChatMessage, MemoryRecalled } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';

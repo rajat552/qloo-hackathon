@@ -7,19 +7,18 @@ import { CrossDomainSynthesis } from './components/Features/CrossDomainSynthesis
 import { SmartSearch } from './components/Features/SmartSearch';
 import { ChoiceApproval } from './components/Features/ChoiceApproval';
 import { apiService } from './services/api';
-import { Sparkles, CheckCircle, AlertCircle, Bot } from 'lucide-react';
+import { Bot } from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('graph');
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
-  const [showOracleModal, setShowOracleModal] = useState(false);
 
   useEffect(() => {
     const checkBackendHealth = async () => {
       try {
         await apiService.healthCheck();
         setBackendStatus('online');
-      } catch (error) {
+      } catch {
         setBackendStatus('offline');
       }
     };

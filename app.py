@@ -380,42 +380,42 @@ if os.path.exists("data/image"):
 # Pydantic Schemas
 # ==============================================================================
 class TasteNodeCreate(BaseModel):
-    name: str = Field(..., example="Crying in H Mart (Michelle Zauner)")
-    domain: str = Field(..., example="literature")
-    timestamp: Optional[str] = Field("Present", example="May 2026")
-    notes: Optional[str] = Field("", example="Food, identity, grief, and Korean culinary nostalgia.")
-    tags: Optional[List[str]] = Field(default_factory=list, example=["Memoir", "Culinary", "Emotional"])
+    name: str
+    domain: str
+    timestamp: Optional[str] = "Present"
+    notes: Optional[str] = ""
+    tags: Optional[List[str]] = Field(default_factory=list)
 
 class ConciergeChatRequest(BaseModel):
-    message: str = Field(..., example="I have a free Saturday afternoon. Where should I go based on what I've been reading and watching?")
+    message: str
     history: Optional[List[Dict[str, str]]] = Field(default_factory=list)
 
 class CityItineraryRequest(BaseModel):
-    city: str = Field(..., example="Kyoto")
-    preferences: Optional[str] = Field(None, example="Quiet, architectural, natural wine, vinyl")
+    city: str
+    preferences: Optional[str] = None
 
 class CrossDomainRequest(BaseModel):
-    domains: List[str] = Field(..., example=["film", "literature", "dining"])
-    prompt: Optional[str] = Field(None, example="Blend melancholic cinema with speculative sci-fi and dining")
+    domains: List[str]
+    prompt: Optional[str] = None
 
 class UserPreferencesRequest(BaseModel):
-    preferences: str = Field(..., example="I love minimalist style, prefer neutral colors, and like comfortable casual wear")
+    preferences: str
 
 class CultureRequest(BaseModel):
-    cultures: List[str] = Field(..., example=["Japanese", "Italian"])
-    preferences: Optional[str] = Field(None, example="I prefer modern fusion styles")
+    cultures: List[str]
+    preferences: Optional[str] = None
 
 class SearchRequest(BaseModel):
-    query: str = Field(..., example="red summer dress")
-    style_preferences: Optional[str] = Field(None, example="I prefer elegant, formal styles")
+    query: str
+    style_preferences: Optional[str] = None
 
 class AntiRecommendationRequest(BaseModel):
-    current_item_description: str = Field(..., example="black formal suit")
-    style_preferences: Optional[str] = Field(None, example="I usually wear conservative styles")
+    current_item_description: str
+    style_preferences: Optional[str] = None
 
 class ChoiceApprovalRequest(BaseModel):
-    item_description: str = Field(..., example="floral summer dress")
-    user_style: Optional[str] = Field(None, example="I love romantic, feminine styles")
+    item_description: str
+    user_style: Optional[str] = None
 
 class FashionItem(BaseModel):
     id: str

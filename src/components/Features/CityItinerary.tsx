@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plane, MapPin, Coffee, BookOpen, Wine, Music, Sparkles, Compass, CheckCircle } from 'lucide-react';
+import { MapPin, Coffee, BookOpen, Wine, Music, Sparkles, Compass } from 'lucide-react';
 import { apiService } from '../../services/api';
 import { CityItineraryResponse, CityItineraryActivity } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';

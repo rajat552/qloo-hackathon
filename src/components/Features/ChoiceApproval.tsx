@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, ThumbsUp, Star, User, Sparkles } from 'lucide-react';
+import { CheckCircle, ThumbsUp, Star } from 'lucide-react';
 import { apiService, ApiError } from '../../services/api';
 import { ChoiceApprovalResponse } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';

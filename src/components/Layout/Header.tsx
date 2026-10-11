@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }
 
           {/* Desktop Navigation Navigation Bar */}
           <nav className="hidden lg:flex items-center space-x-1.5 bg-white/5 border border-white/10 p-1.5 rounded-2xl">
-            {sections.map(({ id, name, icon: Icon, badge }) => (
+            {sections.map(({ id, name, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => onSectionChange(id)}
