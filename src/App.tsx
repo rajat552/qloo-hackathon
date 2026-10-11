@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Layout/Header';
 import { TasteGraphView } from './components/Features/TasteGraphView';
 import { ConciergeChat } from './components/Features/ConciergeChat';
@@ -6,27 +6,10 @@ import { CityItinerary } from './components/Features/CityItinerary';
 import { CrossDomainSynthesis } from './components/Features/CrossDomainSynthesis';
 import { SmartSearch } from './components/Features/SmartSearch';
 import { ChoiceApproval } from './components/Features/ChoiceApproval';
-import { apiService } from './services/api';
-import { Bot, Sparkles, CheckCircle2, ShieldCheck, Github } from 'lucide-react';
+import { Bot, Sparkles, ShieldCheck, Github } from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('graph');
-  const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
-
-  useEffect(() => {
-    const checkBackendHealth = async () => {
-      try {
-        await apiService.healthCheck();
-        setBackendStatus('online');
-      } catch {
-        setBackendStatus('offline');
-      }
-    };
-
-    checkBackendHealth();
-    const interval = setInterval(checkBackendHealth, 30000);
-    return () => clearInterval(interval);
-  }, []);
 
   const renderActiveSection = () => {
     switch (activeSection) {
@@ -54,35 +37,6 @@ function App() {
 
       {/* Main Top Header */}
       <Header activeSection={activeSection} onSectionChange={setActiveSection} />
-
-      {/* System Status & AI Badge Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-        <div className="bg-white border-2 border-slate-900 rounded-2xl shadow-brutal-sm px-4 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border border-slate-900 text-xs font-bold text-[#15803D]">
-              <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
-              <span>AI Engine Active</span>
-            </span>
-            <span className="text-xs text-slate-600 font-semibold hidden md:inline">
-              Backend Status:
-            </span>
-            <span className="text-xs font-bold text-slate-800">
-              {backendStatus === 'online' ? 'FastAPI Local Daemon (Port 8000)' : 'Client-Side Agent & Graph Memory Active'}
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-3 text-xs font-semibold text-slate-600">
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#E2F1F8] border border-slate-900 text-[11px] text-slate-800 font-bold">
-              <Sparkles className="w-3 h-3 text-[#16A34A]" />
-              Hybrid Graph-Vector Memory: 5 Nodes & 5 Bridges
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-[#15803D]">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              Verified
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* Main View Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
