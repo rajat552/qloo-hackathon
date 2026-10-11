@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Palette, Search } from 'lucide-react';
+import { Network, Brain, Compass, Layers, Search, Sparkles, UserCheck } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
@@ -7,39 +7,48 @@ interface HeaderProps {
 }
 
 const sections = [
-  { id: 'search', name: 'Smart Search', icon: Search },
-  { id: 'suggestions', name: 'Get Inspired', icon: Sparkles },
-  { id: 'culture', name: 'Cultural Fusion', icon: Palette },
-  { id: 'unique', name: 'Unique Style', icon: Sparkles },
-  { id: 'twin', name: 'Fashion Twin', icon: Sparkles },
+  { id: 'graph', name: 'Taste Graph', icon: Network, badge: 'Memory' },
+  { id: 'concierge', name: 'Concierge Agent', icon: Brain, badge: 'AI' },
+  { id: 'city', name: 'City Mode', icon: Compass, badge: 'Travel' },
+  { id: 'synthesis', name: 'Cross-Domain', icon: Layers, badge: 'Matrix' },
+  { id: 'search', name: 'Aesthetic Archive', icon: Search, badge: 'Catalog' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-purple-100 sticky top-0 z-50">
+    <header className="bg-black/70 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo & Branding */}
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => onSectionChange('graph')}>
+            <div className="w-11 h-11 bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-600/30 ring-1 ring-white/20">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Fashion AI
-              </h1>
-              <p className="text-xs text-gray-500">Powered by Qloo Intelligence</p>
+              <div className="flex items-center space-x-2">
+                <h1 className="text-xl font-extrabold bg-gradient-to-r from-white via-gray-100 to-purple-300 bg-clip-text text-transparent tracking-tight">
+                  Taste-Evolving Concierge
+                </h1>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-widest hidden sm:inline-block">
+                  Qloo Hackathon
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 font-medium">
+                Personalized Multi-Domain AI Agent &bull; <span className="text-purple-400 font-mono">Hybrid Graph Memory</span>
+              </p>
             </div>
           </div>
-          
-          <nav className="hidden md:flex space-x-1">
-            {sections.map(({ id, name, icon: Icon }) => (
+
+          {/* Desktop Navigation Navigation Bar */}
+          <nav className="hidden lg:flex items-center space-x-1.5 bg-white/5 border border-white/10 p-1.5 rounded-2xl">
+            {sections.map(({ id, name, icon: Icon, badge }) => (
               <button
                 key={id}
                 onClick={() => onSectionChange(id)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center space-x-2 ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center space-x-2 ${
                   activeSection === id
-                    ? 'bg-purple-100 text-purple-700 shadow-sm'
-                    : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -48,11 +57,19 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }
             ))}
           </nav>
 
-          <div className="md:hidden">
+          {/* Solo Developer Identity Badge */}
+          <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-300">
+            <UserCheck className="w-3.5 h-3.5 text-purple-400" />
+            <span className="text-gray-400">Developer:</span>
+            <span className="font-semibold text-white">Rajat (@rajat552)</span>
+          </div>
+
+          {/* Mobile Select Menu */}
+          <div className="lg:hidden">
             <select
               value={activeSection}
               onChange={(e) => onSectionChange(e.target.value)}
-              className="bg-white border border-purple-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="bg-gray-900 border border-gray-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500"
             >
               {sections.map(({ id, name }) => (
                 <option key={id} value={id}>{name}</option>
