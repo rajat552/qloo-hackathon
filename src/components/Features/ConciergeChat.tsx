@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Bot, User, Brain, Compass, Clock, CheckCircle2 } from 'lucide-react';
+import { Send, Bot, User, Brain, Compass, Clock, CheckCircle2, Sparkles } from 'lucide-react';
 import { apiService } from '../../services/api';
 import { ConciergeChatMessage, MemoryRecalled } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
@@ -16,7 +16,7 @@ export const ConciergeChat: React.FC = () => {
     {
       id: 'msg-init',
       sender: 'agent',
-      text: "Welcome. I am your Taste-Evolving Concierge. Unlike standard assistants, I maintain persistent memory of your cultural journey across cinema, music, literature, and dining over time.\n\nI currently have your January indie cinema affinities, March cyberpunk explorations, and recent artisanal kissaten milestones loaded. How can I guide your lifestyle choices today?",
+      text: "Welcome! I am your Taste-Evolving Concierge. Unlike standard chatbots that forget everything between sessions, I maintain persistent graph memory of your cultural journey across cinema, music, literature, and dining over time.\n\nI currently have your January indie cinema affinities, March cyberpunk explorations, and recent artisanal kissaten milestones loaded. How can I guide your lifestyle choices today?",
       timestamp: 'Just now',
       memory_recalled: [
         { milestone: "Past Lives (Celine Song)", domain: "film", timestamp: "January 2026" },
@@ -74,77 +74,79 @@ export const ConciergeChat: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-indigo-950/50 via-purple-950/40 to-black p-6 rounded-2xl border border-indigo-500/20 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Top Banner with Soft Sky Pastel styling */}
+      <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-2">
-            <Brain className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black mb-2 shadow-[2px_2px_0px_#1E293B]">
+            <Brain className="w-3.5 h-3.5 text-[#16A34A]" />
             <span>Anti-Amnesia Agentic Reasoning</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Conversational Concierge
           </h2>
-          <p className="text-gray-300 text-sm mt-1">
+          <p className="text-slate-600 text-xs sm:text-sm mt-1 font-medium max-w-xl">
             Real-time multi-turn dialogue with continuous access to your taste knowledge graph.
           </p>
         </div>
 
-        <div className="flex items-center space-x-4 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
+        <div className="flex items-center space-x-3 bg-white border-2 border-slate-900 px-4 py-2.5 rounded-2xl shadow-[2px_2px_0px_#1E293B]">
           <div>
-            <div className="text-[10px] uppercase font-bold text-gray-400">Qloo Cultural Confidence</div>
-            <div className="text-lg font-mono font-bold text-purple-300">{Math.round(activeConfidence * 100)}% Match</div>
+            <div className="text-[10px] uppercase font-black text-slate-500">Qloo Cultural Confidence</div>
+            <div className="text-base font-black text-slate-900">{Math.round(activeConfidence * 100)}% Match</div>
           </div>
-          <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+          <div className="w-8 h-8 rounded-lg bg-[#DCFCE7] border border-slate-900 flex items-center justify-center">
+            <CheckCircle2 className="w-5 h-5 text-[#15803D]" />
+          </div>
         </div>
       </div>
 
       {/* Main Chat & Memory Inspector Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Chat Window */}
-        <div className="lg:col-span-2 flex flex-col h-[600px] bg-gradient-to-b from-gray-900/90 to-black/90 border border-gray-800 rounded-2xl backdrop-blur-xl overflow-hidden shadow-2xl">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left 8 Cols: Chat Window */}
+        <div className="lg:col-span-8 flex flex-col h-[640px] bg-white border-2 border-slate-900 rounded-3xl shadow-brutal overflow-hidden">
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#FFFDF9]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex items-start space-x-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'agent' && (
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shrink-0 mt-1 shadow-md shadow-purple-500/20">
-                    <Bot className="w-4 h-4 text-white" />
+                  <div className="w-9 h-9 rounded-xl bg-[#FECDD3] border-2 border-slate-900 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#1E293B]">
+                    <Bot className="w-5 h-5 text-slate-900" />
                   </div>
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed ${
+                  className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed border-2 border-slate-900 shadow-[3px_3px_0px_#1E293B] ${
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/20'
-                      : 'bg-white/5 text-gray-200 border border-white/10 shadow-lg'
+                      ? 'bg-[#22C55E] text-white font-bold'
+                      : 'bg-white text-slate-800 font-medium'
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
                   
                   {msg.memory_recalled && msg.memory_recalled.length > 0 && (
-                    <div className="mt-3 pt-2.5 border-t border-white/10 flex flex-wrap gap-1.5 items-center">
-                      <span className="text-[10px] text-purple-300 font-semibold uppercase tracking-wider flex items-center mr-1">
-                        <Clock className="w-3 h-3 mr-1" /> Recalled:
+                    <div className="mt-3 pt-2.5 border-t-2 border-slate-900/10 flex flex-wrap gap-1.5 items-center">
+                      <span className="text-[10px] text-slate-700 font-black uppercase tracking-wider flex items-center mr-1">
+                        <Clock className="w-3 h-3 mr-1 text-slate-500" /> Recalled Memory:
                       </span>
                       {msg.memory_recalled.map((m, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 border border-purple-500/30 text-purple-200 font-mono">
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-lg bg-[#DCFCE7] border border-slate-900 text-[#15803D] font-bold">
                           {m.milestone} ({m.timestamp})
                         </span>
                       ))}
                     </div>
                   )}
 
-                  <div className="mt-2 text-[10px] text-right opacity-60">
+                  <div className={`mt-2 text-[10px] text-right font-bold ${msg.sender === 'user' ? 'text-white/80' : 'text-slate-400'}`}>
                     {msg.timestamp}
                   </div>
                 </div>
 
                 {msg.sender === 'user' && (
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center shrink-0 mt-1">
-                    <User className="w-4 h-4 text-white" />
+                  <div className="w-9 h-9 rounded-xl bg-[#BAE6FD] border-2 border-slate-900 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#1E293B]">
+                    <User className="w-5 h-5 text-slate-900" />
                   </div>
                 )}
               </div>
@@ -152,10 +154,10 @@ export const ConciergeChat: React.FC = () => {
 
             {loading && (
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-purple-600/30 flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-purple-400 animate-pulse" />
+                <div className="w-9 h-9 rounded-xl bg-[#FECDD3] border-2 border-slate-900 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#1E293B]">
+                  <Bot className="w-5 h-5 text-slate-900" />
                 </div>
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-400 flex items-center space-x-2">
+                <div className="p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-xs text-slate-600 font-bold flex items-center space-x-2">
                   <LoadingSpinner size="sm" />
                   <span>Traversing taste knowledge graph & synthesizing Qloo correlations...</span>
                 </div>
@@ -164,14 +166,14 @@ export const ConciergeChat: React.FC = () => {
           </div>
 
           {/* Quick Prompts Bar */}
-          <div className="px-4 py-2 border-t border-gray-800/80 bg-black/40 overflow-x-auto flex items-center space-x-2">
-            <span className="text-[10px] uppercase font-bold text-gray-500 shrink-0">Try asking:</span>
+          <div className="px-4 py-2.5 border-t-2 border-slate-900 bg-[#E2F1F8] overflow-x-auto flex items-center space-x-2">
+            <span className="text-[10px] uppercase font-black text-slate-700 shrink-0">Try asking:</span>
             {samplePrompts.map((p, i) => (
               <button
                 key={i}
                 onClick={() => handleSendMessage(p)}
                 disabled={loading}
-                className="shrink-0 text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-purple-600/20 text-gray-300 hover:text-purple-300 border border-white/5 transition"
+                className="shrink-0 text-xs font-bold px-3 py-1 rounded-xl bg-white hover:bg-[#DCFCE7] text-slate-800 border-2 border-slate-900 shadow-[1px_1px_0px_#1E293B] hover:-translate-y-0.5 transition"
               >
                 "{p}"
               </button>
@@ -184,68 +186,76 @@ export const ConciergeChat: React.FC = () => {
               e.preventDefault();
               handleSendMessage();
             }}
-            className="p-3 bg-black/60 border-t border-gray-800 flex items-center space-x-2"
+            className="p-3 bg-white border-t-2 border-slate-900 flex items-center space-x-2"
           >
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask for recommendations, cross-category advice, or plan an evening..."
-              className="flex-1 px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+              className="flex-1 px-4 py-2.5 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="p-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl disabled:opacity-50 transition shadow-md shadow-purple-600/20"
+              className="brutal-btn-primary px-4 py-2.5 rounded-xl disabled:opacity-50"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 text-white" />
             </button>
           </form>
         </div>
 
-        {/* Right Col: Active Memory Inspector Panel */}
-        <div className="bg-gradient-to-b from-gray-900/90 to-black/90 border border-gray-800 rounded-2xl p-6 backdrop-blur-xl flex flex-col justify-between">
-          <div>
-            <div className="flex items-center space-x-2 text-sm font-semibold text-gray-300 pb-3 border-b border-gray-800">
-              <Compass className="w-4 h-4 text-purple-400" />
-              <span>Active Memory Inspector</span>
+        {/* Right 4 Cols: Active Memory Inspector Panel */}
+        <div className="lg:col-span-4 brutal-card p-6 bg-[#FAF7F2] flex flex-col justify-between space-y-6">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 pb-3 border-b-2 border-slate-900/20">
+              <div className="w-7 h-7 rounded-lg bg-[#DDD6FE] border-2 border-slate-900 flex items-center justify-center">
+                <Compass className="w-4 h-4 text-slate-900" />
+              </div>
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                Active Memory Inspector
+              </h3>
             </div>
 
-            <div className="mt-4 space-y-4">
-              <div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                  User Persona Archetype
-                </span>
-                <p className="text-sm font-bold text-white mt-0.5">
-                  Contemplative Urbanite & Speculative Aesthete
-                </p>
-                <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                  Synthesized from 5 persistent cross-domain milestones spanning Winter to Spring 2026.
-                </p>
-              </div>
+            {/* Persona Archetype */}
+            <div className="bg-white border-2 border-slate-900 rounded-2xl p-4 shadow-[2px_2px_0px_#1E293B] space-y-1">
+              <span className="text-[10px] uppercase font-black tracking-wider text-slate-500">
+                User Persona Archetype
+              </span>
+              <p className="text-sm font-black text-slate-900">
+                Contemplative Urbanite & Speculative Aesthete
+              </p>
+              <p className="text-xs text-slate-600 leading-relaxed font-medium pt-1">
+                Synthesized from 5 persistent cross-domain milestones spanning Winter to Spring 2026.
+              </p>
+            </div>
 
-              <div className="pt-3 border-t border-gray-800">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-purple-400 mb-2 block">
-                  Currently Recalled Knowledge Nodes ({activeMemory.length})
-                </span>
+            {/* Recalled Knowledge Nodes */}
+            <div className="space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#16A34A]" />
+                Recalled Knowledge Nodes ({activeMemory.length})
+              </span>
 
-                <div className="space-y-2.5">
-                  {activeMemory.map((mem, idx) => (
-                    <div key={idx} className="p-3 rounded-lg bg-white/5 border border-white/5 text-xs">
-                      <div className="flex items-center justify-between font-mono text-[10px]">
-                        <span className="uppercase text-purple-300 font-bold">{mem.domain}</span>
-                        <span className="text-gray-400">{mem.timestamp}</span>
-                      </div>
-                      <p className="font-semibold text-white mt-1">{mem.milestone}</p>
+              <div className="space-y-2">
+                {activeMemory.map((mem, idx) => (
+                  <div key={idx} className="p-3 rounded-xl bg-white border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-xs">
+                    <div className="flex items-center justify-between font-mono text-[10px] font-bold">
+                      <span className="uppercase px-2 py-0.5 rounded bg-[#BAE6FD] border border-slate-900 text-slate-900">
+                        {mem.domain}
+                      </span>
+                      <span className="text-slate-500">{mem.timestamp}</span>
                     </div>
-                  ))}
-                </div>
+                    <p className="font-extrabold text-slate-900 mt-1.5">{mem.milestone}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="mt-6 p-4 rounded-xl bg-purple-950/20 border border-purple-800/30 text-xs text-gray-300 leading-relaxed">
-            <span className="font-semibold text-purple-300 block mb-1">
+          {/* Education Callout */}
+          <div className="p-4 rounded-2xl bg-[#DCFCE7] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-xs text-slate-800 leading-relaxed">
+            <span className="font-black text-[#15803D] block mb-1">
               💡 Why This Overcomes AI Amnesia:
             </span>
             Standard chatbots start from zero every session. The Taste-Evolving Concierge preserves your temporal graph so you never have to re-explain who you are or what moves you.

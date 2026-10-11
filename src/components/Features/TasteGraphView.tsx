@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Network, Plus, Calendar, Sparkles, Info, ArrowRight } from 'lucide-react';
+import { Network, Plus, Calendar, Info, ArrowRight, Film, Music, BookOpen, Utensils, Shirt, Compass, Star, Target, Layers } from 'lucide-react';
 import { apiService } from '../../services/api';
 import { TasteGraphData, TasteNode } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
-const domainColors: Record<string, { bg: string; text: string; border: string; glow: string }> = {
-  film: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', glow: 'shadow-amber-500/20' },
-  music: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/30', glow: 'shadow-purple-500/20' },
-  literature: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', glow: 'shadow-emerald-500/20' },
-  dining: { bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/30', glow: 'shadow-rose-500/20' },
-  fashion: { bg: 'bg-pink-500/10', text: 'text-pink-400', border: 'border-pink-500/30', glow: 'shadow-pink-500/20' },
-  travel: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30', glow: 'shadow-cyan-500/20' },
+interface TasteGraphViewProps {
+  onOpenConcierge?: () => void;
+}
+
+const domainConfig: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
+  film: { bg: 'bg-[#FED7AA]', text: 'text-amber-950', icon: <Film className="w-5 h-5 text-slate-900" /> },
+  music: { bg: 'bg-[#BAE6FD]', text: 'text-sky-950', icon: <Music className="w-5 h-5 text-slate-900" /> },
+  literature: { bg: 'bg-[#DDD6FE]', text: 'text-purple-950', icon: <BookOpen className="w-5 h-5 text-slate-900" /> },
+  dining: { bg: 'bg-[#BBF7D0]', text: 'text-emerald-950', icon: <Utensils className="w-5 h-5 text-slate-900" /> },
+  fashion: { bg: 'bg-[#FECDD3]', text: 'text-rose-950', icon: <Shirt className="w-5 h-5 text-slate-900" /> },
+  travel: { bg: 'bg-[#BAE6FD]', text: 'text-indigo-950', icon: <Compass className="w-5 h-5 text-slate-900" /> },
 };
 
-export const TasteGraphView: React.FC = () => {
+export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge }) => {
   const [graphData, setGraphData] = useState<TasteGraphData | null>(null);
   const [selectedNode, setSelectedNode] = useState<TasteNode | null>(null);
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('all');
@@ -70,9 +74,9 @@ export const TasteGraphView: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px]">
+      <div className="flex flex-col items-center justify-center min-h-[450px]">
         <LoadingSpinner size="lg" />
-        <p className="mt-4 text-sm text-gray-400">Loading Persistent Taste Knowledge Graph...</p>
+        <p className="mt-4 text-sm font-bold text-slate-700">Loading Persistent Taste Knowledge Graph...</p>
       </div>
     );
   }
@@ -91,108 +95,223 @@ export const TasteGraphView: React.FC = () => {
     : [];
 
   return (
-    <div className="space-y-8">
-      {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-black p-6 rounded-2xl border border-purple-500/20 backdrop-blur-xl shadow-2xl">
-        <div>
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-xs font-semibold mb-2">
-            <Network className="w-3.5 h-3.5" />
-            <span>Hybrid Graph-Vector Memory Layer</span>
+    <div className="space-y-12">
+      {/* Hero Section matching LearnHub Reference Image 1 */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+        {/* Left Column: Headline & Action */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-extrabold text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
+            <span>New: Persistent Hybrid Memory</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-            Evolving Taste Knowledge Graph
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
+            Map Your Taste, <br />
+            <span className="text-[#16A34A]">Anytime,</span> <br />
+            Anywhere!
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 max-w-xl font-medium leading-relaxed">
+            Overcoming AI amnesia with Qloo cross-domain affinities. Connect how January's indie cinema echoes into April's architecture, literature, and dining.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="brutal-btn-primary px-6 py-3.5 text-sm font-black rounded-2xl"
+            >
+              <Plus className="w-5 h-5" />
+              <span>Add Taste Milestone</span>
+            </button>
+
+            {onOpenConcierge && (
+              <button
+                onClick={onOpenConcierge}
+                className="brutal-btn-secondary px-6 py-3.5 text-sm font-black rounded-2xl"
+              >
+                <span>Talk to Concierge &rarr;</span>
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-8 pt-4 border-t-2 border-slate-900/10">
+            <div>
+              <div className="text-2xl font-black text-slate-900">5+ Domains</div>
+              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Synchronized</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-slate-900">95% Match</div>
+              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Qloo Correlation</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-[#16A34A]">0% Amnesia</div>
+              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Persistent Memory</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Hero Visual Card (Matching the Web Development Card from Image 1) */}
+        <div className="lg:col-span-5 relative">
+          {/* Floating Category Badges */}
+          <div className="absolute -top-3 -right-3 z-20 w-11 h-11 rounded-2xl bg-[#FECDD3] border-2 border-slate-900 shadow-[3px_3px_0px_#1E293B] flex items-center justify-center">
+            <Target className="w-5 h-5 text-slate-900" />
+          </div>
+
+          <div className="absolute top-1/2 -right-4 z-20 w-9 h-9 rounded-full bg-[#BBF7D0] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+            <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+          </div>
+
+          <div className="absolute -bottom-3 -left-3 z-20 w-10 h-10 rounded-2xl bg-[#DDD6FE] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+            <Layers className="w-5 h-5 text-slate-900" />
+          </div>
+
+          {/* Main Card Container */}
+          <div className="brutal-card p-6 sm:p-7 relative z-10 space-y-5">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-xl bg-[#BAE6FD] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]">
+                <Network className="w-6 h-6 text-slate-900" />
+              </div>
+              <div>
+                <h3 className="text-base font-extrabold text-slate-900">
+                  {graphData?.user_persona.archetype || 'Contemplative Urbanite'}
+                </h3>
+                <p className="text-xs text-slate-500 font-semibold">
+                  5 Cultural Milestones &bull; 5 Active Bridges
+                </p>
+              </div>
+            </div>
+
+            {/* Progress Section */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <span className="text-slate-600">Cross-Domain Cohesion</span>
+                <span className="text-[#16A34A]">92%</span>
+              </div>
+              <div className="w-full h-3.5 bg-slate-100 rounded-full border-2 border-slate-900 p-0.5 overflow-hidden">
+                <div
+                  className="h-full bg-[#22C55E] rounded-full transition-all duration-500"
+                  style={{ width: '92%' }}
+                />
+              </div>
+            </div>
+
+            {/* Persona Trajectory Tags */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {graphData?.user_persona.evolving_vector.map((v, i) => (
+                <span key={i} className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-900 text-slate-800">
+                  &bull; {v}
+                </span>
+              ))}
+            </div>
+
+            {/* Action inside card */}
+            <button
+              onClick={() => {
+                if (filteredNodes.length > 0) setSelectedNode(filteredNodes[0]);
+              }}
+              className="w-full brutal-btn-primary py-3 rounded-xl text-xs font-black shadow-brutal-sm"
+            >
+              <span>Inspect Taste Graph</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Section Header matching LearnHub Reference Image 2 */}
+      <section className="space-y-6 pt-4">
+        <div className="text-center space-y-2">
+          <div className="inline-block px-4 py-1 rounded-full bg-[#BAE6FD] border-2 border-slate-900 text-xs font-black text-slate-900 shadow-[2px_2px_0px_#1E293B]">
+            Knowledge Nodes
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Explore Cultural Milestones
           </h2>
-          <p className="text-gray-300 text-sm mt-1 max-w-2xl">
-            Overcoming AI amnesia by tracking multi-domain taste trajectories across months.
-            Discover how January's indie cinema echoes into April's architecture and culinary preferences.
+          <p className="text-slate-600 text-sm max-w-xl mx-auto font-medium">
+            Browse through your saved milestones and click to reveal Qloo cross-category bridges.
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium text-sm shadow-lg shadow-purple-600/30 hover:scale-[1.02] transition-all duration-200"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Taste Milestone</span>
-        </button>
-      </div>
+        {/* Timeline Filter Bar */}
+        <div className="flex items-center justify-center space-x-2.5 overflow-x-auto py-2">
+          <span className="text-xs uppercase tracking-wider text-slate-500 font-extrabold flex items-center space-x-1 pl-1">
+            <Calendar className="w-3.5 h-3.5 mr-1" />
+            <span>Timeline:</span>
+          </span>
+          {timeOptions.map((time) => {
+            const isSelected = selectedTimeFilter === time;
+            return (
+              <button
+                key={time}
+                onClick={() => setSelectedTimeFilter(time)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border-2 border-slate-900 ${
+                  isSelected
+                    ? 'bg-[#22C55E] text-white shadow-[2px_2px_0px_#1E293B] -translate-y-0.5'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 shadow-[2px_2px_0px_#1E293B]'
+                }`}
+              >
+                {time === 'all' ? 'All Milestones' : time}
+              </button>
+            );
+          })}
+        </div>
 
-      {/* Timeline Filter Bar */}
-      <div className="flex items-center space-x-3 overflow-x-auto pb-2">
-        <span className="text-xs uppercase tracking-wider text-gray-400 font-semibold flex items-center space-x-1 pl-1">
-          <Calendar className="w-3.5 h-3.5 mr-1" />
-          <span>Timeline:</span>
-        </span>
-        {timeOptions.map((time) => (
-          <button
-            key={time}
-            onClick={() => setSelectedTimeFilter(time)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              selectedTimeFilter === time
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/5'
-            }`}
-          >
-            {time === 'all' ? 'Full Trajectory' : time}
-          </button>
-        ))}
-      </div>
-
-      {/* Main Graph & Inspector Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Interactive Graph Map */}
-        <div className="lg:col-span-2 bg-gradient-to-b from-gray-900/90 to-black/90 border border-gray-800 rounded-2xl p-6 backdrop-blur-xl">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-800">
-            <h3 className="text-sm font-semibold text-gray-300 flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-purple-400" />
-              <span>Cultural Entity Nodes ({filteredNodes.length})</span>
-            </h3>
-            <span className="text-xs text-gray-400">Click a node to inspect Qloo affinity bridges</span>
-          </div>
-
-          {/* Node Grid representation */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Main Grid: Cultural Nodes (2 cols) + Inspector (1 col) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left 8 Cols: Cultural Entity Cards Grid */}
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
             {filteredNodes.map((node) => {
-              const color = domainColors[node.domain.toLowerCase()] || domainColors.film;
+              const cfg = domainConfig[node.domain.toLowerCase()] || domainConfig.film;
               const isSelected = selectedNode?.id === node.id;
 
               return (
                 <div
                   key={node.id}
                   onClick={() => setSelectedNode(node)}
-                  className={`cursor-pointer p-4 rounded-xl border transition-all duration-200 relative overflow-hidden ${color.bg} ${
+                  className={`brutal-card p-5 cursor-pointer relative overflow-hidden transition-all duration-200 ${
                     isSelected
-                      ? `${color.border} ring-2 ring-purple-500/60 scale-[1.02] shadow-lg ${color.glow}`
-                      : 'border-gray-800/80 hover:border-gray-700 bg-gray-900/40'
+                      ? 'ring-4 ring-[#22C55E] -translate-y-1 shadow-brutal-lg'
+                      : 'hover:-translate-y-1 hover:shadow-brutal-lg'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${color.bg} ${color.text} border ${color.border}`}>
-                      {node.domain}
-                    </span>
-                    <span className="text-[11px] text-gray-400 font-mono flex items-center space-x-1">
-                      <Calendar className="w-3 h-3 mr-0.5 text-gray-500" />
-                      {node.timestamp}
-                    </span>
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-11 h-11 rounded-xl ${cfg.bg} border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]`}>
+                        {cfg.icon}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 border border-slate-900 text-slate-800">
+                          {node.domain}
+                        </span>
+                        <div className="text-[11px] text-slate-500 font-bold mt-0.5 flex items-center">
+                          <Calendar className="w-3 h-3 mr-1 text-slate-400" />
+                          {node.timestamp}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-xs font-black shadow-[1px_1px_0px_#16A34A]">
+                      <Star className="w-3 h-3 text-amber-500 fill-amber-400" />
+                      <span>{Math.round(node.affinity * 100)}%</span>
+                    </div>
                   </div>
 
-                  <h4 className="font-semibold text-white text-base leading-snug line-clamp-1">
+                  <h3 className="font-extrabold text-slate-900 text-base leading-snug line-clamp-1">
                     {node.name}
-                  </h4>
-                  <p className="text-xs text-gray-300 mt-1 line-clamp-2 leading-relaxed">
+                  </h3>
+                  <p className="text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed font-medium">
                     {node.notes}
                   </p>
 
-                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t-2 border-slate-900/10">
                     <div className="flex flex-wrap gap-1">
                       {node.tags.slice(0, 2).map((tag, idx) => (
-                        <span key={idx} className="text-[10px] bg-white/5 text-gray-300 px-1.5 py-0.5 rounded">
+                        <span key={idx} className="text-[10px] font-bold bg-[#E2F1F8] border border-slate-900 text-slate-800 px-2 py-0.5 rounded-md">
                           #{tag}
                         </span>
                       ))}
                     </div>
-                    <span className="text-[11px] font-mono text-purple-300 font-bold">
-                      {Math.round(node.affinity * 100)}% Match
+                    <span className="text-xs font-black text-[#16A34A] flex items-center">
+                      Inspect &rarr;
                     </span>
                   </div>
                 </div>
@@ -200,134 +319,147 @@ export const TasteGraphView: React.FC = () => {
             })}
           </div>
 
-          {/* Persona Vector Summary */}
-          {graphData?.user_persona && (
-            <div className="mt-6 p-4 rounded-xl bg-purple-950/20 border border-purple-800/30">
-              <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider">
-                Current Persona Vector:
-              </span>
-              <p className="text-sm font-medium text-white mt-1">
-                {graphData.user_persona.archetype}
-              </p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {graphData.user_persona.evolving_vector.map((v, i) => (
-                  <span key={i} className="text-xs px-2 py-0.5 rounded-md bg-white/5 text-gray-300 border border-white/5">
-                    &bull; {v}
-                  </span>
-                ))}
+          {/* Right 4 Cols: Node Inspector & Qloo Affinity Bridges */}
+          <div className="lg:col-span-4 brutal-card p-6 space-y-5 bg-[#FAF7F2]">
+            <div className="flex items-center space-x-2 pb-3 border-b-2 border-slate-900/20">
+              <div className="w-7 h-7 rounded-lg bg-[#FECDD3] border-2 border-slate-900 flex items-center justify-center">
+                <Info className="w-4 h-4 text-slate-900" />
               </div>
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                Memory Node Inspector
+              </h3>
             </div>
-          )}
-        </div>
 
-        {/* Right Col: Node Inspector & Qloo Cross-Domain Bridges */}
-        <div className="bg-gradient-to-b from-gray-900/90 to-black/90 border border-gray-800 rounded-2xl p-6 backdrop-blur-xl">
-          <div className="flex items-center space-x-2 text-sm font-semibold text-gray-300 pb-3 border-b border-gray-800">
-            <Info className="w-4 h-4 text-purple-400" />
-            <span>Memory Node Inspector</span>
-          </div>
-
-          {selectedNode ? (
-            <div className="mt-4 space-y-4">
-              <div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-purple-400">
-                  {selectedNode.domain} &bull; {selectedNode.timestamp}
-                </span>
-                <h3 className="text-lg font-bold text-white mt-0.5">{selectedNode.name}</h3>
-                <p className="text-xs text-gray-300 mt-2 leading-relaxed bg-white/5 p-3 rounded-lg border border-white/5">
-                  {selectedNode.notes}
-                </p>
-              </div>
-
-              <div>
-                <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
-                  Tags & Aesthetic Signals:
-                </h5>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedNode.tags.map((tag, i) => (
-                    <span key={i} className="text-xs px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                      {tag}
+            {selectedNode ? (
+              <div className="space-y-4">
+                <div className="bg-white border-2 border-slate-900 rounded-xl p-4 shadow-[2px_2px_0px_#1E293B] space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                      {selectedNode.domain} &bull; {selectedNode.timestamp}
                     </span>
-                  ))}
+                    <span className="text-xs font-black text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-md border border-slate-900">
+                      {Math.round(selectedNode.affinity * 100)}% Match
+                    </span>
+                  </div>
+                  <h4 className="text-base font-black text-slate-900 leading-snug">
+                    {selectedNode.name}
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    {selectedNode.notes}
+                  </p>
+
+                  <div className="pt-2 flex flex-wrap gap-1.5">
+                    {selectedNode.tags.map((tag, i) => (
+                      <span key={i} className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#DDD6FE] text-purple-950 border border-slate-900">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Connected Qloo Bridges */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                      Qloo Affinity Bridges ({activeBridges.length})
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#BAE6FD] border border-slate-900 text-slate-900">
+                      Cross-Category
+                    </span>
+                  </div>
+
+                  {activeBridges.length === 0 ? (
+                    <p className="text-xs text-slate-500 italic p-3 bg-white border-2 border-slate-900 rounded-xl">
+                      No direct cross-domain bridges registered for this node yet.
+                    </p>
+                  ) : (
+                    <div className="space-y-3">
+                      {activeBridges.map((bridge) => {
+                        const otherNodeId = bridge.source === selectedNode.id ? bridge.target : bridge.source;
+                        const otherNode = nodes.find(n => n.id === otherNodeId);
+
+                        return (
+                          <div
+                            key={bridge.id}
+                            className="p-3.5 rounded-xl bg-white border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] space-y-2 text-xs"
+                          >
+                            <div className="flex items-center justify-between font-mono text-[10px] font-bold">
+                              <span className="px-2 py-0.5 rounded-md bg-[#BBF7D0] border border-slate-900 text-emerald-950 uppercase">
+                                {bridge.relation}
+                              </span>
+                              <span className="text-slate-900 font-black">
+                                {Math.round(bridge.strength * 100)}% Affinity
+                              </span>
+                            </div>
+
+                            <div className="flex items-center space-x-1.5 font-bold text-slate-800">
+                              <span>{selectedNode.name}</span>
+                              <ArrowRight className="w-3.5 h-3.5 text-[#16A34A] shrink-0" />
+                              <span className="text-[#16A34A]">{otherNode?.name || 'Related Node'}</span>
+                            </div>
+
+                            <p className="text-[11px] text-slate-600 leading-normal font-medium bg-slate-50 p-2 rounded-lg border border-slate-200">
+                              {bridge.qloo_correlation}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {/* Connected Qloo Bridges */}
-              <div className="pt-3 border-t border-gray-800">
-                <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3 flex items-center justify-between">
-                  <span>Qloo Correlation Bridges ({activeBridges.length})</span>
-                  <span className="text-[10px] text-purple-400">Cross-Domain</span>
-                </h5>
-
-                {activeBridges.length === 0 ? (
-                  <p className="text-xs text-gray-500 italic">No direct bridges registered for this node.</p>
-                ) : (
-                  <div className="space-y-3">
-                    {activeBridges.map((bridge) => {
-                      const otherNodeId = bridge.source === selectedNode.id ? bridge.target : bridge.source;
-                      const otherNode = nodes.find(n => n.id === otherNodeId);
-
-                      return (
-                        <div key={bridge.id} className="p-3 rounded-lg bg-white/5 border border-white/10 text-xs space-y-1.5">
-                          <div className="flex items-center justify-between font-mono text-[10px] text-purple-300 font-bold">
-                            <span className="px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500/30">
-                              {bridge.relation}
-                            </span>
-                            <span>{Math.round(bridge.strength * 100)}% Affinity</span>
-                          </div>
-                          <div className="text-gray-300 flex items-center space-x-1 font-medium">
-                            <span>{selectedNode.name}</span>
-                            <ArrowRight className="w-3 h-3 text-purple-400 shrink-0" />
-                            <span className="text-white font-semibold">{otherNode?.name || 'Related Node'}</span>
-                          </div>
-                          <p className="text-[11px] text-gray-400 leading-normal">
-                            {bridge.qloo_correlation}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <p className="text-xs text-gray-500 mt-4">Select a node to inspect its affinity connections.</p>
-          )}
+            ) : (
+              <p className="text-xs text-slate-500 text-center py-6">
+                Click any milestone on the left to inspect its Qloo affinity bridges.
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Modal: Add New Cultural Milestone */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-gray-900 border border-purple-500/30 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <h3 className="text-lg font-bold text-white flex items-center space-x-2">
-              <Plus className="w-5 h-5 text-purple-400" />
-              <span>Add Cultural Milestone</span>
-            </h3>
-            <p className="text-xs text-gray-400">
-              Input a new entity you've enjoyed recently. The memory layer will synthesize its position and calculate Qloo cross-category bridges.
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white border-2 border-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-brutal-xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-black text-slate-900 flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg bg-[#BBF7D0] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]">
+                  <Plus className="w-4 h-4 text-slate-900" />
+                </div>
+                <span>Add Cultural Milestone</span>
+              </h3>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 border-2 border-slate-900 font-black text-xs flex items-center justify-center"
+              >
+                &times;
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-600 font-medium">
+              Input a cultural entity you've enjoyed recently. The memory layer will synthesize its position and calculate Qloo cross-category bridges.
             </p>
 
-            <form onSubmit={handleAddMilestone} className="space-y-3.5">
+            <form onSubmit={handleAddMilestone} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Entity / Title</label>
+                <label className="block text-xs font-black text-slate-900 mb-1">Entity / Title</label>
                 <input
                   type="text"
                   required
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Crying in H Mart, Aphex Twin, Solaris"
-                  className="w-full px-3 py-2 bg-black/60 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-300 mb-1">Domain</label>
+                  <label className="block text-xs font-black text-slate-900 mb-1">Domain</label>
                   <select
                     value={newDomain}
                     onChange={(e) => setNewDomain(e.target.value)}
-                    className="w-full px-3 py-2 bg-black/60 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-bold text-slate-900 focus:outline-none"
                   >
                     <option value="film">Film / Cinema</option>
                     <option value="music">Music / Audio</option>
@@ -338,51 +470,51 @@ export const TasteGraphView: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-300 mb-1">Time Milestone</label>
+                  <label className="block text-xs font-black text-slate-900 mb-1">Milestone Date</label>
                   <input
                     type="text"
                     value={newTimestamp}
                     onChange={(e) => setNewTimestamp(e.target.value)}
                     placeholder="e.g. May 2026"
-                    className="w-full px-3 py-2 bg-black/60 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Personal Notes & Reflections</label>
+                <label className="block text-xs font-black text-slate-900 mb-1">Personal Notes & Reflections</label>
                 <textarea
                   rows={2}
                   value={newNotes}
                   onChange={(e) => setNewNotes(e.target.value)}
-                  placeholder="Why did this resonate? (e.g. Loved the melancholic pacing and visual stillness)"
-                  className="w-full px-3 py-2 bg-black/60 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-purple-500 resize-none"
+                  placeholder="Why did this resonate? (e.g. Loved the melancholic pacing and quiet intimacy)"
+                  className="w-full px-3.5 py-2 bg-white border-2 border-slate-900 rounded-xl text-xs font-medium text-slate-900 focus:outline-none resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Tags (comma-separated)</label>
+                <label className="block text-xs font-black text-slate-900 mb-1">Tags (comma-separated)</label>
                 <input
                   type="text"
                   value={newTag}
                   onChange={(e) => setNewTag(e.target.value)}
                   placeholder="e.g. Atmospheric, Indie, Nostalgia"
-                  className="w-full px-3 py-2 bg-black/60 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-3 border-t border-gray-800">
+              <div className="flex items-center justify-end space-x-3 pt-3 border-t-2 border-slate-900/10">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 text-xs font-medium text-gray-400 hover:text-white"
+                  className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting || !newName.trim()}
-                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-semibold hover:from-purple-500 hover:to-pink-500 disabled:opacity-50 transition"
+                  className="brutal-btn-primary px-5 py-2.5 text-xs font-black rounded-xl disabled:opacity-50"
                 >
                   {submitting ? 'Linking to Graph...' : 'Commit to Memory'}
                 </button>

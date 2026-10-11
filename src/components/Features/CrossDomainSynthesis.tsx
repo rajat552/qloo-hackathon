@@ -5,12 +5,12 @@ import { CrossDomainSynthesisResponse } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 const domainsList = [
-  { id: 'film', label: 'Cinema / Film', icon: Film },
-  { id: 'music', label: 'Music / Audio', icon: Music },
-  { id: 'literature', label: 'Literature / Sci-Fi', icon: BookOpen },
-  { id: 'dining', label: 'Dining / Wine', icon: Utensils },
-  { id: 'fashion', label: 'Fashion & Design', icon: Shirt },
-  { id: 'travel', label: 'Architecture & Travel', icon: Globe },
+  { id: 'film', label: 'Cinema / Film', icon: Film, pastel: 'bg-[#FED7AA]' },
+  { id: 'music', label: 'Music / Audio', icon: Music, pastel: 'bg-[#BAE6FD]' },
+  { id: 'literature', label: 'Literature / Sci-Fi', icon: BookOpen, pastel: 'bg-[#DDD6FE]' },
+  { id: 'dining', label: 'Dining / Wine', icon: Utensils, pastel: 'bg-[#BBF7D0]' },
+  { id: 'fashion', label: 'Fashion & Design', icon: Shirt, pastel: 'bg-[#FECDD3]' },
+  { id: 'travel', label: 'Architecture & Travel', icon: Globe, pastel: 'bg-[#C7D2FE]' },
 ];
 
 export const CrossDomainSynthesis: React.FC = () => {
@@ -62,50 +62,52 @@ export const CrossDomainSynthesis: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-purple-950/40 via-pink-950/30 to-black p-6 rounded-2xl border border-purple-500/20 backdrop-blur-xl">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-xs font-semibold mb-2">
-          <Layers className="w-3.5 h-3.5" />
+      <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal">
+        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black mb-2 shadow-[2px_2px_0px_#1E293B]">
+          <Layers className="w-3.5 h-3.5 text-[#16A34A]" />
           <span>Cross-Category Cultural Correlation</span>
         </div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           Cross-Domain Synthesis Matrix
         </h2>
-        <p className="text-gray-300 text-sm mt-1 max-w-2xl">
+        <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl font-medium">
           Qloo's cultural AI connects disparate interests. Pick 2 or more domains to generate an overarching aesthetic lifestyle signature.
         </p>
       </div>
 
       {/* Domain Picker Pills */}
-      <div className="bg-gray-900/80 border border-gray-800 rounded-2xl p-6 backdrop-blur-xl space-y-4">
-        <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider block">
+      <div className="brutal-card p-6 space-y-4">
+        <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
           Select Cultural Domains to Harmonize (Choose 2 or more):
         </span>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {domainsList.map(({ id, label, icon: Icon }) => {
+          {domainsList.map(({ id, label, icon: Icon, pastel }) => {
             const isSelected = selectedDomains.includes(id);
             return (
               <button
                 key={id}
                 onClick={() => toggleDomain(id)}
-                className={`p-3.5 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between space-y-2 ${
+                className={`p-3.5 rounded-2xl border-2 border-slate-900 text-left transition-all duration-150 flex flex-col justify-between space-y-3 ${
                   isSelected
-                    ? 'bg-purple-600/20 border-purple-500 shadow-md shadow-purple-600/20 text-white'
-                    : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                    ? `${pastel} shadow-[3px_3px_0px_#1E293B] -translate-y-0.5 text-slate-900 font-black`
+                    : 'bg-white hover:bg-slate-50 text-slate-600 shadow-[1px_1px_0px_#1E293B]'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isSelected ? 'text-purple-400' : 'text-gray-500'}`} />
-                <span className="text-xs font-semibold leading-tight">{label}</span>
+                <div className="w-8 h-8 rounded-lg bg-white border-2 border-slate-900 flex items-center justify-center shadow-[1px_1px_0px_#1E293B]">
+                  <Icon className="w-4 h-4 text-slate-900" />
+                </div>
+                <span className="text-xs font-bold leading-tight">{label}</span>
               </button>
             );
           })}
         </div>
 
-        <div className="pt-2 flex justify-end">
+        <div className="pt-3 flex justify-end">
           <button
             onClick={handleSynthesize}
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xs font-bold shadow-lg shadow-purple-600/30 transition flex items-center space-x-2"
+            className="brutal-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow-brutal-sm"
           >
             {loading ? (
               <>
@@ -114,7 +116,7 @@ export const CrossDomainSynthesis: React.FC = () => {
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-white" />
                 <span>Synthesize Aesthetic Signature</span>
               </>
             )}
@@ -124,34 +126,44 @@ export const CrossDomainSynthesis: React.FC = () => {
 
       {/* Synthesis Result Card */}
       {synthesis && (
-        <div className="bg-gradient-to-b from-gray-900/90 to-black/90 border border-gray-800 rounded-2xl p-6 backdrop-blur-xl space-y-6">
-          <div className="border-b border-gray-800 pb-4">
-            <span className="text-[11px] font-mono text-purple-400 uppercase tracking-widest font-bold">
+        <div className="brutal-card p-6 sm:p-7 space-y-6">
+          <div className="border-b-2 border-slate-900/10 pb-5">
+            <span className="text-[11px] font-mono text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-2.5 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
               {synthesis.synthesis_title}
             </span>
-            <h3 className="text-2xl font-extrabold text-white mt-1">
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
               {synthesis.concept}
             </h3>
-            <p className="text-xs text-gray-300 mt-2 bg-purple-950/20 border border-purple-800/30 p-3.5 rounded-xl leading-relaxed">
-              <strong>Correlation Engine:</strong> {synthesis.qloo_cross_correlation}
-            </p>
+            <div className="mt-3 bg-[#FAF7F2] border-2 border-slate-900 p-4 rounded-2xl shadow-[2px_2px_0px_#1E293B]">
+              <p className="text-xs text-slate-700 leading-relaxed font-semibold">
+                <strong className="text-slate-900">Qloo Correlation Engine:</strong> {synthesis.qloo_cross_correlation}
+              </p>
+            </div>
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">
               Synthesized Experiences Across Domains:
             </h4>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {synthesis.recommended_experiences.map((exp, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/30 transition space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 inline-block">
-                    {exp.domain}
-                  </span>
-                  <h5 className="font-bold text-white text-sm">{exp.title}</h5>
-                  <p className="text-xs text-gray-300 leading-relaxed">{exp.reasoning}</p>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {synthesis.recommended_experiences.map((exp, idx) => {
+                const pastels = ['bg-[#FED7AA]', 'bg-[#BBF7D0]', 'bg-[#DDD6FE]'];
+                const cardPastel = pastels[idx % pastels.length];
+
+                return (
+                  <div
+                    key={idx}
+                    className="brutal-card p-5 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all"
+                  >
+                    <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${cardPastel} text-slate-900 border border-slate-900 inline-block`}>
+                      {exp.domain}
+                    </span>
+                    <h5 className="font-black text-slate-900 text-sm leading-snug">{exp.title}</h5>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">{exp.reasoning}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

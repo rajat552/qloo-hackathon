@@ -4,7 +4,6 @@ import { apiService, ApiError } from '../../services/api';
 import { ChoiceApprovalResponse } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 import { ErrorMessage } from '../UI/ErrorMessage';
-import { Card } from '../UI/Card';
 
 export const ChoiceApproval: React.FC = () => {
   const [itemDescription, setItemDescription] = useState('');
@@ -36,13 +35,6 @@ export const ChoiceApproval: React.FC = () => {
     }
   };
 
-  const getAffinityColor = (score: number) => {
-    if (score >= 0.8) return 'text-green-600 bg-green-100';
-    if (score >= 0.6) return 'text-blue-600 bg-blue-100';
-    if (score >= 0.4) return 'text-yellow-600 bg-yellow-100';
-    return 'text-red-600 bg-red-100';
-  };
-
   const getAffinityEmoji = (score: number) => {
     if (score >= 0.8) return '🔥';
     if (score >= 0.6) return '👍';
@@ -52,38 +44,46 @@ export const ChoiceApproval: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Should I Wear This?</h2>
-        <p className="text-gray-600">Get AI-powered approval for your fashion choices</p>
+      {/* Top Banner */}
+      <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal text-center max-w-2xl mx-auto space-y-2">
+        <div className="inline-block px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
+          AI Taste Validation
+        </div>
+        <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+          Aesthetic Choice Approval
+        </h2>
+        <p className="text-slate-600 text-xs sm:text-sm font-medium">
+          Get Qloo-powered taste validation before committing to a new cultural or fashion choice.
+        </p>
       </div>
 
-      <Card className="max-w-2xl mx-auto">
+      <div className="brutal-card max-w-2xl mx-auto p-6 space-y-4">
         <form onSubmit={handleGetApproval} className="space-y-4">
           <div>
-            <label htmlFor="itemDescription" className="block text-sm font-medium text-gray-700 mb-2">
-              Describe the item you're considering
+            <label htmlFor="itemDescription" className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wider">
+              Describe the item or experience you're considering
             </label>
             <textarea
               id="itemDescription"
               value={itemDescription}
               onChange={(e) => setItemDescription(e.target.value)}
-              placeholder="e.g., 'a floral summer dress with short sleeves' or 'black leather jacket with jeans'"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+              placeholder="e.g., 'vintage charcoal chore jacket' or 'brutalist concrete cafe in Tokyo'"
+              className="w-full px-4 py-3 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E] resize-none"
               disabled={loading}
               rows={3}
             />
           </div>
           
           <div>
-            <label htmlFor="userStyle" className="block text-sm font-medium text-gray-700 mb-2">
-              Your style preferences (optional)
+            <label htmlFor="userStyle" className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wider">
+              Your style or mood preferences (optional)
             </label>
             <textarea
               id="userStyle"
               value={userStyle}
               onChange={(e) => setUserStyle(e.target.value)}
-              placeholder="e.g., 'I prefer minimalist, professional styles' or 'I love bohemian, artistic looks'"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+              placeholder="e.g., 'Contemplative urbanite, muted earth tones, quiet craftsmanship'"
+              className="w-full px-4 py-2.5 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E] resize-none"
               disabled={loading}
               rows={2}
             />
@@ -92,19 +92,19 @@ export const ChoiceApproval: React.FC = () => {
           <button
             type="submit"
             disabled={loading || !itemDescription.trim()}
-            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-6 rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full brutal-btn-primary py-3.5 rounded-xl text-xs font-black shadow-brutal-sm disabled:opacity-50"
           >
             {loading ? (
               <LoadingSpinner size="sm" className="text-white" />
             ) : (
               <>
-                <ThumbsUp className="w-5 h-5" />
-                <span>Get Style Approval</span>
+                <ThumbsUp className="w-4 h-4 text-white" />
+                <span>Validate Taste Match</span>
               </>
             )}
           </button>
         </form>
-      </Card>
+      </div>
 
       {error && (
         <div className="max-w-2xl mx-auto">
@@ -114,58 +114,50 @@ export const ChoiceApproval: React.FC = () => {
 
       {showResult && approval && (
         <div className="max-w-2xl mx-auto">
-          <Card className="text-center space-y-6 transform transition-all duration-500 scale-100">
-            <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle className="w-12 h-12 text-green-500" />
+          <div className="brutal-card p-6 text-center space-y-5 bg-white">
+            <div className="w-16 h-16 bg-[#DCFCE7] border-2 border-slate-900 rounded-2xl flex items-center justify-center mx-auto shadow-[3px_3px_0px_#1E293B]">
+              <CheckCircle className="w-8 h-8 text-[#15803D]" />
             </div>
             
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+            <div className="space-y-3">
+              <h3 className="text-2xl font-black text-slate-900">
                 {approval.approval}
               </h3>
               
-              <div className="mb-4">
-                <div className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full ${getAffinityColor(approval.affinity_score)}`}>
-                  <Star className="w-5 h-5" />
-                  <span className="font-semibold">
+              <div>
+                <div className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-xs font-black shadow-[2px_2px_0px_#16A34A]">
+                  <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                  <span>
                     Affinity Score: {Math.round(approval.affinity_score * 100)}% {getAffinityEmoji(approval.affinity_score)}
                   </span>
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                <h4 className="font-semibold text-gray-900 mb-2">AI Analysis:</h4>
-                <p className="text-gray-700">{approval.message}</p>
+              <div className="bg-[#FAF7F2] border-2 border-slate-900 rounded-2xl p-4 text-left space-y-1.5 shadow-[2px_2px_0px_#1E293B]">
+                <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider">AI Reasoning:</h4>
+                <p className="text-xs text-slate-700 leading-relaxed font-semibold">{approval.message}</p>
                 {approval.style_analysis && (
-                  <p className="text-gray-600 mt-2 text-sm">{approval.style_analysis}</p>
+                  <p className="text-xs text-slate-600 font-medium pt-1">{approval.style_analysis}</p>
                 )}
               </div>
 
               {approval.user_profile && (
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-900 mb-3">Your Style Profile</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <div className="bg-[#E2F1F8] border-2 border-slate-900 rounded-2xl p-4 text-left shadow-[2px_2px_0px_#1E293B]">
+                  <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider mb-2">Style Signature Match</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     <div>
-                      <span className="font-medium text-gray-700">Style:</span>
-                      <span className="ml-2 text-gray-600 capitalize">{approval.user_profile.style_preference}</span>
+                      <span className="font-extrabold text-slate-700">Style:</span>
+                      <span className="ml-1.5 font-bold text-[#16A34A] capitalize">{approval.user_profile.style_preference}</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-700">Colors:</span>
-                      <span className="ml-2 text-gray-600">{approval.user_profile.color_preference.join(', ')}</span>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-700">Occasions:</span>
-                      <span className="ml-2 text-gray-600">{approval.user_profile.occasion_focus.join(', ')}</span>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-700">Personality:</span>
-                      <span className="ml-2 text-gray-600 capitalize">{approval.user_profile.personality}</span>
+                      <span className="font-extrabold text-slate-700">Colors:</span>
+                      <span className="ml-1.5 font-medium text-slate-700">{approval.user_profile.color_preference.join(', ')}</span>
                     </div>
                   </div>
                 </div>
               )}
             </div>
-          </Card>
+          </div>
         </div>
       )}
     </div>
