@@ -154,7 +154,7 @@ export const SmartSearch: React.FC = () => {
               <div key={item.id} className="brutal-card p-4 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all">
                 <div className="relative h-60 bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-900">
                   <img
-                    src={`http://127.0.0.1:8000${item.image_url}`}
+                    src={item.image_url.startsWith('http') ? item.image_url : `http://127.0.0.1:8000${item.image_url}`}
                     alt={`${item.clothing_type} - ${item.dominant_color}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                     onError={(e) => {
