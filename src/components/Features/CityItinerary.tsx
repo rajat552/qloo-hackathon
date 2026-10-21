@@ -103,7 +103,7 @@ export const CityItinerary: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div id="tour-city-mode" className="space-y-6">
       {/* Top Banner */}
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
