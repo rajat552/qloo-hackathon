@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Layout/Header';
 import { TasteGraphView } from './components/Features/TasteGraphView';
 import { ConciergeChat } from './components/Features/ConciergeChat';
