@@ -99,13 +99,13 @@ export const ChoiceApproval: React.FC = () => {
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
           <Sparkles className="w-3.5 h-3.5 text-[#16A34A]" />
-          <span>Qloo Taste AI™ Validation & Serendipity Engine</span>
+          <span>Aesthetic Validation & Serendipity</span>
         </div>
         <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-          Aesthetic Validator & Serendipity
+          Taste Validator & Serendipity
         </h2>
         <p className="text-slate-600 text-xs sm:text-sm font-medium max-w-xl mx-auto">
-          Validate whether a prospective cultural or lifestyle choice harmonizes with your taste graph, or break algorithmic echo chambers with curated counterpoints.
+          Check whether a potential purchase, venue, or cultural choice fits your taste profile, or discover fresh counterpoints to broaden your horizons.
         </p>
 
         {/* Tab Switcher */}
@@ -135,7 +135,7 @@ export const ChoiceApproval: React.FC = () => {
             }`}
           >
             <Shuffle className="w-3.5 h-3.5 text-purple-700" />
-            <span>Serendipity (Anti-Recs)</span>
+            <span>Explore Counterpoints</span>
           </button>
         </div>
       </div>
@@ -153,13 +153,13 @@ export const ChoiceApproval: React.FC = () => {
             <form onSubmit={handleGetApproval} className="space-y-4">
               <div>
                 <label htmlFor="itemDescription" className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wider">
-                  Describe the item, venue, or cultural experience you're considering
+                  Item, venue, or experience you're considering
                 </label>
                 <textarea
                   id="itemDescription"
                   value={itemDescription}
                   onChange={(e) => setItemDescription(e.target.value)}
-                  placeholder="e.g., 'Comme des Garcons tailored wool coat' or 'Vinyl Kissaten in Shibuya'"
+                  placeholder="e.g., 'Comme des Garçons wool coat' or 'Vinyl listening bar in Shibuya'"
                   className="w-full px-4 py-3 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E] resize-none"
                   disabled={loading}
                   rows={3}
@@ -168,7 +168,7 @@ export const ChoiceApproval: React.FC = () => {
 
               <div>
                 <label htmlFor="userStyle" className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wider">
-                  Style or mood focus (optional)
+                  Style or aesthetic focus (optional)
                 </label>
                 <input
                   id="userStyle"
@@ -191,7 +191,7 @@ export const ChoiceApproval: React.FC = () => {
                 ) : (
                   <>
                     <ThumbsUp className="w-4 h-4 text-white" />
-                    <span>Validate Taste Match via Qloo</span>
+                    <span>Validate Taste Match</span>
                   </>
                 )}
               </button>
@@ -227,7 +227,7 @@ export const ChoiceApproval: React.FC = () => {
                   </div>
 
                   <div className="bg-[#FAF7F2] border-2 border-slate-900 rounded-2xl p-4 text-left space-y-1.5 shadow-[2px_2px_0px_#1E293B]">
-                    <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider">AI Cultural Rationale:</h4>
+                    <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider">Cultural Analysis:</h4>
                     <p className="text-xs text-slate-700 leading-relaxed font-semibold">{approval.message}</p>
                     {approval.style_analysis && (
                       <p className="text-xs text-slate-600 font-medium pt-1">{approval.style_analysis}</p>
@@ -236,7 +236,7 @@ export const ChoiceApproval: React.FC = () => {
 
                   {approval.user_profile && (
                     <div className="bg-[#E2F1F8] border-2 border-slate-900 rounded-2xl p-4 text-left shadow-[2px_2px_0px_#1E293B]">
-                      <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider mb-2">Style Signature Match</h4>
+                      <h4 className="font-black text-slate-900 text-xs uppercase tracking-wider mb-2">Style Profile Match</h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                         <div>
                           <span className="font-extrabold text-slate-700">Style:</span>
@@ -266,14 +266,14 @@ export const ChoiceApproval: React.FC = () => {
           <div className="brutal-card p-6 bg-white space-y-4">
             <form onSubmit={handleGetAntiRecommendations} className="space-y-3">
               <label className="block text-xs font-black text-slate-900 uppercase tracking-wider">
-                Current Aesthetic Habit or Default Routine:
+                Your Current Aesthetic or Daily Routine:
               </label>
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={serendipityInput}
                   onChange={(e) => setSerendipityInput(e.target.value)}
-                  placeholder="e.g., 'Minimalist monochrome workwear and standard third-wave cafes'"
+                  placeholder="e.g., Minimalist monochrome workwear and third-wave cafes"
                   className="flex-1 px-4 py-2.5 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]"
                 />
                 <button
@@ -303,7 +303,7 @@ export const ChoiceApproval: React.FC = () => {
                     Serendipity Score
                   </span>
                   <p className="text-xl font-black text-slate-900">
-                    {Math.round(antiResponse.uniqueness_score * 100)}% Aesthetic Diversity
+                    {Math.round(antiResponse.uniqueness_score * 100)}% Aesthetic Contrast
                   </p>
                 </div>
                 <div className="text-right max-w-xs text-xs text-purple-950 font-medium hidden sm:block">
@@ -354,12 +354,12 @@ export const ChoiceApproval: React.FC = () => {
                       {addedPlaces.includes(place.name) ? (
                         <>
                           <Check className="w-3.5 h-3.5 text-[#15803D]" />
-                          <span>Added to Graph</span>
+                          <span>Saved to Graph</span>
                         </>
                       ) : (
                         <>
                           <Plus className="w-3.5 h-3.5" />
-                          <span>+ Add Counterpoint</span>
+                          <span>+ Save Counterpoint</span>
                         </>
                       )}
                     </button>
