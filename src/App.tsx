@@ -28,6 +28,11 @@ function App() {
     }
   }, []);
 
+  // Ensure view resets to top when switching sections
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeSection]);
+
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'graph':
