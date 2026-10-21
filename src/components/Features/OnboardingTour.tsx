@@ -423,7 +423,7 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
       >
         <div
           ref={popoverRef}
-          className="pointer-events-auto brutal-card w-full bg-white border-2 border-slate-900 shadow-brutal-lg p-5 sm:p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200"
+          className="pointer-events-auto brutal-card w-full bg-white border-2 border-slate-900 shadow-brutal-lg p-4 sm:p-6 space-y-3 sm:space-y-4 max-h-[85vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200"
         >
           {/* Top Header Row */}
           <div className="flex items-center justify-between gap-3 border-b-2 border-slate-900/10 pb-3">
