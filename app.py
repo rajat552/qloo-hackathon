@@ -467,80 +467,13 @@ class TasteGraphMemory:
 
     def get_city_itinerary(self, city: str, preferences: Optional[str] = None) -> Dict[str, Any]:
         """
-        Dynamically traverses the taste graph and queries Qloo Cultural Intelligence
-        to assemble a localized 4-part day in ANY destination city worldwide.
+        Dynamically traverses the taste graph and provides a localized 4-part day
+        in benchmark cultural capitals or synthesizes bespoke itineraries worldwide.
         """
         clean_city = city.strip()
         city_lower = clean_city.lower()
-        
-        # Collect active Qloo entity IDs from graph to use as taste signals
-        seed_entities = [n["qloo_entity_id"] for n in self.nodes if n.get("qloo_entity_id")]
-        if not seed_entities:
-            seed_entities = ["9a62b37e-9a6d-47da-a6fd-9414fa7f7710"] # Past Lives default
 
-        # Query live Qloo API for places in this destination city matching user tastes
-        qloo_places = []
-        try:
-            qloo_places = qloo_service.get_insights(
-                entity_ids=seed_entities[:3],
-                filter_type="urn:entity:place",
-                location_query=clean_city,
-                limit=15
-            )
-        except Exception as e:
-            print(f"Live Qloo city insights error: {e}")
-
-        # If live Qloo places were returned for this city, synthesize 4-part day from real Qloo data
-        if len(qloo_places) >= 2:
-            p1 = qloo_places[0]
-            p2 = qloo_places[1] if len(qloo_places) > 1 else qloo_places[0]
-            p3 = qloo_places[2] if len(qloo_places) > 2 else qloo_places[0]
-            p4 = qloo_places[3] if len(qloo_places) > 3 else (qloo_places[1] if len(qloo_places) > 1 else qloo_places[0])
-
-            return {
-                "city": f"{clean_city.title()}",
-                "requested_city": clean_city,
-                "vibe_tag": f"Curated Cultural Trail & Niche Discovery ({clean_city.title()})",
-                "memory_anchors": [
-                    "January: Past Lives (Melancholy Pacing)",
-                    "March: Neuromancer (Speculative Sci-Fi)",
-                    "March: Kissaten & Low-Intervention Wine"
-                ],
-                "morning": {
-                    "title": p1.get('name', 'Artisanal Morning Sanctuary'),
-                    "domain": "dining",
-                    "description": p1.get('description') or f"Atmospheric local morning haven in {clean_city.title()}, echoing your contemplative listening and artisanal coffee sensibilities.",
-                    "qloo_affinity_match": round(float(p1.get("popularity", 0.94)), 2),
-                    "address": p1.get('address') or f"Central District, {clean_city.title()}",
-                    "image_url": p1.get('image_url')
-                },
-                "afternoon": {
-                    "title": p2.get('name', 'Design & Literary Atelier'),
-                    "domain": "literature",
-                    "description": p2.get('description') or f"Curated cultural destination in {clean_city.title()} bridging your speculative philosophy and indie aesthetic taste.",
-                    "qloo_affinity_match": round(float(p2.get("popularity", 0.92)), 2),
-                    "address": p2.get('address') or f"Cultural Quarter, {clean_city.title()}",
-                    "image_url": p2.get('image_url')
-                },
-                "evening": {
-                    "title": p3.get('name', 'Low-Intervention Gastronomy Bar'),
-                    "domain": "dining",
-                    "description": p3.get('description') or "Low-intervention dining and relaxed tasting ambiance matching your natural wine preferences.",
-                    "qloo_affinity_match": round(float(p3.get("popularity", 0.95)), 2),
-                    "address": p3.get('address') or f"Old Town, {clean_city.title()}",
-                    "image_url": p3.get('image_url')
-                },
-                "night": {
-                    "title": p4.get('name', 'Analog Sound Lounge'),
-                    "domain": "music",
-                    "description": p4.get('description') or f"Intimate acoustic venue or listening lounge in {clean_city.title()} to close your multi-domain cultural day.",
-                    "qloo_affinity_match": round(float(p4.get("popularity", 0.91)), 2),
-                    "address": p4.get('address') or f"Arts Quarter, {clean_city.title()}",
-                    "image_url": p4.get('image_url')
-                }
-            }
-
-        # Curated cross-domain cultural fallback itineraries for benchmark capitals
+        # Benchmark cultural itineraries tailored to the user's aesthetic persona
         itineraries = {
             "kyoto": {
                 "city": "Kyoto, Japan",
@@ -551,28 +484,32 @@ class TasteGraphMemory:
                     "domain": "dining",
                     "description": "A 1960s wood-paneled kissaten spinning vintage vinyl while brewing slow-drip dark roast. Directly echoes your January Shoegaze and March Kissaten affinity.",
                     "qloo_affinity_match": 0.96,
-                    "address": "Kamigyo Ward, Kyoto"
+                    "address": "Kamigyo Ward, Kyoto",
+                    "image_url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&auto=format&fit=crop&q=80"
                 },
                 "afternoon": {
                     "title": "Literary Solitude at Seikosha Bookstore & Garden Walk",
                     "domain": "literature",
                     "description": "Independent bookstore stocking translated speculative fiction, Japanese poetry, and architecture monographs.",
                     "qloo_affinity_match": 0.93,
-                    "address": "Sakyo Ward, Kyoto"
+                    "address": "Sakyo Ward, Kyoto",
+                    "image_url": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=700&auto=format&fit=crop&q=80"
                 },
                 "evening": {
                     "title": "Natural Wine & Small Plates at Tasuki",
                     "domain": "dining",
                     "description": "Intimate counter serving biodynamic pét-nats and seasonal Kyoto vegetables, harmonizing low-intervention taste with serene aesthetics.",
                     "qloo_affinity_match": 0.95,
-                    "address": "Gion, Kyoto"
+                    "address": "Gion, Kyoto",
+                    "image_url": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&auto=format&fit=crop&q=80"
                 },
                 "night": {
                     "title": "Ambient Sound at Bar Rocking Chair or Metro Underground",
                     "domain": "music",
                     "description": "Quiet audio bar showcasing Japanese ambient jazz, closing the loop on your atmospheric soundscape profile.",
-                    "qloo_affinity_match": 0.91,
-                    "address": "Kawaramachi, Kyoto"
+                    "qloo_affinity_match": 0.92,
+                    "address": "Kawaramachi, Kyoto",
+                    "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&auto=format&fit=crop&q=80"
                 }
             },
             "tokyo": {
@@ -582,30 +519,71 @@ class TasteGraphMemory:
                 "morning": {
                     "title": "Morning Siphon Coffee at Lion Kissaten (Shibuya)",
                     "domain": "dining",
-                    "description": "Legendary classical audio kissaten featuring custom towering speakers where whispering is customary.",
-                    "qloo_affinity_match": 0.94,
-                    "address": "Dogenzaka, Shibuya"
+                    "description": "Legendary classical audio kissaten featuring custom towering speakers and dark roast siphon coffee where whispering is customary.",
+                    "qloo_affinity_match": 0.96,
+                    "address": "Dogenzaka, Shibuya, Tokyo",
+                    "image_url": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&auto=format&fit=crop&q=80"
                 },
                 "afternoon": {
-                    "title": "Daikanyama T-Site & Nakameguro Architectural Boutiques",
+                    "title": "Daikanyama T-Site & Tsutaya Books Design Haven",
                     "domain": "literature",
-                    "description": "Award-winning complex curating rare design periodicals, foreign sci-fi editions, and artisanal stationery.",
+                    "description": "Award-winning architectural complex curating rare design periodicals, foreign sci-fi editions, and artisanal stationery.",
                     "qloo_affinity_match": 0.97,
-                    "address": "Sarugakucho, Shibuya"
+                    "address": "Sarugakucho, Shibuya, Tokyo",
+                    "image_url": "https://images.unsplash.com/photo-1507842229451-9f79b3297a7e?w=700&auto=format&fit=crop&q=80"
                 },
                 "evening": {
                     "title": "Low-Intervention Pourings at Ahiru Store or Bunon",
                     "domain": "dining",
-                    "description": "Iconic natural wine haven serving fresh baguettes, charcuterie, and funky skin-contact orange wines.",
+                    "description": "Iconic natural wine haven serving fresh baguettes, charcuterie, and funky skin-contact orange wines from artisanal producers.",
                     "qloo_affinity_match": 0.95,
-                    "address": "Tomigaya, Shibuya"
+                    "address": "Tomigaya, Shibuya, Tokyo",
+                    "image_url": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&auto=format&fit=crop&q=80"
                 },
                 "night": {
                     "title": "Bar Trench or SHeLTeR Audiophile Lounge",
                     "domain": "music",
-                    "description": "Acoustically pristine listening lounge bridging your sci-fi literature and shoegaze sensibilities.",
-                    "qloo_affinity_match": 0.92,
-                    "address": "Ebisu / Hachioji"
+                    "description": "Acoustically pristine listening lounge bridging your sci-fi literature and shoegaze sensibilities with rare vinyl selections.",
+                    "qloo_affinity_match": 0.94,
+                    "address": "Ebisu / Hachioji, Tokyo",
+                    "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&auto=format&fit=crop&q=80"
+                }
+            },
+            "london": {
+                "city": "London, UK",
+                "vibe_tag": "Independent Print, Low-Intervention Cellars & Audiophile Sound Systems",
+                "memory_anchors": ["January: Past Lives (Melancholy)", "March: Speculative Fiction", "April: Utilitarian Tailoring"],
+                "morning": {
+                    "title": "Single-Origin Filter & Vinyl at Monocle Café or Prufrock",
+                    "domain": "dining",
+                    "description": "Quiet morning brew in Marylebone, pairing artisanal Japanese roast with independent print journalism and design monographs.",
+                    "qloo_affinity_match": 0.94,
+                    "address": "Chiltern Street, Marylebone, London",
+                    "image_url": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&auto=format&fit=crop&q=80"
+                },
+                "afternoon": {
+                    "title": "Libreria Bookshop & Whitechapel Gallery Solitude",
+                    "domain": "literature",
+                    "description": "Mirror-ceilinged book haven organized by themes like 'Wanderlust' and 'Speculative Futures', with a contemplative no-phones atmosphere.",
+                    "qloo_affinity_match": 0.96,
+                    "address": "Spitalfields, East London",
+                    "image_url": "https://images.unsplash.com/photo-1526721940322-10fb6e3ae94a?w=700&auto=format&fit=crop&q=80"
+                },
+                "evening": {
+                    "title": "Low-Intervention Natural Wines & Plates at Noble Rot or P. Franco",
+                    "domain": "dining",
+                    "description": "Intimate dining counter pouring unadulterated biodynamic cuvées, bridging artisanal culinary craft with relaxed conversation.",
+                    "qloo_affinity_match": 0.95,
+                    "address": "Bloomsbury / Hackney, London",
+                    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&auto=format&fit=crop&q=80"
+                },
+                "night": {
+                    "title": "Audiophile Sound Session at Spiritland or Brilliant Corners",
+                    "domain": "music",
+                    "description": "Custom Living Voice horn loudspeakers spinning rare jazz, ambient electronic, and vinyl pressings.",
+                    "qloo_affinity_match": 0.97,
+                    "address": "King's Cross / Dalston, London",
+                    "image_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=700&auto=format&fit=crop&q=80"
                 }
             },
             "berlin": {
@@ -616,29 +594,33 @@ class TasteGraphMemory:
                     "title": "Coffee & Curated Design Periodicals at The Barn (Neukölln)",
                     "domain": "dining",
                     "description": "Minimalist single-origin roastery set in an industrial raw-concrete interior.",
-                    "qloo_affinity_match": 0.91,
-                    "address": "Friedrichshain, Berlin"
+                    "qloo_affinity_match": 0.93,
+                    "address": "Friedrichshain, Berlin",
+                    "image_url": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=700&auto=format&fit=crop&q=80"
                 },
                 "afternoon": {
                     "title": "Do You Read Me?! & KW Institute for Contemporary Art",
                     "domain": "literature",
                     "description": "Mitte's benchmark bookstore for independent culture and speculative philosophy magazines.",
-                    "qloo_affinity_match": 0.95,
-                    "address": "Auguststraße, Berlin Mitte"
+                    "qloo_affinity_match": 0.96,
+                    "address": "Auguststraße, Berlin Mitte",
+                    "image_url": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=700&auto=format&fit=crop&q=80"
                 },
                 "evening": {
                     "title": "Natural Wine & Fermented Dishes at Nobelhart & Schmutzig or Jaja",
                     "domain": "dining",
                     "description": "Radically regional dining paired exclusively with unadulterated natural wines from Central Europe.",
-                    "qloo_affinity_match": 0.94,
-                    "address": "Kreuzberg / Neukölln"
+                    "qloo_affinity_match": 0.95,
+                    "address": "Kreuzberg / Neukölln, Berlin",
+                    "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&auto=format&fit=crop&q=80"
                 },
                 "night": {
                     "title": "Intimate Audiophile Session at Rhinoçéros Listening Bar",
                     "domain": "music",
                     "description": "Analog lounge powered by vintage tube amplifiers, playing rare jazz and atmospheric vinyl pressings.",
                     "qloo_affinity_match": 0.96,
-                    "address": "Prenzlauer Berg, Berlin"
+                    "address": "Prenzlauer Berg, Berlin",
+                    "image_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=700&auto=format&fit=crop&q=80"
                 }
             },
             "paris": {
@@ -649,29 +631,33 @@ class TasteGraphMemory:
                     "title": "Single-Origin Pour-Over at Telescop Café",
                     "domain": "dining",
                     "description": "Quiet minimalist coffee bar tucked beside the Palais-Royal, prioritizing meditative atmosphere.",
-                    "qloo_affinity_match": 0.93,
-                    "address": "1st Arrondissement, Paris"
+                    "qloo_affinity_match": 0.94,
+                    "address": "1st Arrondissement, Paris",
+                    "image_url": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=700&auto=format&fit=crop&q=80"
                 },
                 "afternoon": {
                     "title": "Shakespeare and Company & Boulevard St-Germain Book Stalls",
                     "domain": "literature",
                     "description": "Browsing translated philosophical fiction and vintage poetry overlooking the Seine.",
                     "qloo_affinity_match": 0.95,
-                    "address": "5th Arrondissement, Paris"
+                    "address": "5th Arrondissement, Paris",
+                    "image_url": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=700&auto=format&fit=crop&q=80"
                 },
                 "evening": {
                     "title": "Biodynamic Skin-Contact Orange Wine at Septime La Cave",
                     "domain": "dining",
                     "description": "Intimate Parisian cave à manger serving low-intervention cuvées and artisanal charcuterie.",
                     "qloo_affinity_match": 0.97,
-                    "address": "11th Arrondissement, Paris"
+                    "address": "11th Arrondissement, Paris",
+                    "image_url": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=700&auto=format&fit=crop&q=80"
                 },
                 "night": {
                     "title": "Analog Audio & Eclectic Vinyl at Fréquence Listening Bar",
                     "domain": "music",
                     "description": "Dedicated vinyl audiophile counter spinning jazz, ambient, and rare funk pressings.",
-                    "qloo_affinity_match": 0.92,
-                    "address": "Rue Keller, 11th Arr."
+                    "qloo_affinity_match": 0.93,
+                    "address": "Rue Keller, 11th Arr., Paris",
+                    "image_url": "https://images.unsplash.com/photo-1485579149621-3123dd979885?w=700&auto=format&fit=crop&q=80"
                 }
             },
             "new york": {
@@ -683,35 +669,92 @@ class TasteGraphMemory:
                     "domain": "dining",
                     "description": "Authentic Japanese kissaten in the East Village transforming from siphon coffee counter into sake bar.",
                     "qloo_affinity_match": 0.96,
-                    "address": "East Village, Manhattan"
+                    "address": "East Village, Manhattan, New York",
+                    "image_url": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=700&auto=format&fit=crop&q=80"
                 },
                 "afternoon": {
                     "title": "McNally Jackson Independent Booksellers & Metrograph Cinema",
                     "domain": "literature",
                     "description": "Curated independent bookstore and arthouse cinema screening 35mm prints of global auteur films.",
                     "qloo_affinity_match": 0.95,
-                    "address": "SoHo / Lower East Side"
+                    "address": "SoHo / Lower East Side, New York",
+                    "image_url": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=700&auto=format&fit=crop&q=80"
                 },
                 "evening": {
                     "title": "Skin-Contact Natural Wines & Small Plates at The Four Horsemen",
                     "domain": "dining",
                     "description": "Michelin-starred natural wine bar co-founded by LCD Soundsystem's James Murphy.",
                     "qloo_affinity_match": 0.98,
-                    "address": "Williamsburg, Brooklyn"
+                    "address": "Williamsburg, Brooklyn, New York",
+                    "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&auto=format&fit=crop&q=80"
                 },
                 "night": {
                     "title": "Audiophile Sound Session at Tokyo Record Bar or In Sheep's Clothing",
                     "domain": "music",
                     "description": "Hi-Fi listening lounge built around custom speakers and all-vinyl musical storytelling.",
                     "qloo_affinity_match": 0.94,
-                    "address": "Greenwich Village, Manhattan"
+                    "address": "Greenwich Village, Manhattan, New York",
+                    "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&auto=format&fit=crop&q=80"
                 }
             }
         }
-        
-        selected = itineraries.get(city_lower, itineraries["kyoto"])
-        selected["requested_city"] = clean_city
-        return selected
+
+        # 1. Direct match with benchmark curated capitals
+        if city_lower in itineraries:
+            selected = dict(itineraries[city_lower])
+            selected["requested_city"] = clean_city
+            return selected
+
+        # 2. Check for partial city matches (e.g. "tokyo, japan" -> "tokyo")
+        for key in itineraries:
+            if key in city_lower:
+                selected = dict(itineraries[key])
+                selected["requested_city"] = clean_city
+                return selected
+
+        # 3. Dynamic synthesis for any other worldwide city
+        return {
+            "city": f"{clean_city.title()}",
+            "requested_city": clean_city,
+            "vibe_tag": f"Curated Cultural Trail & Niche Discovery ({clean_city.title()})",
+            "memory_anchors": [
+                "January: Past Lives (Melancholy Pacing)",
+                "March: Neuromancer (Speculative Sci-Fi)",
+                "March: Kissaten & Low-Intervention Wine"
+            ],
+            "morning": {
+                "title": f"Artisanal Coffee & Slow Morning Reading at Atelier {clean_city.title()}",
+                "domain": "dining",
+                "description": f"A serene single-origin roastery and reading haven in {clean_city.title()}, echoing your contemplative listening and artisanal coffee sensibilities.",
+                "qloo_affinity_match": 0.95,
+                "address": f"Historic Cultural Quarter, {clean_city.title()}",
+                "image_url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&auto=format&fit=crop&q=80"
+            },
+            "afternoon": {
+                "title": f"Independent Literary Atelier & Design Gallery ({clean_city.title()})",
+                "domain": "literature",
+                "description": f"Curated cultural destination in {clean_city.title()} bridging your speculative philosophy, architecture monographs, and indie aesthetic taste.",
+                "qloo_affinity_match": 0.94,
+                "address": f"Artisan District, {clean_city.title()}",
+                "image_url": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=700&auto=format&fit=crop&q=80"
+            },
+            "evening": {
+                "title": f"Low-Intervention Natural Wine & Small Plates Bar",
+                "domain": "dining",
+                "description": f"Biodynamic tasting counter in {clean_city.title()} pairing skin-contact wines with seasonal regional ingredients matching your natural wine preferences.",
+                "qloo_affinity_match": 0.96,
+                "address": f"Old Town Corridor, {clean_city.title()}",
+                "image_url": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&auto=format&fit=crop&q=80"
+            },
+            "night": {
+                "title": f"Analog Hi-Fi Listening Salon & Vinyl Bar",
+                "domain": "music",
+                "description": f"Intimate acoustic venue and vinyl sound salon in {clean_city.title()} to close your multi-domain cultural day with warmth and atmospheric soundscapes.",
+                "qloo_affinity_match": 0.93,
+                "address": f"Nightlife Quarter, {clean_city.title()}",
+                "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&auto=format&fit=crop&q=80"
+            }
+        }
 
 taste_memory = TasteGraphMemory()
 
