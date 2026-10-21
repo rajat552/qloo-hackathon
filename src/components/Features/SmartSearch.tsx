@@ -57,13 +57,13 @@ export const SmartSearch: React.FC = () => {
       {/* Top Banner */}
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal text-center max-w-2xl mx-auto space-y-2">
         <div className="inline-block px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
-          Aesthetic Archive & Discovery
+          Aesthetic Archive
         </div>
         <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-          Smart Aesthetic Search
+          Taste Search
         </h2>
         <p className="text-slate-600 text-xs sm:text-sm font-medium">
-          Query your personal aesthetic archive with multi-domain style filters.
+          Search your aesthetic archive and discover matching pieces with style and mood filters.
         </p>
       </div>
 
@@ -75,7 +75,7 @@ export const SmartSearch: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Type an aesthetic or item (e.g., minimalist linen jacket)..."
+              placeholder="Search an aesthetic or item (e.g., minimalist linen jacket)..."
               className="w-full pl-11 pr-10 py-3 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
               disabled={loading}
               autoFocus
@@ -94,7 +94,7 @@ export const SmartSearch: React.FC = () => {
           {/* Quick Prompts */}
           <div className="flex flex-wrap items-center gap-1.5 pt-1">
             <span className="text-[11px] font-black uppercase tracking-wider text-slate-500 flex items-center mr-1">
-              <Tag className="w-3 h-3 mr-1" /> Quick Queries:
+              <Tag className="w-3 h-3 mr-1" /> Popular Searches:
             </span>
             {QUICK_PROMPTS.map((prompt) => (
               <button
@@ -115,7 +115,7 @@ export const SmartSearch: React.FC = () => {
               className="flex items-center space-x-2 text-xs font-bold text-slate-700 hover:text-slate-900 transition-colors"
             >
               <Settings className="w-4 h-4 text-slate-600" />
-              <span>Personalize with style preferences (optional)</span>
+              <span>Add style preferences (optional)</span>
             </button>
             
             {showPreferences && (
@@ -123,7 +123,7 @@ export const SmartSearch: React.FC = () => {
                 <textarea
                   value={stylePreferences}
                   onChange={(e) => setStylePreferences(e.target.value)}
-                  placeholder="e.g., 'I love muted earth tones, Japanese workwear, and minimalist tailoring'"
+                  placeholder="e.g., Muted earth tones, Japanese workwear, and relaxed tailoring"
                   className="w-full p-3 bg-white border-2 border-slate-900 rounded-xl text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E] resize-none"
                   rows={3}
                 />
@@ -139,12 +139,12 @@ export const SmartSearch: React.FC = () => {
             {loading ? (
               <div className="flex items-center space-x-2">
                 <LoadingSpinner size="sm" className="text-white" />
-                <span>Searching Cultural Archive & Qloo...</span>
+                <span>Searching aesthetic archive...</span>
               </div>
             ) : (
               <>
                 <Sparkles className="w-4 h-4" />
-                <span>Search Aesthetic Archive</span>
+                <span>Search Archive</span>
               </>
             )}
           </button>
@@ -164,7 +164,7 @@ export const SmartSearch: React.FC = () => {
               <User className="w-5 h-5 text-slate-900" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="font-black text-slate-900 text-sm mb-2">Active Style Signature</h3>
+              <h3 className="font-black text-slate-900 text-sm mb-2">Active Style Profile</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div>
                   <span className="font-extrabold text-slate-700">Style:</span>
@@ -193,10 +193,10 @@ export const SmartSearch: React.FC = () => {
           <div className="space-y-4 pt-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <h3 className="text-base sm:text-lg font-black text-slate-900">
-                Found {results.length} Archive Matches for "{query}"
+                Found {results.length} Matches for "{query}"
               </h3>
               <span className="text-xs font-bold text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-3 py-1 rounded-full shadow-[1px_1px_0px_#1E293B] w-fit">
-                Qloo Match Verified
+                Qloo Verified
               </span>
             </div>
 
