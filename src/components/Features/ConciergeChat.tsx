@@ -174,7 +174,7 @@ export const ConciergeChat: React.FC = () => {
       {/* Main Chat & Memory Inspector Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left 8 Cols: Chat Window */}
-        <div id="tour-concierge-chat" className="lg:col-span-8 flex flex-col h-[680px] bg-white border-2 border-slate-900 rounded-3xl shadow-brutal overflow-hidden">
+        <div id="tour-concierge-chat" className="lg:col-span-8 flex flex-col h-[520px] sm:h-[600px] lg:h-[680px] bg-white border-2 border-slate-900 rounded-3xl shadow-brutal overflow-hidden">
           {/* Messages Scroll Area */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-[#FFFDF9]">
             {messages.map((msg) => (
