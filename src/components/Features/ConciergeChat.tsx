@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Send,
   Bot,
@@ -54,6 +54,11 @@ export const ConciergeChat: React.FC = () => {
   const [expandedTraceIds, setExpandedTraceIds] = useState<string[]>(['msg-init']);
   const [addedItemNames, setAddedItemNames] = useState<string[]>([]);
   const [addingItem, setAddingItem] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
 
   const toggleTrace = (msgId: string) => {
     setExpandedTraceIds(prev =>
@@ -336,10 +341,11 @@ export const ConciergeChat: React.FC = () => {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Prompts Bar */}
-          <div className="px-4 py-2.5 border-t-2 border-slate-900 bg-[#E2F1F8] overflow-x-auto flex items-center space-x-2">
+          <div className="px-4 py-2.5 border-t-2 border-slate-900 bg-[#E2F1F8] overflow-x-auto flex items-center space-x-2 no-scrollbar">
             <span className="text-[10px] uppercase font-black text-slate-700 shrink-0">Try asking:</span>
             {samplePrompts.map((p, i) => (
               <button
