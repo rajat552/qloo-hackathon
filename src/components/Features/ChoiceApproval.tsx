@@ -95,7 +95,7 @@ export const ChoiceApproval: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div id="tour-validator-section" className="space-y-6">
       {/* Top Banner */}
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
