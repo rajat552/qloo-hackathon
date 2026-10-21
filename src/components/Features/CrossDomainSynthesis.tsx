@@ -107,7 +107,7 @@ export const CrossDomainSynthesis: React.FC = () => {
           <button
             onClick={handleSynthesize}
             disabled={loading}
-            className="brutal-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow-brutal-sm"
+            className="w-full sm:w-auto brutal-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow-brutal-sm flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
