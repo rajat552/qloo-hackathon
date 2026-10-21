@@ -130,13 +130,13 @@ export const CityItinerary: React.FC = () => {
           <div className="space-y-2">
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black shadow-[2px_2px_0px_#1E293B]">
               <Compass className="w-3.5 h-3.5 text-[#16A34A]" />
-              <span>Qloo Proactive Travel Mode</span>
+              <span>Curated City Guide</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              City Experience Concierge
+              City Itineraries
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm max-w-2xl font-medium">
-              Powered by Qloo's live cultural intelligence. The agent cross-references local cultural spots against your multi-domain taste graph to recommend niche galleries, analog kissatens, and listening bars in any city worldwide.
+              Explore cities tailored to your personal aesthetic. We map local spots against your taste profile to curate boutique cafes, indie bookshops, galleries, and listening bars anywhere in the world.
             </p>
           </div>
 
@@ -168,7 +168,7 @@ export const CityItinerary: React.FC = () => {
                 type="text"
                 value={customCity}
                 onChange={(e) => setCustomCity(e.target.value)}
-                placeholder="Or type any city (e.g. Rome, Seoul)..."
+                placeholder="Search any city (e.g., Rome, Seoul)..."
                 className="px-3 py-1.5 rounded-xl border-2 border-slate-900 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E] shadow-[1px_1px_0px_#1E293B] w-full"
               />
               <button
@@ -186,7 +186,7 @@ export const CityItinerary: React.FC = () => {
       {loading || !itinerary ? (
         <div className="flex flex-col items-center justify-center min-h-[350px]">
           <LoadingSpinner size="lg" />
-          <p className="mt-4 text-sm font-bold text-slate-700">Synthesizing personalized city itinerary...</p>
+          <p className="mt-4 text-sm font-bold text-slate-700">Curating your personalized city itinerary...</p>
         </div>
       ) : (
         <div className="space-y-6">
@@ -194,17 +194,17 @@ export const CityItinerary: React.FC = () => {
           <div className="brutal-card p-6 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-[#BAE6FD] border border-slate-900 text-slate-900">
-                Localized Lifestyle Blueprint
+                Personalized Day Plan
               </span>
               <h3 className="text-2xl font-black text-slate-900 mt-2">{itinerary.city}</h3>
               <p className="text-xs text-slate-600 mt-1 font-bold">
-                Vibe Aesthetic: <span className="text-[#16A34A]">{itinerary.vibe_tag}</span>
+                Aesthetic: <span className="text-[#16A34A]">{itinerary.vibe_tag}</span>
               </p>
             </div>
 
             <div className="flex flex-col md:items-end space-y-1">
               <span className="text-[11px] uppercase font-black text-slate-500">
-                Active Memory Anchors:
+                Taste Milestones Connected:
               </span>
               <div className="flex flex-wrap gap-1.5 justify-start md:justify-end">
                 {itinerary.memory_anchors.map((anchor, idx) => (
