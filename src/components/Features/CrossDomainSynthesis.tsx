@@ -5,10 +5,10 @@ import { CrossDomainSynthesisResponse } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 const domainsList = [
-  { id: 'film', label: 'Cinema / Film', icon: Film, pastel: 'bg-[#FED7AA]' },
-  { id: 'music', label: 'Music / Audio', icon: Music, pastel: 'bg-[#BAE6FD]' },
-  { id: 'literature', label: 'Literature / Sci-Fi', icon: BookOpen, pastel: 'bg-[#DDD6FE]' },
-  { id: 'dining', label: 'Dining / Wine', icon: Utensils, pastel: 'bg-[#BBF7D0]' },
+  { id: 'film', label: 'Cinema & Film', icon: Film, pastel: 'bg-[#FED7AA]' },
+  { id: 'music', label: 'Music & Audio', icon: Music, pastel: 'bg-[#BAE6FD]' },
+  { id: 'literature', label: 'Literature & Books', icon: BookOpen, pastel: 'bg-[#DDD6FE]' },
+  { id: 'dining', label: 'Dining & Culinary', icon: Utensils, pastel: 'bg-[#BBF7D0]' },
   { id: 'fashion', label: 'Fashion & Design', icon: Shirt, pastel: 'bg-[#FECDD3]' },
   { id: 'travel', label: 'Architecture & Travel', icon: Globe, pastel: 'bg-[#C7D2FE]' },
 ];
@@ -65,20 +65,20 @@ export const CrossDomainSynthesis: React.FC = () => {
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal">
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black mb-2 shadow-[2px_2px_0px_#1E293B]">
           <Layers className="w-3.5 h-3.5 text-[#16A34A]" />
-          <span>Cross-Category Cultural Correlation</span>
+          <span>Cross-Category Cultural Intelligence</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          Cross-Domain Synthesis Matrix
+          Cross-Domain Synthesis
         </h2>
         <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl font-medium">
-          Qloo's cultural AI connects disparate interests. Pick 2 or more domains to generate an overarching aesthetic lifestyle signature.
+          Connect disparate cultural interests. Select 2 or more categories to synthesize an overarching aesthetic lifestyle signature powered by Qloo.
         </p>
       </div>
 
       {/* Domain Picker Pills */}
       <div className="brutal-card p-6 space-y-4">
         <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
-          Select Cultural Domains to Harmonize (Choose 2 or more):
+          Select Categories to Harmonize (Choose 2 or more):
         </span>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
@@ -112,12 +112,12 @@ export const CrossDomainSynthesis: React.FC = () => {
             {loading ? (
               <>
                 <LoadingSpinner size="sm" />
-                <span>Computing Cross-Domain Affinities...</span>
+                <span>Connecting Categories...</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4 text-white" />
-                <span>Synthesize Aesthetic Signature</span>
+                <span>Synthesize Categories</span>
               </>
             )}
           </button>
@@ -136,14 +136,14 @@ export const CrossDomainSynthesis: React.FC = () => {
             </h3>
             <div className="mt-3 bg-[#FAF7F2] border-2 border-slate-900 p-4 rounded-2xl shadow-[2px_2px_0px_#1E293B]">
               <p className="text-xs text-slate-700 leading-relaxed font-semibold">
-                <strong className="text-slate-900">Qloo Correlation Engine:</strong> {synthesis.qloo_cross_correlation}
+                <strong className="text-slate-900">Qloo Cultural Correlation:</strong> {synthesis.qloo_cross_correlation}
               </p>
             </div>
           </div>
 
           <div>
             <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">
-              Synthesized Experiences Across Domains:
+              Connected Cross-Category Experiences:
             </h4>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
