@@ -187,16 +187,16 @@ export const SmartSearch: React.FC = () => {
       <div ref={resultsRef}>
         {results.length > 0 && (
           <div className="space-y-4 pt-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-black text-slate-900">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h3 className="text-base sm:text-lg font-black text-slate-900">
                 Found {results.length} Archive Matches for "{query}"
               </h3>
-              <span className="text-xs font-bold text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-3 py-1 rounded-full shadow-[1px_1px_0px_#1E293B]">
+              <span className="text-xs font-bold text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-3 py-1 rounded-full shadow-[1px_1px_0px_#1E293B] w-fit">
                 Qloo Match Verified
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
               {results.map((item) => (
                 <div key={item.id} className="brutal-card p-4 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all flex flex-col justify-between">
                   <div>
