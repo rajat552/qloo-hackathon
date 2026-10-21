@@ -4,7 +4,6 @@ import {
   ThumbsUp,
   Star,
   Shuffle,
-  Compass,
   Check,
   Plus,
   Sparkles,
