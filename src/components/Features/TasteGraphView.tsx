@@ -108,7 +108,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
     return (
       <div className="flex flex-col items-center justify-center min-h-[450px]">
         <LoadingSpinner size="lg" />
-        <p className="mt-4 text-sm font-bold text-slate-700">Loading Persistent Taste Knowledge Graph...</p>
+        <p className="mt-4 text-sm font-bold text-slate-700">Loading your taste graph...</p>
       </div>
     );
   }
@@ -134,16 +134,16 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
         <div className="lg:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
             <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E] animate-pulse" />
-            <span>New: Persistent Hybrid Memory</span>
+            <span>Continuous Taste Memory</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
-            Map Your Taste, <br />
-            <span className="text-[#16A34A]">Anytime, Anywhere!</span>
+            Discover What Moves You, <br />
+            <span className="text-[#16A34A]">Across Every Medium.</span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 max-w-xl font-medium leading-relaxed">
-            Overcoming AI amnesia with Qloo cross-domain affinities. Connect how January's indie cinema echoes into April's architecture, literature, and dining.
+            AI recommendations that remember your taste. Explore how your favorite cinema, music, literature, dining, and design connect through Qloo cultural intelligence.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -153,7 +153,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               className="brutal-btn-primary px-5 py-3 text-sm font-black rounded-xl"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Taste Milestone</span>
+              <span>Add Milestone</span>
             </button>
 
             {onOpenConcierge && (
@@ -161,7 +161,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 onClick={onOpenConcierge}
                 className="brutal-btn-secondary px-5 py-3 text-sm font-black rounded-xl"
               >
-                <span>Talk to Concierge &rarr;</span>
+                <span>Ask Concierge &rarr;</span>
               </button>
             )}
 
@@ -169,10 +169,10 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               <button
                 onClick={onStartTour}
                 className="px-4 py-3 text-sm font-black rounded-xl bg-[#FAF7F2] hover:bg-[#E2F1F8] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-slate-800 transition flex items-center space-x-1.5"
-                title="Start 10-Step Interactive Tour"
+                title="Start interactive tour"
               >
                 <Compass className="w-4 h-4 text-slate-700" />
-                <span>10-Step Tour</span>
+                <span>Quick Tour</span>
               </button>
             )}
           </div>
@@ -239,23 +239,23 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               }}
               className="w-full brutal-btn-primary py-3 rounded-xl text-xs font-black shadow-brutal-sm"
             >
-              <span>Inspect Taste Graph</span>
+              <span>View Milestone Details</span>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Explore Section Header matching LearnHub Reference Image 2 */}
+      {/* Explore Section */}
       <section id="tour-explore-section" className="space-y-6 pt-4">
         <div className="text-center space-y-2">
           <div className="inline-block px-4 py-1 rounded-full bg-[#BAE6FD] border-2 border-slate-900 text-xs font-black text-slate-900 shadow-[2px_2px_0px_#1E293B]">
-            Knowledge Nodes
+            Taste Timeline
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             Explore Cultural Milestones
           </h2>
           <p className="text-slate-600 text-sm max-w-xl mx-auto font-medium">
-            Browse through your saved milestones and click to reveal Qloo cross-category bridges.
+            Browse your saved milestones to explore cross-category connections powered by Qloo.
           </p>
         </div>
 
@@ -354,7 +354,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 <Info className="w-4 h-4 text-slate-900" />
               </div>
               <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                Memory Node Inspector
+                Milestone Details
               </h3>
             </div>
 
@@ -403,7 +403,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                      Qloo Affinity Bridges ({activeBridges.length})
+                      Cross-Category Links ({activeBridges.length})
                     </span>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#BAE6FD] border border-slate-900 text-slate-900">
                       Cross-Category
@@ -412,7 +412,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
 
                   {activeBridges.length === 0 ? (
                     <p className="text-xs text-slate-500 italic p-3 bg-white border-2 border-slate-900 rounded-xl">
-                      No direct cross-domain bridges registered for this node yet.
+                      No cross-category connections recorded for this milestone yet.
                     </p>
                   ) : (
                     <div className="space-y-3">
@@ -452,7 +452,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               </div>
             ) : (
               <p className="text-xs text-slate-500 text-center py-6">
-                Click any milestone on the left to inspect its Qloo affinity bridges.
+                Select any milestone on the left to view connected cross-category recommendations.
               </p>
             )}
           </div>
@@ -479,15 +479,15 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
             </div>
 
             <p className="text-xs text-slate-600 font-medium">
-              Input a cultural entity you've enjoyed recently. The memory layer will synthesize its position and calculate Qloo cross-category bridges.
+              Add a film, artist, book, restaurant, or place you love. We will link it to your taste profile and uncover cross-category recommendations.
             </p>
 
             <form onSubmit={handleAddMilestone} className="space-y-4">
               <div className="relative">
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-black text-slate-900">Entity / Title</label>
+                  <label className="block text-xs font-black text-slate-900">Name or Title</label>
                   <span className="text-[10px] font-black text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-full border border-slate-900 shadow-[1px_1px_0px_#1E293B]">
-                    {isSearchingQloo ? 'Searching Qloo...' : 'Qloo Live Autocomplete'}
+                    {isSearchingQloo ? 'Searching...' : 'Live Suggestions'}
                   </span>
                 </div>
                 <input
@@ -503,7 +503,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 {qlooSuggestions.length > 0 && (
                   <div className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border-2 border-slate-900 rounded-xl shadow-brutal p-1.5 space-y-1">
                     <div className="text-[9px] font-black uppercase tracking-wider text-slate-400 px-2 py-0.5">
-                      Qloo Live Matches:
+                      Suggestions:
                     </div>
                     {qlooSuggestions.map((item) => (
                       <button
@@ -531,22 +531,22 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-black text-slate-900 mb-1">Domain</label>
+                  <label className="block text-xs font-black text-slate-900 mb-1">Category</label>
                   <select
                     value={newDomain}
                     onChange={(e) => setNewDomain(e.target.value)}
                     className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-bold text-slate-900 focus:outline-none"
                   >
-                    <option value="film">Film / Cinema</option>
-                    <option value="music">Music / Audio</option>
-                    <option value="literature">Literature / Books</option>
-                    <option value="dining">Dining / Culinary</option>
-                    <option value="fashion">Fashion / Aesthetics</option>
-                    <option value="travel">Travel / Architecture</option>
+                    <option value="film">Film & Cinema</option>
+                    <option value="music">Music & Audio</option>
+                    <option value="literature">Literature & Books</option>
+                    <option value="dining">Dining & Culinary</option>
+                    <option value="fashion">Fashion & Aesthetics</option>
+                    <option value="travel">Travel & Architecture</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-black text-slate-900 mb-1">Milestone Date</label>
+                  <label className="block text-xs font-black text-slate-900 mb-1">Date or Period</label>
                   <input
                     type="text"
                     value={newTimestamp}
@@ -558,18 +558,18 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               </div>
 
               <div>
-                <label className="block text-xs font-black text-slate-900 mb-1">Personal Notes & Reflections</label>
+                <label className="block text-xs font-black text-slate-900 mb-1">Personal Notes</label>
                 <textarea
                   rows={2}
                   value={newNotes}
                   onChange={(e) => setNewNotes(e.target.value)}
-                  placeholder="Why did this resonate? (e.g. Loved the melancholic pacing and quiet intimacy)"
+                  placeholder="What made this memorable? (e.g., atmospheric visuals, rich textures)"
                   className="w-full px-3.5 py-2 bg-white border-2 border-slate-900 rounded-xl text-xs font-medium text-slate-900 focus:outline-none resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-black text-slate-900 mb-1">Tags (comma-separated)</label>
+                <label className="block text-xs font-black text-slate-900 mb-1">Tags (optional, comma-separated)</label>
                 <input
                   type="text"
                   value={newTag}
@@ -592,7 +592,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                   disabled={submitting || !newName.trim()}
                   className="brutal-btn-primary px-5 py-2.5 text-xs font-black rounded-xl disabled:opacity-50"
                 >
-                  {submitting ? 'Linking to Graph...' : 'Commit to Memory'}
+                  {submitting ? 'Saving Milestone...' : 'Save Milestone'}
                 </button>
               </div>
             </form>
