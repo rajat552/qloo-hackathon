@@ -9,8 +9,8 @@
 
 | Variable Name | Purpose | Required / Optional | Used By | Provider | Setup Instructions | Validation Method |
 |---|---|---|---|---|---|---|
-| `QLOO_API_KEY` | Authenticates requests to the Qloo API for cross-domain cultural correlations and entity insights | Required for live Qloo queries | `backend/services/qloo_service.py` & `app.py` | Qloo API | Obtain from Qloo Hackathon portal | Run `GET /health` or curl `https://hackathon.api.qloo.com/v2/insights` with `X-Api-Key` header |
-| `QLOO_BASE_URL` | Base endpoint URL for Qloo API | Optional (defaults to `https://hackathon.api.qloo.com/v2`) | API client | Qloo | Set in `.env` if targeting a dedicated environment | Verify HTTP status `200` on health probe |
+| `QLOO_API_KEY` | Authenticates requests to the Qloo API for cross-domain cultural correlations and entity insights | Required for live Qloo queries | `app.py` | Qloo API | Received from hackathon@qloo.com | Run `GET /api/qloo/status` or `GET /health` |
+| `QLOO_BASE_URL` | Base endpoint URL for Qloo API | Optional (defaults to `https://hackathon.api.qloo.com`) | API client | Qloo | Set in `.env` if targeting a dedicated environment | Verify HTTP status `200` on health probe |
 | `GEMINI_API_KEY` | Generates semantic embeddings and agentic natural language reasoning | Required for live LLM features | `backend/services/gemini_service.py` & `app.py` | Google AI Studio / Gemini | Generate key at [Google AI Studio](https://aistudio.google.com/) | Run test script or verify `genai.configure()` |
 | `GEMINI_EMBEDDING_MODEL` | Text embedding model identifier | Optional (defaults to `models/text-embedding-004`) | Vector search | Google Gemini | Set in `.env` | Verified on startup |
 | `QDRANT_URL` | Cloud or local cluster URL for vector database storage | Required for vector search | `backend/services/qdrant_service.py` & `app.py` | Qdrant Cloud or Local Docker | Deploy cluster at [Qdrant Cloud](https://cloud.qdrant.io/) or run `docker run -p 6333:6333 qdrant/qdrant` | Client ping to `/collections` |
