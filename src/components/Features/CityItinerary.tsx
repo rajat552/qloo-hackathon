@@ -46,26 +46,47 @@ export const CityItinerary: React.FC = () => {
     icon: React.ReactNode,
     pastelBg: string
   ) => {
+    // Parse timeOfDay: e.g. "Afternoon & Solitude" -> period: "Afternoon", theme: "Solitude"
+    const [period, theme] = timeOfDay.includes('&')
+      ? timeOfDay.split('&').map((s) => s.trim())
+      : [timeOfDay.trim(), ''];
+
+    // Clean title so prefixes like "Solitude & Design: Mount Kurama" don't duplicate the theme
+    const cleanTitle = activity.title.replace(
+      /^(Morning Ritual|Morning|Solitude & Design|Solitude|Afternoon|Gastronomy & Micro-Plates|Gastronomy|Evening|Atmospheric Night Session|Night Session|Night):\s*/i,
+      ''
+    );
+
     return (
-      <div className="brutal-card p-5 space-y-3.5 hover:-translate-y-1 hover:shadow-brutal-lg transition-all duration-200 flex flex-col justify-between">
+      <div className="brutal-card p-4 sm:p-5 space-y-3.5 hover:-translate-y-1 hover:shadow-brutal-lg transition-all duration-200 flex flex-col justify-between">
         <div className="space-y-3">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center space-x-3">
-              <div className={`w-11 h-11 rounded-xl ${pastelBg} border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B] shrink-0`}>
+          <div className="flex items-start justify-between gap-2.5">
+            <div className="flex items-start space-x-2.5 sm:space-x-3 min-w-0 flex-1">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl ${pastelBg} border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B] shrink-0 mt-0.5`}
+              >
                 {icon}
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 border border-slate-900 text-slate-800">
-                  {timeOfDay}
-                </span>
-                <h4 className="text-base font-extrabold text-slate-900 leading-snug mt-0.5">
-                  {activity.title}
+              <div className="min-w-0 flex-1">
+                {/* Badges: time of day and optional aesthetic theme, each clean and unbreakable */}
+                <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                  <span className="inline-flex items-center text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-900 text-white shadow-[1px_1px_0px_#1E293B] whitespace-nowrap shrink-0">
+                    {period}
+                  </span>
+                  {theme && (
+                    <span className="inline-flex items-center text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white border border-slate-900 text-slate-800 shadow-[1px_1px_0px_#1E293B] whitespace-nowrap shrink-0">
+                      {theme}
+                    </span>
+                  )}
+                </div>
+                <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug break-words">
+                  {cleanTitle}
                 </h4>
               </div>
             </div>
 
-            <div className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-xs font-black shadow-[1px_1px_0px_#16A34A] shrink-0">
-              <Star className="w-3 h-3 text-amber-500 fill-amber-400" />
+            <div className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-[11px] sm:text-xs font-black shadow-[1px_1px_0px_#16A34A] shrink-0 whitespace-nowrap">
+              <Star className="w-3 h-3 text-amber-500 fill-amber-400 shrink-0" />
               <span>{Math.round(activity.qloo_affinity_match * 100)}% Match</span>
             </div>
           </div>
@@ -74,10 +95,9 @@ export const CityItinerary: React.FC = () => {
             <div className="w-full h-36 rounded-xl overflow-hidden border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] bg-slate-100">
               <img
                 src={activity.image_url}
-                alt={activity.title}
+                alt={cleanTitle}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 onError={(e) => {
-                  // Hide image container on broken image link
                   (e.target as HTMLElement).parentElement?.classList.add('hidden');
                 }}
               />
@@ -89,12 +109,12 @@ export const CityItinerary: React.FC = () => {
           </p>
         </div>
 
-        <div className="pt-3 border-t-2 border-slate-900/10 flex items-center justify-between text-xs text-slate-600 font-semibold mt-auto">
-          <span className="flex items-center space-x-1 max-w-[70%] truncate">
+        <div className="pt-3 border-t-2 border-slate-900/10 flex items-center justify-between text-xs text-slate-600 font-semibold mt-auto gap-2">
+          <span className="flex items-center space-x-1 min-w-0 flex-1">
             <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             <span className="truncate">{activity.address}</span>
           </span>
-          <span className="capitalize px-2 py-0.5 rounded-md bg-[#E2F1F8] border border-slate-900 text-slate-800 text-[10px] font-bold shrink-0">
+          <span className="capitalize px-2 py-0.5 rounded-md bg-[#E2F1F8] border border-slate-900 text-slate-800 text-[10px] font-bold shrink-0 whitespace-nowrap">
             {activity.domain}
           </span>
         </div>

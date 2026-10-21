@@ -77,7 +77,7 @@ function App() {
       />
 
       {/* Main View Area */}
-      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-24 sm:pb-8 flex-1 w-full">
         {renderActiveSection()}
       </main>
 
@@ -166,19 +166,19 @@ function App() {
         </div>
       </footer>
 
-      {/* Floating Concierge Action Trigger */}
-      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
-        <button
-          onClick={() => setActiveSection(activeSection === 'concierge' ? 'graph' : 'concierge')}
-          className="brutal-btn-primary p-3 sm:px-4 sm:py-3 rounded-2xl shadow-brutal hover:shadow-brutal-sm text-xs font-extrabold flex items-center gap-2"
-          title="Chat with Concierge Agent"
-        >
-          <Bot className="w-5 h-5 text-white shrink-0" />
-          <span className="hidden sm:inline">
-            {activeSection === 'concierge' ? 'View Taste Graph' : 'Talk to Concierge'}
-          </span>
-        </button>
-      </div>
+      {/* Floating Concierge Action Trigger (shown on other tabs for quick access) */}
+      {activeSection !== 'concierge' && (
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
+          <button
+            onClick={() => setActiveSection('concierge')}
+            className="brutal-btn-primary p-3 sm:px-4 sm:py-3 rounded-2xl shadow-brutal hover:shadow-brutal-sm text-xs font-extrabold flex items-center gap-2"
+            title="Chat with Concierge Agent"
+          >
+            <Bot className="w-5 h-5 text-white shrink-0" />
+            <span className="hidden sm:inline">Talk to Concierge</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -507,7 +507,7 @@ class TasteGraphMemory:
                     "March: Kissaten & Low-Intervention Wine"
                 ],
                 "morning": {
-                    "title": f"Morning Ritual: {p1.get('name')}",
+                    "title": p1.get('name', 'Artisanal Morning Sanctuary'),
                     "domain": "dining",
                     "description": p1.get('description') or f"Atmospheric local morning haven in {clean_city.title()}, echoing your contemplative listening and artisanal coffee sensibilities.",
                     "qloo_affinity_match": round(float(p1.get("popularity", 0.94)), 2),
@@ -515,7 +515,7 @@ class TasteGraphMemory:
                     "image_url": p1.get('image_url')
                 },
                 "afternoon": {
-                    "title": f"Solitude & Design: {p2.get('name')}",
+                    "title": p2.get('name', 'Design & Literary Atelier'),
                     "domain": "literature",
                     "description": p2.get('description') or f"Curated cultural destination in {clean_city.title()} bridging your speculative philosophy and indie aesthetic taste.",
                     "qloo_affinity_match": round(float(p2.get("popularity", 0.92)), 2),
@@ -523,7 +523,7 @@ class TasteGraphMemory:
                     "image_url": p2.get('image_url')
                 },
                 "evening": {
-                    "title": f"Gastronomy & Micro-Plates: {p3.get('name')}",
+                    "title": p3.get('name', 'Low-Intervention Gastronomy Bar'),
                     "domain": "dining",
                     "description": p3.get('description') or "Low-intervention dining and relaxed tasting ambiance matching your natural wine preferences.",
                     "qloo_affinity_match": round(float(p3.get("popularity", 0.95)), 2),
@@ -531,7 +531,7 @@ class TasteGraphMemory:
                     "image_url": p3.get('image_url')
                 },
                 "night": {
-                    "title": f"Atmospheric Night Session: {p4.get('name')}",
+                    "title": p4.get('name', 'Analog Sound Lounge'),
                     "domain": "music",
                     "description": p4.get('description') or f"Intimate acoustic venue or listening lounge in {clean_city.title()} to close your multi-domain cultural day.",
                     "qloo_affinity_match": round(float(p4.get("popularity", 0.91)), 2),

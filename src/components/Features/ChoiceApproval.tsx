@@ -211,8 +211,8 @@ export const ChoiceApproval: React.FC = () => {
                       {approval.approval}
                     </h3>
                     {approval.qloo_verified && (
-                      <span className="px-2 py-0.5 rounded-full bg-[#DCFCE7] border border-slate-900 text-[#15803D] text-[10px] font-black flex items-center gap-1">
-                        <ShieldCheck className="w-3 h-3 text-[#15803D]" /> Qloo Verified
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border border-slate-900 text-[#15803D] text-[10px] font-black shrink-0 whitespace-nowrap">
+                        <ShieldCheck className="w-3 h-3 text-[#15803D] shrink-0" /> Qloo Verified
                       </span>
                     )}
                   </div>
@@ -327,7 +327,7 @@ export const ChoiceApproval: React.FC = () => {
                         />
                       )}
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#BAE6FD] text-slate-900 border border-slate-900">
+                        <span className="inline-flex items-center text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#BAE6FD] text-slate-900 border border-slate-900 shrink-0 whitespace-nowrap">
                           {place.location}
                         </span>
                         {place.rating && (

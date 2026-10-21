@@ -307,18 +307,18 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                         {cfg.icon}
                       </div>
                       <div>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 border border-slate-900 text-slate-800">
+                        <span className="inline-flex items-center text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 border border-slate-900 text-slate-800 whitespace-nowrap">
                           {node.domain}
                         </span>
-                        <div className="text-[11px] text-slate-500 font-bold mt-0.5 flex items-center">
-                          <Calendar className="w-3 h-3 mr-1 text-slate-400" />
+                        <div className="text-[11px] text-slate-500 font-bold mt-0.5 flex items-center whitespace-nowrap">
+                          <Calendar className="w-3 h-3 mr-1 text-slate-400 shrink-0" />
                           {node.timestamp}
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-xs font-black shadow-[1px_1px_0px_#16A34A]">
-                      <Star className="w-3 h-3 text-amber-500 fill-amber-400" />
+                    <div className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#DCFCE7] border-2 border-[#16A34A] text-[#15803D] text-xs font-black shadow-[1px_1px_0px_#16A34A] shrink-0 whitespace-nowrap">
+                      <Star className="w-3 h-3 text-amber-500 fill-amber-400 shrink-0" />
                       <span>{Math.round(node.affinity * 100)}%</span>
                     </div>
                   </div>
