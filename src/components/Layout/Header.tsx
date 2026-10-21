@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+        <nav id="tour-header-nav" className="hidden lg:flex items-center gap-1 xl:gap-1.5">
           {sections.map(({ id, name, icon: Icon }) => {
             const isActive = activeSection === id;
             return (
@@ -63,6 +63,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
           {/* 10-Step Guided Tour Button */}
           {onStartTour && (
             <button
+              id="tour-btn"
               onClick={onStartTour}
               className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-[#E2F1F8] hover:bg-[#BAE6FD] border border-slate-900 text-[10px] font-black text-slate-900 shadow-[1px_1px_0px_#1E293B] transition shrink-0"
               title="Start 10-Step Interactive Onboarding Tour"
@@ -74,6 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
 
           {/* Live Qloo Connectivity Pulse */}
           <div
+            id="tour-qloo-live"
             className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#DCFCE7] border border-slate-900 text-[10px] font-black text-[#15803D] shadow-[1px_1px_0px_#1E293B] shrink-0"
             title="Qloo Cultural Intelligence API: Connected Live"
           >
