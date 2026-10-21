@@ -129,7 +129,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2">
+      <section id="tour-brand-hero" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2">
         {/* Left Column: Headline & Action */}
         <div className="lg:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
@@ -148,6 +148,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
+              id="tour-add-milestone-btn"
               onClick={() => setShowAddModal(true)}
               className="brutal-btn-primary px-5 py-3 text-sm font-black rounded-xl"
             >
@@ -193,7 +194,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
           </div>
 
           {/* Main Card Container */}
-          <div className="brutal-card p-6 sm:p-7 relative z-10 space-y-5">
+          <div id="tour-persona-card" className="brutal-card p-6 sm:p-7 relative z-10 space-y-5">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 rounded-xl bg-[#BAE6FD] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]">
                 <Network className="w-6 h-6 text-slate-900" />
@@ -245,7 +246,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
       </section>
 
       {/* Explore Section Header matching LearnHub Reference Image 2 */}
-      <section className="space-y-6 pt-4">
+      <section id="tour-explore-section" className="space-y-6 pt-4">
         <div className="text-center space-y-2">
           <div className="inline-block px-4 py-1 rounded-full bg-[#BAE6FD] border-2 border-slate-900 text-xs font-black text-slate-900 shadow-[2px_2px_0px_#1E293B]">
             Knowledge Nodes
@@ -347,7 +348,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
           </div>
 
           {/* Right 4 Cols: Node Inspector & Qloo Affinity Bridges */}
-          <div className="lg:col-span-4 brutal-card p-6 space-y-5 bg-[#FAF7F2]">
+          <div id="tour-memory-inspector" className="lg:col-span-4 brutal-card p-6 space-y-5 bg-[#FAF7F2]">
             <div className="flex items-center space-x-2 pb-3 border-b-2 border-slate-900/20">
               <div className="w-7 h-7 rounded-lg bg-[#FECDD3] border-2 border-slate-900 flex items-center justify-center">
                 <Info className="w-4 h-4 text-slate-900" />
