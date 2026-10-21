@@ -64,6 +64,13 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
     else if (entity.subtype?.includes('brand')) setNewDomain('fashion');
   };
 
+  const handleSelectNode = (node: TasteNode) => {
+    setSelectedNode(node);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      document.getElementById('tour-memory-inspector')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+
   useEffect(() => {
     loadGraph();
   }, []);
@@ -235,11 +242,16 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
             {/* Action inside card */}
             <button
               onClick={() => {
-                if (filteredNodes.length > 0) setSelectedNode(filteredNodes[0]);
+                if (filteredNodes.length > 0) {
+                  setSelectedNode(filteredNodes[0]);
+                }
+                const target = document.getElementById('tour-explore-section') || document.getElementById('tour-memory-inspector');
+                target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
-              className="w-full brutal-btn-primary py-3 rounded-xl text-xs font-black shadow-brutal-sm"
+              className="w-full brutal-btn-primary py-3 rounded-xl text-xs font-black shadow-brutal-sm flex items-center justify-center space-x-1.5 hover:-translate-y-0.5 transition"
             >
               <span>View Milestone Details</span>
+              <span className="text-sm font-bold">&darr;</span>
             </button>
           </div>
         </div>
@@ -294,7 +306,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
               return (
                 <div
                   key={node.id}
-                  onClick={() => setSelectedNode(node)}
+                  onClick={() => handleSelectNode(node)}
                   className={`brutal-card p-5 cursor-pointer relative overflow-hidden transition-all duration-200 ${
                     isSelected
                       ? 'ring-4 ring-[#22C55E] -translate-y-1 shadow-brutal-lg'
