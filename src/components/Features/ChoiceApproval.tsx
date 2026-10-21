@@ -109,10 +109,10 @@ export const ChoiceApproval: React.FC = () => {
         </p>
 
         {/* Tab Switcher */}
-        <div className="pt-2 flex justify-center gap-2">
+        <div className="pt-2 flex flex-col sm:flex-row justify-center gap-2 max-w-md mx-auto">
           <button
             onClick={() => setActiveTab('validate')}
-            className={`px-4 py-2 rounded-xl text-xs font-black border-2 border-slate-900 transition flex items-center gap-1.5 ${
+            className={`w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-black border-2 border-slate-900 transition flex items-center justify-center gap-1.5 ${
               activeTab === 'validate'
                 ? 'bg-[#DCFCE7] text-slate-900 shadow-[2px_2px_0px_#1E293B] -translate-y-0.5'
                 : 'bg-white text-slate-600 hover:bg-slate-50'
@@ -128,7 +128,7 @@ export const ChoiceApproval: React.FC = () => {
                 handleGetAntiRecommendations({ preventDefault: () => {} } as React.FormEvent);
               }
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-black border-2 border-slate-900 transition flex items-center gap-1.5 ${
+            className={`w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-black border-2 border-slate-900 transition flex items-center justify-center gap-1.5 ${
               activeTab === 'serendipity'
                 ? 'bg-[#DDD6FE] text-slate-900 shadow-[2px_2px_0px_#1E293B] -translate-y-0.5'
                 : 'bg-white text-slate-600 hover:bg-slate-50'
@@ -268,7 +268,7 @@ export const ChoiceApproval: React.FC = () => {
               <label className="block text-xs font-black text-slate-900 uppercase tracking-wider">
                 Current Aesthetic Habit or Default Routine:
               </label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={serendipityInput}
@@ -279,7 +279,7 @@ export const ChoiceApproval: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loadingAnti}
-                  className="brutal-btn-primary px-5 py-2.5 rounded-xl text-xs font-black shrink-0"
+                  className="w-full sm:w-auto brutal-btn-primary px-5 py-2.5 rounded-xl text-xs font-black shrink-0 flex items-center justify-center gap-1.5"
                 >
                   {loadingAnti ? (
                     <LoadingSpinner size="sm" className="text-white" />
