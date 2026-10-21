@@ -66,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
               id="tour-btn"
               onClick={onStartTour}
               className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1.5 rounded-full bg-[#E2F1F8] hover:bg-[#BAE6FD] border-2 border-slate-900 text-xs font-black text-slate-900 shadow-[2px_2px_0px_#1E293B] hover:-translate-y-0.5 transition shrink-0 whitespace-nowrap"
-              title="Start 10-Step Interactive Onboarding Tour"
+              title="Take a quick guided tour"
             >
               <Compass className="w-3.5 h-3.5 text-slate-800 shrink-0" />
               <span className="hidden sm:inline">Tour</span>
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
           <div
             id="tour-qloo-live"
             className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B] shrink-0 whitespace-nowrap"
-            title="Qloo Cultural Intelligence API: Connected Live"
+            title="Connected to Qloo Cultural Intelligence"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22C55E] opacity-75"></span>
