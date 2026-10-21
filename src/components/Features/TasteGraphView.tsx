@@ -137,7 +137,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
             <span>New: Persistent Hybrid Memory</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
+          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
             Map Your Taste, <br />
             <span className="text-[#16A34A]">Anytime, Anywhere!</span>
           </h1>
@@ -181,15 +181,15 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
         {/* Right Column: Hero Visual Card */}
         <div className="lg:col-span-5 relative pr-2">
           {/* Decorative Corner Category Badges (anchored cleanly without clipping) */}
-          <div className="absolute -top-2.5 -right-1 z-20 w-10 h-10 rounded-2xl bg-[#FECDD3] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+          <div className="hidden sm:flex absolute -top-2.5 -right-1 z-20 w-10 h-10 rounded-2xl bg-[#FECDD3] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] items-center justify-center">
             <Target className="w-4 h-4 text-slate-900" />
           </div>
 
-          <div className="absolute top-1/2 -right-2.5 z-20 w-8 h-8 rounded-full bg-[#BBF7D0] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+          <div className="hidden sm:flex absolute top-1/2 -right-2.5 z-20 w-8 h-8 rounded-full bg-[#BBF7D0] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] items-center justify-center">
             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
           </div>
 
-          <div className="absolute -bottom-2.5 -left-1 z-20 w-9 h-9 rounded-2xl bg-[#DDD6FE] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+          <div className="hidden sm:flex absolute -bottom-2.5 -left-1 z-20 w-9 h-9 rounded-2xl bg-[#DDD6FE] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] items-center justify-center">
             <Layers className="w-4 h-4 text-slate-900" />
           </div>
 
@@ -461,8 +461,8 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
 
       {/* Modal: Add New Cultural Milestone */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white border-2 border-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-brutal-xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white border-2 border-slate-900 rounded-3xl max-w-md w-full p-5 sm:p-7 shadow-brutal-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-black text-slate-900 flex items-center space-x-2">
                 <div className="w-8 h-8 rounded-lg bg-[#BBF7D0] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]">
@@ -529,7 +529,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-black text-slate-900 mb-1">Domain</label>
                   <select
