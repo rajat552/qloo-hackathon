@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 interface TasteGraphViewProps {
   onOpenConcierge?: () => void;
+  onStartTour?: () => void;
 }
 
 const domainConfig: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
@@ -17,7 +18,7 @@ const domainConfig: Record<string, { bg: string; text: string; icon: React.React
   travel: { bg: 'bg-[#BAE6FD]', text: 'text-indigo-950', icon: <Compass className="w-5 h-5 text-slate-900" /> },
 };
 
-export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge }) => {
+export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge, onStartTour }) => {
   const [graphData, setGraphData] = useState<TasteGraphData | null>(null);
   const [selectedNode, setSelectedNode] = useState<TasteNode | null>(null);
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('all');
@@ -127,73 +128,68 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge 
 
   return (
     <div className="space-y-12">
-      {/* Hero Section matching LearnHub Reference Image 1 */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+      {/* Hero Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2">
         {/* Left Column: Headline & Action */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-extrabold text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E] animate-pulse" />
             <span>New: Persistent Hybrid Memory</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
             Map Your Taste, <br />
-            <span className="text-[#16A34A]">Anytime,</span> <br />
-            Anywhere!
+            <span className="text-[#16A34A]">Anytime, Anywhere!</span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 max-w-xl font-medium leading-relaxed">
             Overcoming AI amnesia with Qloo cross-domain affinities. Connect how January's indie cinema echoes into April's architecture, literature, and dining.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3.5 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={() => setShowAddModal(true)}
-              className="brutal-btn-primary px-6 py-3.5 text-sm font-black rounded-2xl"
+              className="brutal-btn-primary px-5 py-3 text-sm font-black rounded-xl"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4" />
               <span>Add Taste Milestone</span>
             </button>
 
             {onOpenConcierge && (
               <button
                 onClick={onOpenConcierge}
-                className="brutal-btn-secondary px-6 py-3.5 text-sm font-black rounded-2xl"
+                className="brutal-btn-secondary px-5 py-3 text-sm font-black rounded-xl"
               >
                 <span>Talk to Concierge &rarr;</span>
               </button>
             )}
-          </div>
 
-          <div className="flex items-center gap-8 pt-4 border-t-2 border-slate-900/10">
-            <div>
-              <div className="text-2xl font-black text-slate-900">5+ Domains</div>
-              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Synchronized</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black text-slate-900">95% Match</div>
-              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Qloo Correlation</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black text-[#16A34A]">0% Amnesia</div>
-              <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Persistent Memory</div>
-            </div>
+            {onStartTour && (
+              <button
+                onClick={onStartTour}
+                className="px-4 py-3 text-sm font-black rounded-xl bg-[#FAF7F2] hover:bg-[#E2F1F8] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-slate-800 transition flex items-center space-x-1.5"
+                title="Start 10-Step Interactive Tour"
+              >
+                <Compass className="w-4 h-4 text-slate-700" />
+                <span>10-Step Tour</span>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Right Column: Hero Visual Card (Matching the Web Development Card from Image 1) */}
-        <div className="lg:col-span-5 relative">
-          {/* Floating Category Badges */}
-          <div className="absolute -top-3 -right-3 z-20 w-11 h-11 rounded-2xl bg-[#FECDD3] border-2 border-slate-900 shadow-[3px_3px_0px_#1E293B] flex items-center justify-center">
-            <Target className="w-5 h-5 text-slate-900" />
+        {/* Right Column: Hero Visual Card */}
+        <div className="lg:col-span-5 relative pr-2">
+          {/* Decorative Corner Category Badges (anchored cleanly without clipping) */}
+          <div className="absolute -top-2.5 -right-1 z-20 w-10 h-10 rounded-2xl bg-[#FECDD3] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+            <Target className="w-4 h-4 text-slate-900" />
           </div>
 
-          <div className="absolute top-1/2 -right-4 z-20 w-9 h-9 rounded-full bg-[#BBF7D0] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
-            <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+          <div className="absolute top-1/2 -right-2.5 z-20 w-8 h-8 rounded-full bg-[#BBF7D0] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
           </div>
 
-          <div className="absolute -bottom-3 -left-3 z-20 w-10 h-10 rounded-2xl bg-[#DDD6FE] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
-            <Layers className="w-5 h-5 text-slate-900" />
+          <div className="absolute -bottom-2.5 -left-1 z-20 w-9 h-9 rounded-2xl bg-[#DDD6FE] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] flex items-center justify-center">
+            <Layers className="w-4 h-4 text-slate-900" />
           </div>
 
           {/* Main Card Container */}
