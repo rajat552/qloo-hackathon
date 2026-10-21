@@ -93,10 +93,12 @@ Desktop.ini
 .idea/
 
 # ------------------------------------------------------------------------------
-# 7. Internal Development Audits, Notes & Planning Files
+# 7. Internal Documentation, Planning Files & Audits
 # ------------------------------------------------------------------------------
 plan.md
 *.plan
+docs/
+docs/**
 scratch/
 temp/
 tmp/
@@ -127,9 +129,4 @@ data/**
 *.sqlite3
 *.db
 
-# ------------------------------------------------------------------------------
-# 10. Internal Development Audit Documents (Except Hackathon Venture Pitch)
-# ------------------------------------------------------------------------------
-docs/*
-!docs/JCAL_VENTURE_PITCH.md
 
