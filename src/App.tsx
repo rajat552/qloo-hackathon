@@ -96,7 +96,7 @@ function App() {
                 </span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Empowering personalized cultural discovery with Qloo cross-domain affinities and persistent graph memory.
+                Personalized cultural recommendations powered by Qloo cross-domain affinities and continuous taste memory.
               </p>
               <div className="flex items-center space-x-2 pt-1">
                 <a
@@ -104,11 +104,11 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                   className="w-8 h-8 rounded-lg bg-white border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B] hover:translate-x-0.5 hover:translate-y-0.5 transition"
-                  title="GitHub Repository"
+                  title="View GitHub Repository"
                 >
                   <Github className="w-4 h-4 text-slate-900" />
                 </a>
-                <div className="w-8 h-8 rounded-lg bg-[#DCFCE7] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]" title="Verified Safe">
+                <div className="w-8 h-8 rounded-lg bg-[#DCFCE7] border-2 border-slate-900 flex items-center justify-center shadow-[2px_2px_0px_#1E293B]" title="Verified Safe & Secure">
                   <ShieldCheck className="w-4 h-4 text-[#15803D]" />
                 </div>
               </div>
@@ -117,13 +117,13 @@ function App() {
             {/* Col 2: Core Capabilities */}
             <div>
               <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider mb-3">
-                Agent Features
+                Features
               </h4>
               <ul className="space-y-2 text-xs font-semibold text-slate-600">
-                <li><button onClick={() => setActiveSection('graph')} className="hover:text-slate-900 hover:underline">Taste Knowledge Graph</button></li>
-                <li><button onClick={() => setActiveSection('concierge')} className="hover:text-slate-900 hover:underline">Anti-Amnesia Concierge</button></li>
-                <li><button onClick={() => setActiveSection('city')} className="hover:text-slate-900 hover:underline">City Mode Itinerary</button></li>
-                <li><button onClick={() => setActiveSection('synthesis')} className="hover:text-slate-900 hover:underline">Cross-Domain Synthesis</button></li>
+                <li><button onClick={() => setActiveSection('graph')} className="hover:text-slate-900 hover:underline">Taste Graph</button></li>
+                <li><button onClick={() => setActiveSection('concierge')} className="hover:text-slate-900 hover:underline">Conversational Concierge</button></li>
+                <li><button onClick={() => setActiveSection('city')} className="hover:text-slate-900 hover:underline">City Guide</button></li>
+                <li><button onClick={() => setActiveSection('synthesis')} className="hover:text-slate-900 hover:underline">Aesthetic Synthesis</button></li>
               </ul>
             </div>
 
@@ -133,34 +133,37 @@ function App() {
                 Built With
               </h4>
               <ul className="space-y-2 text-xs font-semibold text-slate-600">
-                <li>Qloo API Cultural Graph</li>
-                <li>FastAPI Microservice (Python)</li>
+                <li>Qloo Cultural Intelligence API</li>
+                <li>FastAPI Backend (Python)</li>
                 <li>React 18 & TypeScript</li>
                 <li>Neo-Brutalist Design System</li>
               </ul>
             </div>
 
-            {/* Col 4: Project Info */}
+            {/* Col 4: Platform Overview */}
             <div>
               <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider mb-3">
-                Submission Info
+                Cultural Intelligence
               </h4>
               <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Built for the <span className="font-bold text-slate-900">Qloo Agentic AI Hackathon</span>.
+                Powered by <span className="font-bold text-slate-900">Qloo Taste AI™</span> to connect your preferences across film, music, literature, dining, and travel.
               </p>
               <div className="mt-3 p-3 bg-white border-2 border-slate-900 rounded-xl shadow-[2px_2px_0px_#1E293B]">
-                <div className="text-[10px] uppercase font-bold text-slate-500">Developer</div>
-                <div className="text-xs font-extrabold text-slate-900">Rajat (@rajat552)</div>
+                <div className="text-[10px] uppercase font-bold text-slate-500">API Status</div>
+                <div className="text-xs font-extrabold text-[#16A34A] flex items-center gap-1.5 mt-0.5">
+                  <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse"></span>
+                  Operational &amp; Connected
+                </div>
               </div>
             </div>
           </div>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600 font-medium">
-            <p>&copy; 2026 Taste-Evolving Concierge. All rights reserved.</p>
+            <p>&copy; 2026 TasteHub. All rights reserved.</p>
             <div className="flex space-x-4">
               <span>Privacy</span>
               <span>Terms</span>
-              <span>API Status: Normal</span>
+              <span>API Status: Operational</span>
             </div>
           </div>
         </div>
@@ -172,7 +175,7 @@ function App() {
           <button
             onClick={() => setActiveSection('concierge')}
             className="brutal-btn-primary p-3 sm:px-4 sm:py-3 rounded-2xl shadow-brutal hover:shadow-brutal-sm text-xs font-extrabold flex items-center gap-2"
-            title="Chat with Concierge Agent"
+            title="Ask the Concierge for recommendations"
           >
             <Bot className="w-5 h-5 text-white shrink-0" />
             <span className="hidden sm:inline">Talk to Concierge</span>
