@@ -77,16 +77,16 @@ function App() {
       />
 
       {/* Main View Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full">
         {renderActiveSection()}
       </main>
 
       {/* Neo-brutalist Footer styled after LearnHub reference */}
-      <footer className="mt-20 border-t-2 border-slate-900 bg-[#E2F1F8] pt-12 pb-8">
+      <footer className="mt-16 sm:mt-20 border-t-2 border-slate-900 bg-[#E2F1F8] pt-10 sm:pt-12 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b-2 border-slate-900/20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 pb-10 border-b-2 border-slate-900/20">
             {/* Col 1: Brand */}
-            <div className="space-y-3 md:col-span-1">
+            <div className="space-y-3 sm:col-span-2 md:col-span-1">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-[#FECDD3] border-2 border-slate-900 rounded-lg flex items-center justify-center shadow-[2px_2px_0px_#1E293B]">
                   <Sparkles className="w-4 h-4 text-slate-900" />
@@ -167,13 +167,13 @@ function App() {
       </footer>
 
       {/* Floating Concierge Action Trigger */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
         <button
           onClick={() => setActiveSection(activeSection === 'concierge' ? 'graph' : 'concierge')}
-          className="brutal-btn-primary px-4 py-3 rounded-2xl shadow-brutal hover:shadow-brutal-sm text-xs font-extrabold"
+          className="brutal-btn-primary p-3 sm:px-4 sm:py-3 rounded-2xl shadow-brutal hover:shadow-brutal-sm text-xs font-extrabold flex items-center gap-2"
           title="Chat with Concierge Agent"
         >
-          <Bot className="w-5 h-5 text-white" />
+          <Bot className="w-5 h-5 text-white shrink-0" />
           <span className="hidden sm:inline">
             {activeSection === 'concierge' ? 'View Taste Graph' : 'Talk to Concierge'}
           </span>
