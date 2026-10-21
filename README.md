@@ -197,6 +197,51 @@ npm run dev
 
 ---
 
+## 🧭 Interactive 10-Step Onboarding Tour
+
+TasteHub includes a built-in, native **10-Step Interactive Walkthrough** designed specifically for judges and first-time users to explore the application end-to-end in under 2 minutes:
+
+1. **Auto-Launch on First Visit**: Automatically detects first-time visitors via `localStorage` and launches after an 800ms load delay.
+2. **Dynamic SVG Spotlight Mask**: Focuses attention on active UI elements (`#tour-brand-hero`, `#tour-persona-card`, `#tour-explore-section`, etc.) using high-contrast backdrop cutouts and pulsing emerald outlines.
+3. **Smooth Auto-Scroll & Route Switching**: Automatically scrolls elements into view and transitions across application tabs seamlessly.
+4. **Keyboard & Touch Accessible**: Full support for `ArrowRight`/`Enter` (Next), `ArrowLeft` (Back), and `Escape` (Skip/Close).
+5. **On-Demand Replay**: Click the **"Tour"** pill with the compass icon in the top header or **"10-Step Tour"** in the Hero section at any time.
+
+---
+
+## 🚀 1-Click Cloud Deployment
+
+TasteHub is fully configured for zero-config production cloud deployment:
+
+### Deploy Frontend (Vercel)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+- Root Directory: `./`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Environment Variables:
+  - `VITE_API_URL`: Your deployed FastAPI backend URL (e.g. `https://tastehub-api.up.railway.app`)
+
+### Deploy Backend (Railway / Render)
+[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
+- Configuration: Pre-configured via `render.yaml` and `Procfile`.
+- Start Command: `uvicorn app:app --host 0.0.0.0 --port $PORT`
+- Environment Variables:
+  - `QLOO_API_KEY`: Your official Qloo API Key
+  - `QLOO_BASE_URL`: `https://hackathon.api.qloo.com`
+
+---
+
+## 💼 Venture Strategy & JCal Bonus Track ($25,000)
+
+For the **Jason Calacanis $25,000 Investor Bonus Challenge**, a comprehensive investment memo and 5-slide pitch deck is available in:
+📄 **[docs/JCAL_VENTURE_PITCH.md](docs/JCAL_VENTURE_PITCH.md)**
+
+- **Market Problem**: The $10.4B AI Personalization Blindspot & Chatbot Amnesia.
+- **The Core Moat**: Persistent Hybrid Knowledge Graph + Qloo 250M+ Entity Empirical Correlation Engine.
+- **Business Model**: B2B2C Taste Profile as a Service (TPaaS) API for Luxury Travel, Boutique Hospitality, and Lifestyle Fintech.
+
+---
+
 ## 📡 API Endpoints Reference
 
 | Endpoint | Method | Description |
