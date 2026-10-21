@@ -1,5 +1,64 @@
-# Logs
-logs
+# ==============================================================================
+# TasteHub: The Taste-Evolving Concierge - Git Ignore Rules
+# Full-Stack: React 18 (Vite + TypeScript) & Python 3 (FastAPI + Uvicorn)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Environment Variables & Secrets (CRITICAL)
+# ------------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# ------------------------------------------------------------------------------
+# 2. Node.js & Frontend Build Outputs (Vite)
+# ------------------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+.eslintcache
+*.local
+
+# ------------------------------------------------------------------------------
+# 3. Python Artifacts, Bytecode & Virtual Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+build/
+develop-eggs/
+eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+
+# ------------------------------------------------------------------------------
+# 4. Testing, Code Coverage & Cache
+# ------------------------------------------------------------------------------
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+
+# ------------------------------------------------------------------------------
+# 5. Logs & Runtime Debug Traces
+# ------------------------------------------------------------------------------
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,28 +66,70 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ------------------------------------------------------------------------------
+# 6. IDEs, Text Editors & Operating System Metadata
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Editor directories and files
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio & VS Code
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+!.vscode/settings.json
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.env
-.env*.local
-.venv/
-venv/
-env/
-__pycache__/
-*.pyc
-.pytest_cache/
-.coverage
-htmlcov/
+
+# JetBrains / IntelliJ / PyCharm
+.idea/
+
+# ------------------------------------------------------------------------------
+# 7. Internal Development Audits, Notes & Planning Files
+# ------------------------------------------------------------------------------
+plan.md
+*.plan
+scratch/
+temp/
+tmp/
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# ------------------------------------------------------------------------------
+# 8. Local Configurations, Credentials & Unused/Temporary JSON Files
+# ------------------------------------------------------------------------------
+*.local.json
+local_*.json
+local.config.json
+credentials.json
+secrets.json
+token.json
+serviceAccountKey*.json
+*.json.bak
+*.json.tmp
+
+# ------------------------------------------------------------------------------
+# 9. Local Datasets & Raw Image Archives (Unused Legacy Data)
+# ------------------------------------------------------------------------------
+data/
+data/**
+*.sqlite3
+*.db
+
+# ------------------------------------------------------------------------------
+# 10. Internal Development Audit Documents (Except Hackathon Venture Pitch)
+# ------------------------------------------------------------------------------
+docs/*
+!docs/JCAL_VENTURE_PITCH.md
+
