@@ -30,7 +30,7 @@ export const ConciergeChat: React.FC = () => {
     {
       id: 'msg-init',
       sender: 'agent',
-      text: "Welcome! I am your Taste-Evolving Concierge. Unlike standard chatbots that suffer from cognitive amnesia between sessions, I maintain persistent graph memory of your cultural journey across cinema, music, literature, dining, and travel.\n\nI currently have your January indie cinema affinities, March cyberpunk explorations, and recent artisanal kissaten milestones loaded. How can I guide your lifestyle choices today?",
+      text: "Hello! I'm your cultural concierge. Unlike standard assistants that forget your preferences between visits, I remember your evolving tastes across cinema, music, literature, dining, and travel.\n\nI have your recent milestones loaded — including your indie cinema favorites, speculative literature, and artisanal dining discoveries. What would you like recommendations for today?",
       timestamp: 'Just now',
       memory_recalled: [
         { milestone: "Past Lives (Celine Song)", domain: "film", timestamp: "January 2026" },
@@ -39,10 +39,10 @@ export const ConciergeChat: React.FC = () => {
       qloo_confidence_score: 0.95,
       active_persona: "Contemplative Urbanite & Speculative Aesthete",
       execution_trace: [
-        { step: 1, action: "Goal Decomposition & Intent Extraction", detail: "Loaded initial user aesthetic profile" },
-        { step: 2, action: "Persistent Memory Graph Traversal", detail: "Recalled January indie cinema & March speculative literature" },
-        { step: 3, action: "Qloo Tool Invocation", detail: "Connected to live Qloo Cultural Intelligence server" },
-        { step: 4, action: "Aesthetic Harmony Synthesis", detail: "Persona verified at 95% cultural affinity match" }
+        { step: 1, action: "Understand Intent", detail: "Analyzed cultural preferences and context" },
+        { step: 2, action: "Recall Taste Memory", detail: "Retrieved saved indie cinema & speculative literature milestones" },
+        { step: 3, action: "Query Qloo Intelligence", detail: "Connected to live Qloo Cultural Intelligence API" },
+        { step: 4, action: "Synthesize Recommendations", detail: "Verified cultural affinity match at 95%" }
       ]
     }
   ]);
@@ -86,7 +86,7 @@ export const ConciergeChat: React.FC = () => {
         name: item.name,
         domain,
         timestamp: 'Spring 2026',
-        notes: item.description || `Discovered via Concierge Agent with ${Math.round(item.affinity_match * 100)}% Qloo affinity.`,
+        notes: item.description || `Discovered via Concierge with ${Math.round(item.affinity_match * 100)}% Qloo affinity.`,
         tags: [item.subtype, 'Concierge Discovery', 'Qloo Verified']
       });
       setAddedItemNames(prev => [...prev, item.name]);
@@ -150,19 +150,19 @@ export const ConciergeChat: React.FC = () => {
         <div>
           <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black mb-2 shadow-[2px_2px_0px_#1E293B]">
             <Brain className="w-3.5 h-3.5 text-[#16A34A]" />
-            <span>Anti-Amnesia Agentic Reasoning</span>
+            <span>Continuous Taste Memory</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Conversational Concierge
+            Taste Concierge
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-1 font-medium max-w-xl">
-            Autonomous multi-step reasoning with live Qloo tool invocation and continuous knowledge graph memory.
+            Smart recommendations powered by live Qloo cultural intelligence and your personal taste history.
           </p>
         </div>
 
         <div className="flex items-center space-x-3 bg-white border-2 border-slate-900 px-4 py-2.5 rounded-2xl shadow-[2px_2px_0px_#1E293B]">
           <div>
-            <div className="text-[10px] uppercase font-black text-slate-500">Qloo Cultural Confidence</div>
+            <div className="text-[10px] uppercase font-black text-slate-500">Cultural Affinity Match</div>
             <div className="text-base font-black text-slate-900">{Math.round(activeConfidence * 100)}% Match</div>
           </div>
           <div className="w-8 h-8 rounded-lg bg-[#DCFCE7] border border-slate-900 flex items-center justify-center">
@@ -207,7 +207,7 @@ export const ConciergeChat: React.FC = () => {
                       >
                         <span className="text-[10px] font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
                           <Workflow className="w-3.5 h-3.5 text-[#16A34A]" />
-                          Agent Reasoning Pipeline ({msg.execution_trace.length} Steps)
+                          Reasoning Steps ({msg.execution_trace.length})
                         </span>
                         {expandedTraceIds.includes(msg.id) ? (
                           <ChevronUp className="w-3.5 h-3.5 text-slate-600" />
@@ -239,7 +239,7 @@ export const ConciergeChat: React.FC = () => {
                     <div className="mt-3.5 pt-3 border-t-2 border-slate-900/15 space-y-2">
                       <span className="text-[10px] uppercase font-black tracking-wider text-slate-600 flex items-center gap-1">
                         <Sparkles className="w-3 h-3 text-[#16A34A]" />
-                        Qloo Verified Cultural Recommendations:
+                        Recommended for You:
                       </span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {msg.recommended_items.map((item, idx) => (
@@ -285,14 +285,14 @@ export const ConciergeChat: React.FC = () => {
                                 {addedItemNames.includes(item.name) ? (
                                   <>
                                     <Check className="w-2.5 h-2.5 text-[#15803D]" />
-                                    <span>In Graph</span>
+                                    <span>In Taste Graph</span>
                                   </>
                                 ) : addingItem === item.name ? (
                                   <span>Adding...</span>
                                 ) : (
                                   <>
                                     <Plus className="w-2.5 h-2.5" />
-                                    <span>+ Add to Graph</span>
+                                    <span>+ Save to Graph</span>
                                   </>
                                 )}
                               </button>
@@ -307,7 +307,7 @@ export const ConciergeChat: React.FC = () => {
                   {msg.memory_recalled && msg.memory_recalled.length > 0 && (
                     <div className="mt-3 pt-2.5 border-t-2 border-slate-900/10 flex flex-wrap gap-1.5 items-center">
                       <span className="text-[10px] text-slate-700 font-black uppercase tracking-wider flex items-center mr-1">
-                        <Clock className="w-3 h-3 mr-1 text-slate-500" /> Recalled Anchors:
+                        <Clock className="w-3 h-3 mr-1 text-slate-500" /> Recalled Milestones:
                       </span>
                       {msg.memory_recalled.map((m, i) => (
                         <span key={i} className="text-[10px] px-2 py-0.5 rounded-lg bg-[#DCFCE7] border border-slate-900 text-[#15803D] font-bold">
@@ -337,7 +337,7 @@ export const ConciergeChat: React.FC = () => {
                 </div>
                 <div className="p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-xs text-slate-600 font-bold flex items-center space-x-2">
                   <LoadingSpinner size="sm" />
-                  <span>Traversing taste knowledge graph & synthesizing Qloo correlations...</span>
+                  <span>Consulting your taste history and Qloo intelligence...</span>
                 </div>
               </div>
             )}
@@ -371,7 +371,7 @@ export const ConciergeChat: React.FC = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask for recommendations, cross-category advice, or plan an evening..."
+              placeholder="Ask for recommendations, cross-category ideas, or travel advice..."
               className="flex-1 px-4 py-2.5 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
             />
             <button
@@ -392,20 +392,20 @@ export const ConciergeChat: React.FC = () => {
                 <Compass className="w-4 h-4 text-slate-900" />
               </div>
               <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                Active Memory Inspector
+                Active Taste Profile
               </h3>
             </div>
 
             {/* Persona Archetype */}
             <div className="bg-white border-2 border-slate-900 rounded-2xl p-4 shadow-[2px_2px_0px_#1E293B] space-y-1">
               <span className="text-[10px] uppercase font-black tracking-wider text-slate-500">
-                User Persona Archetype
+                Taste Archetype
               </span>
               <p className="text-sm font-black text-slate-900">
                 Contemplative Urbanite & Speculative Aesthete
               </p>
               <p className="text-xs text-slate-600 leading-relaxed font-medium pt-1">
-                Synthesized from persistent cross-domain milestones spanning Winter to Spring 2026.
+                Synthesized from your cross-domain milestones and cultural preferences.
               </p>
             </div>
 
@@ -413,7 +413,7 @@ export const ConciergeChat: React.FC = () => {
             <div className="space-y-2.5">
               <span className="text-xs font-black uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-[#16A34A]" />
-                Recalled Knowledge Nodes ({activeMemory.length})
+                Active Memory Milestones ({activeMemory.length})
               </span>
 
               <div className="space-y-2">
@@ -435,9 +435,9 @@ export const ConciergeChat: React.FC = () => {
           {/* Education Callout */}
           <div className="p-4 rounded-2xl bg-[#DCFCE7] border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] text-xs text-slate-800 leading-relaxed">
             <span className="font-black text-[#15803D] block mb-1">
-              💡 Why This Overcomes AI Amnesia:
+              💡 Continuous Taste Memory:
             </span>
-            Standard chatbots start from zero every session. The Taste-Evolving Concierge preserves your temporal graph so you never have to re-explain who you are or what moves you.
+            Standard chatbots start from scratch every conversation. The Taste Concierge remembers your past preferences and cultural milestones so you never have to repeat yourself.
           </div>
         </div>
       </div>
