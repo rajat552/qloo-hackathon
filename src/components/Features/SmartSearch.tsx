@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { Search, Sparkles, User, Settings } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Search, Sparkles, User, Settings, X, Tag } from 'lucide-react';
 import { apiService, ApiError } from '../../services/api';
 import { FashionItem, UserProfile } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 import { ErrorMessage } from '../UI/ErrorMessage';
+
+const QUICK_PROMPTS = [
+  'Minimalist Linen Jacket',
+  'Vintage Arthouse Denim',
+  'Analog Kissaten Selvedge',
+  'Monochrome Tailoring'
+];
 
 export const SmartSearch: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -13,23 +20,36 @@ export const SmartSearch: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-
+  const executeSearch = async (searchQuery: string, prefs?: string) => {
+    const q = searchQuery.trim() || 'Minimalist Linen Jacket';
+    setQuery(q);
     setLoading(true);
     setError(null);
 
     try {
-      const response = await apiService.search(query, stylePreferences || undefined);
-      setResults(response.items);
+      const response = await apiService.search(q, prefs || stylePreferences || undefined);
+      setResults(response.items || []);
       setUserProfile(response.personalization || null);
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Search failed');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await executeSearch(query);
+  };
+
+  const handleQuickPrompt = async (prompt: string) => {
+    setQuery(prompt);
+    await executeSearch(prompt);
   };
 
   return (
@@ -50,15 +70,42 @@ export const SmartSearch: React.FC = () => {
       <div className="brutal-card max-w-2xl mx-auto p-6 space-y-4">
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g., 'minimalist linen jacket' or 'analog retro-futurism attire'"
-              className="w-full pl-11 pr-4 py-3 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
+              placeholder="Type an aesthetic or item (e.g., minimalist linen jacket)..."
+              className="w-full pl-11 pr-10 py-3 bg-[#FFFDF9] border-2 border-slate-900 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
               disabled={loading}
+              autoFocus
             />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-700"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Quick Prompts */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1">
+            <span className="text-[11px] font-black uppercase tracking-wider text-slate-500 flex items-center mr-1">
+              <Tag className="w-3 h-3 mr-1" /> Quick Queries:
+            </span>
+            {QUICK_PROMPTS.map((prompt) => (
+              <button
+                key={prompt}
+                type="button"
+                onClick={() => handleQuickPrompt(prompt)}
+                className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#DCFCE7] border border-slate-900 text-slate-800 transition"
+              >
+                {prompt}
+              </button>
+            ))}
           </div>
           
           <div>
@@ -86,11 +133,14 @@ export const SmartSearch: React.FC = () => {
           
           <button
             type="submit"
-            disabled={loading || !query.trim()}
-            className="w-full brutal-btn-primary py-3.5 rounded-xl text-xs font-black shadow-brutal-sm disabled:opacity-50"
+            disabled={loading}
+            className="w-full brutal-btn-primary py-3.5 rounded-xl text-xs font-black shadow-brutal-sm"
           >
             {loading ? (
-              <LoadingSpinner size="sm" className="text-white" />
+              <div className="flex items-center space-x-2">
+                <LoadingSpinner size="sm" className="text-white" />
+                <span>Searching Cultural Archive & Qloo...</span>
+              </div>
             ) : (
               <>
                 <Sparkles className="w-4 h-4" />
@@ -103,7 +153,7 @@ export const SmartSearch: React.FC = () => {
 
       {error && (
         <div className="max-w-2xl mx-auto">
-          <ErrorMessage message={error} onRetry={() => handleSearch({ preventDefault: () => {} } as React.FormEvent)} />
+          <ErrorMessage message={error} onRetry={() => executeSearch(query)} />
         </div>
       )}
 
@@ -118,19 +168,15 @@ export const SmartSearch: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div>
                   <span className="font-extrabold text-slate-700">Style:</span>
-                  <span className="ml-2 font-bold text-[#16A34A] capitalize">{userProfile.style_preference}</span>
+                  <span className="ml-2 font-medium text-slate-900 capitalize">{userProfile.style_preference}</span>
                 </div>
                 <div>
                   <span className="font-extrabold text-slate-700">Colors:</span>
-                  <span className="ml-2 font-medium text-slate-700">{userProfile.color_preference.join(', ')}</span>
+                  <span className="ml-2 font-medium text-slate-900">{userProfile.color_preference.join(', ')}</span>
                 </div>
-                <div>
+                <div className="sm:col-span-2">
                   <span className="font-extrabold text-slate-700">Occasions:</span>
-                  <span className="ml-2 font-medium text-slate-700">{userProfile.occasion_focus.join(', ')}</span>
-                </div>
-                <div>
-                  <span className="font-extrabold text-slate-700">Personality:</span>
-                  <span className="ml-2 font-bold text-slate-800 capitalize">{userProfile.personality}</span>
+                  <span className="ml-2 font-medium text-slate-900">{userProfile.occasion_focus.join(', ')}</span>
                 </div>
               </div>
             </div>
@@ -138,64 +184,71 @@ export const SmartSearch: React.FC = () => {
         </div>
       )}
 
-      {results.length > 0 && (
-        <div className="space-y-4 pt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-black text-slate-900">
-              Found {results.length} Archive Matches for "{query}"
-            </h3>
-            <span className="text-xs font-bold text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-3 py-1 rounded-full">
-              Qloo Match Verified
-            </span>
-          </div>
+      <div ref={resultsRef}>
+        {results.length > 0 && (
+          <div className="space-y-4 pt-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-black text-slate-900">
+                Found {results.length} Archive Matches for "{query}"
+              </h3>
+              <span className="text-xs font-bold text-[#15803D] bg-[#DCFCE7] border border-slate-900 px-3 py-1 rounded-full shadow-[1px_1px_0px_#1E293B]">
+                Qloo Match Verified
+              </span>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {results.map((item) => (
-              <div key={item.id} className="brutal-card p-4 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all">
-                <div className="relative h-60 bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-900">
-                  <img
-                    src={item.image_url.startsWith('http') ? item.image_url : `http://127.0.0.1:8000${item.image_url}`}
-                    alt={`${item.clothing_type} - ${item.dominant_color}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik02MCA2MEgxNDBWMTQwSDYwVjYwWiIgZmlsbD0iI0Q5RDlEOSIvPgo8L3N2Zz4K';
-                    }}
-                  />
-                  <div className="absolute top-2 right-2">
-                    <span className="px-2 py-0.5 bg-white border-2 border-slate-900 text-slate-900 text-[10px] font-black rounded-lg shadow-[1px_1px_0px_#1E293B]">
-                      #{item.original_id}
-                    </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {results.map((item) => (
+                <div key={item.id} className="brutal-card p-4 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="relative h-60 bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-900">
+                      <img
+                        src={item.image_url.startsWith('http') ? item.image_url : `http://127.0.0.1:8000${item.image_url}`}
+                        alt={`${item.clothing_type} - ${item.dominant_color}`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80';
+                        }}
+                      />
+                      <div className="absolute top-2 right-2">
+                        <span className="px-2 py-0.5 bg-white border-2 border-slate-900 text-slate-900 text-[10px] font-black rounded-lg shadow-[1px_1px_0px_#1E293B]">
+                          #{item.original_id}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <h4 className="font-extrabold text-slate-900 capitalize text-sm">{item.clothing_type}</h4>
+                      <p className="text-xs text-slate-600 mb-3 font-medium line-clamp-2 mt-0.5">
+                        {item.pattern_description || item.remarks || 'Curated aesthetic milestone'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      <span className="px-2 py-0.5 bg-[#BAE6FD] text-slate-900 text-[10px] font-bold rounded-md border border-slate-900">
+                        {item.dominant_color}
+                      </span>
+                      {item.secondary_color && (
+                        <span className="px-2 py-0.5 bg-[#DCFCE7] text-[#15803D] text-[10px] font-bold rounded-md border border-slate-900">
+                          {item.secondary_color}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {item.occasion_suitability.map((occasion, idx) => (
+                        <span key={idx} className="px-2 py-0.5 bg-[#FAF7F2] text-slate-700 text-[10px] font-semibold rounded-md border border-slate-300">
+                          {occasion}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-900 capitalize text-sm">{item.clothing_type}</h4>
-                  <p className="text-xs text-slate-600 mb-3 font-medium line-clamp-2 mt-0.5">
-                    {item.pattern_description || item.remarks || 'Curated fashion milestone'}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    <span className="px-2 py-0.5 bg-[#BAE6FD] text-slate-900 text-[10px] font-bold rounded-md border border-slate-900">
-                      {item.dominant_color}
-                    </span>
-                    {item.secondary_color && (
-                      <span className="px-2 py-0.5 bg-[#DCFCE7] text-[#15803D] text-[10px] font-bold rounded-md border border-slate-900">
-                        {item.secondary_color}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {item.occasion_suitability.map((occasion, idx) => (
-                      <span key={idx} className="px-2 py-0.5 bg-[#FAF7F2] text-slate-700 text-[10px] font-semibold rounded-md border border-slate-300">
-                        {occasion}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
