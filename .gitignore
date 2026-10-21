@@ -23,5 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env*.local
+.venv/
+venv/
+env/
 __pycache__/
 *.pyc
+.pytest_cache/
+.coverage
+htmlcov/
