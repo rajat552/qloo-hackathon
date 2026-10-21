@@ -186,7 +186,7 @@ export const CityItinerary: React.FC = () => {
               <span className="text-[11px] uppercase font-black text-slate-500">
                 Active Memory Anchors:
               </span>
-              <div className="flex flex-wrap gap-1.5 justify-end">
+              <div className="flex flex-wrap gap-1.5 justify-start md:justify-end">
                 {itinerary.memory_anchors.map((anchor, idx) => (
                   <span key={idx} className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-[#FAF7F2] border border-slate-900 text-slate-800">
                     &bull; {anchor}
