@@ -18,7 +18,7 @@ import {
   RecommendedItem
 } from '../types';
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || 'http://127.0.0.1:8000';
+const API_BASE_URL = ((import.meta.env.VITE_API_URL as string) || 'http://127.0.0.1:8000').replace(/\/+$/, '');
 
 export class ApiError extends Error {
   status?: number;
