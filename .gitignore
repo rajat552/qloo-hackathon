@@ -80,9 +80,8 @@ ehthumbs.db
 Desktop.ini
 
 # Visual Studio & VS Code
+.vscode/
 .vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
 *.suo
 *.ntvs*
 *.njsproj
@@ -128,5 +127,12 @@ data/
 data/**
 *.sqlite3
 *.db
+
+# ------------------------------------------------------------------------------
+# 10. Cache & Editor Temporary Files
+# ------------------------------------------------------------------------------
+.eslintcache
+
+
 
 
