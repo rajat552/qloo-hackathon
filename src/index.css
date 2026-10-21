@@ -104,4 +104,13 @@
     border-radius: 1rem;
     box-shadow: 2px 2px 0px #1E293B;
   }
+
+  /* Clean horizontal scroll without ugly OS scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
