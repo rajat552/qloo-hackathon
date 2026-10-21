@@ -60,7 +60,7 @@ export const CrossDomainSynthesis: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div id="tour-synthesis-section" className="space-y-6">
       {/* Top Banner */}
       <div className="bg-[#E2F1F8] border-2 border-slate-900 p-6 rounded-3xl shadow-brutal">
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-[#15803D] text-xs font-black mb-2 shadow-[2px_2px_0px_#1E293B]">
