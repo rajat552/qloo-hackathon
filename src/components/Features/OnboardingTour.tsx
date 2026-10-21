@@ -32,7 +32,7 @@ export interface TourStep {
   colorBg: string;
 }
 
-export const TOUR_STEPS: TourStep[] = [
+const TOUR_STEPS: TourStep[] = [
   {
     step: 1,
     frameworkCategory: 'Welcome to the Website',
