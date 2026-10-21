@@ -424,7 +424,7 @@ export const apiService = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, style_preferences: stylePreferences }),
-        signal: AbortSignal.timeout(3000)
+        signal: AbortSignal.timeout(8000)
       });
       if (response.ok) return await response.json();
     } catch (e) {
