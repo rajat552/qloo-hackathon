@@ -487,7 +487,7 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge,
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-xs font-black text-slate-900">Entity / Title</label>
                   <span className="text-[10px] font-black text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-full border border-slate-900 shadow-[1px_1px_0px_#1E293B]">
-                    Qloo Live Autocomplete
+                    {isSearchingQloo ? 'Searching Qloo...' : 'Qloo Live Autocomplete'}
                   </span>
                 </div>
                 <input
