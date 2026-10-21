@@ -18,7 +18,7 @@ import {
   RecommendedItem
 } from '../types';
 
-const API_BASE_URL = ((import.meta.env.VITE_API_URL as string) || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+export const API_BASE_URL = ((import.meta.env.VITE_API_URL as string) || 'http://127.0.0.1:8000').replace(/\/+$/, '');
 
 export class ApiError extends Error {
   status?: number;
@@ -424,7 +424,7 @@ export const apiService = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, style_preferences: stylePreferences }),
-        signal: AbortSignal.timeout(8000)
+        signal: AbortSignal.timeout(15000)
       });
       if (response.ok) return await response.json();
     } catch (e) {

@@ -1199,7 +1199,12 @@ def api_search_fashion_items(request: SearchRequest):
 
     return {
         "query": request.query,
-        "personalization": {"style_preference": request.style_preferences or "Minimalist"},
+        "personalization": {
+            "style_preference": request.style_preferences or "Minimalist",
+            "color_preference": ["Charcoal", "Ecru", "Olive", "Neutral"],
+            "occasion_focus": ["Gallery", "Studio", "Contemporary Casual"],
+            "personality": "Refined Urban Minimalist"
+        },
         "items": all_items[:12],
         "qloo_cultural_items": qloo_entities,
         "total_results": len(all_items)

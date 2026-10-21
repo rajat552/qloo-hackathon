@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Search, Sparkles, User, Settings, X, Tag } from 'lucide-react';
-import { apiService, ApiError } from '../../services/api';
+import { apiService, ApiError, API_BASE_URL } from '../../services/api';
 import { FashionItem, UserProfile } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 import { ErrorMessage } from '../UI/ErrorMessage';
@@ -163,20 +163,24 @@ export const SmartSearch: React.FC = () => {
             <div className="w-9 h-9 rounded-xl bg-[#DDD6FE] border-2 border-slate-900 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#1E293B]">
               <User className="w-5 h-5 text-slate-900" />
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <h3 className="font-black text-slate-900 text-sm mb-2">Active Style Signature</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div>
                   <span className="font-extrabold text-slate-700">Style:</span>
-                  <span className="ml-2 font-medium text-slate-900 capitalize">{userProfile.style_preference}</span>
+                  <span className="ml-2 font-medium text-slate-900 capitalize">{userProfile.style_preference || 'Minimalist'}</span>
                 </div>
                 <div>
                   <span className="font-extrabold text-slate-700">Colors:</span>
-                  <span className="ml-2 font-medium text-slate-900">{userProfile.color_preference.join(', ')}</span>
+                  <span className="ml-2 font-medium text-slate-900">
+                    {Array.isArray(userProfile.color_preference) ? userProfile.color_preference.join(', ') : 'Charcoal, Ecru, Olive, Neutral'}
+                  </span>
                 </div>
                 <div className="sm:col-span-2">
                   <span className="font-extrabold text-slate-700">Occasions:</span>
-                  <span className="ml-2 font-medium text-slate-900">{userProfile.occasion_focus.join(', ')}</span>
+                  <span className="ml-2 font-medium text-slate-900">
+                    {Array.isArray(userProfile.occasion_focus) ? userProfile.occasion_focus.join(', ') : 'Gallery, Studio, Contemporary Casual'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -202,8 +206,14 @@ export const SmartSearch: React.FC = () => {
                   <div>
                     <div className="relative h-60 bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-900">
                       <img
-                        src={item.image_url.startsWith('http') ? item.image_url : `http://127.0.0.1:8000${item.image_url}`}
-                        alt={`${item.clothing_type} - ${item.dominant_color}`}
+                        src={
+                          item.image_url?.startsWith('http')
+                            ? item.image_url
+                            : item.image_url
+                            ? `${API_BASE_URL}${item.image_url}`
+                            : 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80'
+                        }
+                        alt={`${item.clothing_type || 'Item'} - ${item.dominant_color || 'Neutral'}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
@@ -217,7 +227,7 @@ export const SmartSearch: React.FC = () => {
                       </div>
                     </div>
                     <div className="mt-3">
-                      <h4 className="font-extrabold text-slate-900 capitalize text-sm">{item.clothing_type}</h4>
+                      <h4 className="font-extrabold text-slate-900 capitalize text-sm">{item.clothing_type || 'Curated Item'}</h4>
                       <p className="text-xs text-slate-600 mb-3 font-medium line-clamp-2 mt-0.5">
                         {item.pattern_description || item.remarks || 'Curated aesthetic milestone'}
                       </p>
@@ -227,7 +237,7 @@ export const SmartSearch: React.FC = () => {
                   <div>
                     <div className="flex flex-wrap gap-1.5 mb-2">
                       <span className="px-2 py-0.5 bg-[#BAE6FD] text-slate-900 text-[10px] font-bold rounded-md border border-slate-900">
-                        {item.dominant_color}
+                        {item.dominant_color || 'Neutral'}
                       </span>
                       {item.secondary_color && (
                         <span className="px-2 py-0.5 bg-[#DCFCE7] text-[#15803D] text-[10px] font-bold rounded-md border border-slate-900">
@@ -236,7 +246,7 @@ export const SmartSearch: React.FC = () => {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-1">
-                      {item.occasion_suitability.map((occasion, idx) => (
+                      {(Array.isArray(item.occasion_suitability) ? item.occasion_suitability : ['Contemporary']).map((occasion, idx) => (
                         <span key={idx} className="px-2 py-0.5 bg-[#FAF7F2] text-slate-700 text-[10px] font-semibold rounded-md border border-slate-300">
                           {occasion}
                         </span>
