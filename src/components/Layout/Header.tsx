@@ -1,5 +1,5 @@
 import React from 'react';
-import { Network, Brain, Compass, Layers, Search, Sparkles } from 'lucide-react';
+import { Network, Brain, Compass, Layers, Search, Sparkles, ThumbsUp } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
@@ -12,6 +12,7 @@ const sections = [
   { id: 'city', name: 'City Mode', icon: Compass },
   { id: 'synthesis', name: 'Cross-Domain', icon: Layers },
   { id: 'search', name: 'Aesthetic Archive', icon: Search },
+  { id: 'approval', name: 'Taste Validator', icon: ThumbsUp },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
@@ -64,6 +65,14 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }
 
         {/* Right Action */}
         <div className="flex items-center space-x-2.5">
+          <div
+            className="hidden sm:flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#DCFCE7] border border-slate-900 text-[10px] font-black text-[#15803D] shadow-[1px_1px_0px_#1E293B]"
+            title="Qloo Cultural Intelligence API: https://hackathon.api.qloo.com"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
+            <span>Qloo Live</span>
+          </div>
+
           <button
             onClick={() => onSectionChange('concierge')}
             className="brutal-btn-primary px-3.5 sm:px-4 py-2 text-xs font-bold"
