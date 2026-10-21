@@ -12,6 +12,17 @@ const QUICK_PROMPTS = [
   'Monochrome Tailoring'
 ];
 
+const AESTHETIC_FALLBACKS = [
+  'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1550614000-4895a10e1bfd?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=600&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&auto=format&fit=crop&q=80'
+];
+
 export const SmartSearch: React.FC = () => {
   const [query, setQuery] = useState('');
   const [stylePreferences, setStylePreferences] = useState('');
@@ -30,7 +41,26 @@ export const SmartSearch: React.FC = () => {
 
     try {
       const response = await apiService.search(q, prefs || stylePreferences || undefined);
-      setResults(response.items || []);
+      const rawItems = response.items || [];
+      
+      // Strict deduplication by image URL and title
+      const uniqueItems: FashionItem[] = [];
+      const seenImages = new Set<string>();
+      const seenTitles = new Set<string>();
+
+      for (const item of rawItems) {
+        const img = item.image_url?.trim().toLowerCase();
+        const title = (item.clothing_type || item.remarks || '').trim().toLowerCase();
+
+        if (img && seenImages.has(img)) continue;
+        if (title && seenTitles.has(title)) continue;
+
+        if (img) seenImages.add(img);
+        if (title) seenTitles.add(title);
+        uniqueItems.push(item);
+      }
+
+      setResults(uniqueItems);
       setUserProfile(response.personalization || null);
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -201,7 +231,7 @@ export const SmartSearch: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-              {results.map((item) => (
+              {results.map((item, idx) => (
                 <div key={item.id} className="brutal-card p-4 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all flex flex-col justify-between">
                   <div>
                     <div className="relative h-60 bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-900">
@@ -211,13 +241,13 @@ export const SmartSearch: React.FC = () => {
                             ? item.image_url
                             : item.image_url
                             ? `${API_BASE_URL}${item.image_url}`
-                            : 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80'
+                            : AESTHETIC_FALLBACKS[idx % AESTHETIC_FALLBACKS.length]
                         }
                         alt={`${item.clothing_type || 'Item'} - ${item.dominant_color || 'Neutral'}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80';
+                          target.src = AESTHETIC_FALLBACKS[idx % AESTHETIC_FALLBACKS.length];
                         }}
                       />
                       <div className="absolute top-2 right-2">
