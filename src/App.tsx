@@ -6,15 +6,22 @@ import { CityItinerary } from './components/Features/CityItinerary';
 import { CrossDomainSynthesis } from './components/Features/CrossDomainSynthesis';
 import { SmartSearch } from './components/Features/SmartSearch';
 import { ChoiceApproval } from './components/Features/ChoiceApproval';
+import { OnboardingTour } from './components/Features/OnboardingTour';
 import { Bot, Sparkles, ShieldCheck, Github } from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('graph');
+  const [showTour, setShowTour] = useState(false);
 
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'graph':
-        return <TasteGraphView onOpenConcierge={() => setActiveSection('concierge')} />;
+        return (
+          <TasteGraphView
+            onOpenConcierge={() => setActiveSection('concierge')}
+            onStartTour={() => setShowTour(true)}
+          />
+        );
       case 'concierge':
         return <ConciergeChat />;
       case 'city':
@@ -26,7 +33,12 @@ function App() {
       case 'approval':
         return <ChoiceApproval />;
       default:
-        return <TasteGraphView onOpenConcierge={() => setActiveSection('concierge')} />;
+        return (
+          <TasteGraphView
+            onOpenConcierge={() => setActiveSection('concierge')}
+            onStartTour={() => setShowTour(true)}
+          />
+        );
     }
   };
 
@@ -36,7 +48,18 @@ function App() {
       <div className="h-2 w-full bg-[#BAE6FD] border-b-2 border-slate-900" />
 
       {/* Main Top Header */}
-      <Header activeSection={activeSection} onSectionChange={setActiveSection} />
+      <Header
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        onStartTour={() => setShowTour(true)}
+      />
+
+      {/* Interactive 10-Step Onboarding Tour Modal/Guide */}
+      <OnboardingTour
+        isOpen={showTour}
+        onClose={() => setShowTour(false)}
+        onSwitchSection={setActiveSection}
+      />
 
       {/* Main View Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
