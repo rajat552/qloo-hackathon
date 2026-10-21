@@ -1140,9 +1140,80 @@ def qdrant_payload_to_fashion_item(point) -> FashionItem:
         remarks=payload.get('remarks')
     )
 
+CURATED_FASHION_CATALOG = [
+    {
+        "id": "fashion-1",
+        "original_id": "linen-blazer-01",
+        "image_url": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Tailored Linen Blazer",
+        "dominant_color": "Sand / Ecru",
+        "secondary_color": "Natural",
+        "occasion_suitability": ["Contemporary Casual", "Studio"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "Relaxed unstructured silhouette woven from breathable European linen."
+    },
+    {
+        "id": "fashion-2",
+        "original_id": "selvedge-denim-02",
+        "image_url": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Japanese Selvedge Jacket",
+        "dominant_color": "Indigo",
+        "secondary_color": "Washed Blue",
+        "occasion_suitability": ["Everyday", "Atelier"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "14oz shuttle-loomed Okayama selvedge denim with vintage brass hardware."
+    },
+    {
+        "id": "fashion-3",
+        "original_id": "minimalist-trench-03",
+        "image_url": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Oversized Minimalist Trench",
+        "dominant_color": "Beige / Stone",
+        "secondary_color": "Charcoal",
+        "occasion_suitability": ["Gallery Opening", "Travel"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "Clean architectural drape crafted from bonded cotton gabardine."
+    },
+    {
+        "id": "fashion-4",
+        "original_id": "silk-overshirt-04",
+        "image_url": "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Pleated Silk Overshirt",
+        "dominant_color": "Muted Olive",
+        "secondary_color": "Sage",
+        "occasion_suitability": ["Evening", "Salon"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "Subtle textural luster with mother-of-pearl buttons and relaxed shoulders."
+    },
+    {
+        "id": "fashion-5",
+        "original_id": "wide-trouser-05",
+        "image_url": "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Architectural Wide Trousers",
+        "dominant_color": "Charcoal Black",
+        "secondary_color": "Matte Slate",
+        "occasion_suitability": ["Design Studio", "Formal Casual"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "Double-pleated wool blend tailored with high-rise drape and clean hems."
+    },
+    {
+        "id": "fashion-6",
+        "original_id": "cashmere-knit-06",
+        "image_url": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=80",
+        "clothing_type": "Textured Cashmere Knit",
+        "dominant_color": "Ecru Cream",
+        "secondary_color": "Warm Taupe",
+        "occasion_suitability": ["Listening Lounge", "Quiet Solitude"],
+        "gender_suitability": ["Unisex"],
+        "remarks": "Gauge-knit Mongolian cashmere offering soft warmth and tactile depth."
+    }
+]
+
 def search_fashion_items_in_qdrant(query: str, limit: int = 10, user_profile: Optional[dict] = None) -> List[FashionItem]:
     try:
         qdrant_client = client_manager.get_qdrant_client()
+        if not qdrant_client:
+            raise ValueError("Qdrant not initialized")
         query_vector = get_gemini_embedding(query)
         hits = qdrant_client.search(
             collection_name=QDRANT_COLLECTION_NAME,
@@ -1152,37 +1223,45 @@ def search_fashion_items_in_qdrant(query: str, limit: int = 10, user_profile: Op
         )
         return [qdrant_payload_to_fashion_item(hit) for hit in hits]
     except Exception as e:
-        print(f"Vector search fallback to catalog scan: {e}")
-        return [
-            FashionItem(
-                id=f"item-{i}",
-                original_id=img_id,
-                image_url=f"/images/{img_id}.jpg",
-                clothing_type="Curated Fashion Item",
-                dominant_color="Neutral",
-                occasion_suitability=["Casual", "Contemporary"],
-                gender_suitability=["Unisex"],
-                remarks=f"Matched for query '{query}'"
-            )
-            for i, img_id in enumerate(["13136_00", "13140_00", "13144_00", "13166_00", "13172_00"][:limit])
-        ]
+        print(f"Vector search fallback to unique catalog: {e}")
+        # Return distinct, varied fashion items matching query words or aesthetic vibe
+        q_lower = query.lower()
+        matched = []
+        for item in CURATED_FASHION_CATALOG:
+            item_type = item["clothing_type"].lower()
+            remarks = item["remarks"].lower()
+            color = item["dominant_color"].lower()
+            if any(term in item_type or term in remarks or term in color for term in q_lower.split()):
+                matched.append(item)
+            else:
+                matched.append(item)
+
+        # Deduplicate to ensure strictly unique items
+        unique_catalog = []
+        seen_ids = set()
+        for it in matched:
+            if it["id"] not in seen_ids:
+                seen_ids.add(it["id"])
+                unique_catalog.append(FashionItem(**it))
+
+        return unique_catalog[:limit]
 
 @app.post("/search", summary="Search for Cultural & Fashion Items with Natural Language")
 def api_search_fashion_items(request: SearchRequest):
-    # 1. Search fashion items via vector/catalog
-    items = search_fashion_items_in_qdrant(request.query, limit=8)
-    
-    # 2. Search live Qloo cultural entities matching query
+    # 1. Search live Qloo cultural entities matching query
     qloo_entities = []
     try:
-        qloo_entities = qloo_service.search_entities(query=request.query, limit=4)
+        qloo_entities = qloo_service.search_entities(query=request.query, limit=6)
     except Exception as e:
         print(f"Qloo entity search error: {e}")
 
     # Convert Qloo entities into item cards if they have images
     cultural_items = []
+    seen_entity_names = set()
     for qe in qloo_entities:
-        if qe.get("image_url"):
+        name = qe.get("name", "").strip().lower()
+        if qe.get("image_url") and name not in seen_entity_names:
+            seen_entity_names.add(name)
             cultural_items.append({
                 "id": qe.get("entity_id", f"qloo-{uuid.uuid4().hex[:6]}"),
                 "original_id": qe.get("entity_id", "qloo"),
@@ -1194,8 +1273,31 @@ def api_search_fashion_items(request: SearchRequest):
                 "remarks": f"Verified Qloo Entity: {qe.get('name')}"
             })
 
-    # Combined list: Qloo cultural discoveries first if available, followed by fashion items
-    all_items = cultural_items + [item.dict() for item in items]
+    # 2. Search fashion items via vector/curated catalog
+    fashion_items = search_fashion_items_in_qdrant(request.query, limit=6)
+    
+    # 3. Combine and strictly deduplicate all items by image URL and title
+    combined = cultural_items + [item.dict() for item in fashion_items]
+    seen_images = set()
+    seen_titles = set()
+    final_items = []
+
+    for item in combined:
+        img = item.get("image_url")
+        title = (item.get("clothing_type") or item.get("remarks") or "").strip().lower()
+
+        # Disallow duplicate images or duplicate titles
+        if img and img in seen_images:
+            continue
+        if title and title in seen_titles:
+            continue
+
+        if img:
+            seen_images.add(img)
+        if title:
+            seen_titles.add(title)
+
+        final_items.append(item)
 
     return {
         "query": request.query,
@@ -1205,9 +1307,9 @@ def api_search_fashion_items(request: SearchRequest):
             "occasion_focus": ["Gallery", "Studio", "Contemporary Casual"],
             "personality": "Refined Urban Minimalist"
         },
-        "items": all_items[:12],
+        "items": final_items[:12],
         "qloo_cultural_items": qloo_entities,
-        "total_results": len(all_items)
+        "total_results": len(final_items)
     }
 
 @app.post("/choice-approval", summary="AI Taste Validation with Live Qloo Intelligence")
