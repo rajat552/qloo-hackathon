@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Network, Plus, Calendar, Info, ArrowRight, Film, Music, BookOpen, Utensils, Shirt, Compass, Star, Target, Layers } from 'lucide-react';
 import { apiService } from '../../services/api';
-import { TasteGraphData, TasteNode } from '../../types';
+import { TasteGraphData, TasteNode, QlooEntity } from '../../types';
 import { LoadingSpinner } from '../UI/LoadingSpinner';
 
 interface TasteGraphViewProps {
@@ -31,6 +31,37 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge 
   const [newNotes, setNewNotes] = useState('');
   const [newTag, setNewTag] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  // Live Qloo Autocomplete State
+  const [qlooSuggestions, setQlooSuggestions] = useState<QlooEntity[]>([]);
+  const [isSearchingQloo, setIsSearchingQloo] = useState(false);
+
+  const handleNameChange = async (val: string) => {
+    setNewName(val);
+    if (val.trim().length >= 3) {
+      setIsSearchingQloo(true);
+      try {
+        const matches = await apiService.searchQloo(val, 4);
+        setQlooSuggestions(matches);
+      } catch {
+        setQlooSuggestions([]);
+      } finally {
+        setIsSearchingQloo(false);
+      }
+    } else {
+      setQlooSuggestions([]);
+    }
+  };
+
+  const handleSelectEntity = (entity: QlooEntity) => {
+    setNewName(entity.name);
+    setQlooSuggestions([]);
+    if (entity.subtype?.includes('movie') || entity.subtype?.includes('film')) setNewDomain('film');
+    else if (entity.subtype?.includes('artist') || entity.subtype?.includes('music')) setNewDomain('music');
+    else if (entity.subtype?.includes('book')) setNewDomain('literature');
+    else if (entity.subtype?.includes('place')) setNewDomain('dining');
+    else if (entity.subtype?.includes('brand')) setNewDomain('fashion');
+  };
 
   useEffect(() => {
     loadGraph();
@@ -341,6 +372,20 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge 
                       {Math.round(selectedNode.affinity * 100)}% Match
                     </span>
                   </div>
+
+                  {selectedNode.image_url && (
+                    <div className="w-full h-36 rounded-xl overflow-hidden border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] bg-slate-100">
+                      <img
+                        src={selectedNode.image_url}
+                        alt={selectedNode.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLElement).parentElement?.classList.add('hidden');
+                        }}
+                      />
+                    </div>
+                  )}
+
                   <h4 className="text-base font-black text-slate-900 leading-snug">
                     {selectedNode.name}
                   </h4>
@@ -441,16 +486,50 @@ export const TasteGraphView: React.FC<TasteGraphViewProps> = ({ onOpenConcierge 
             </p>
 
             <form onSubmit={handleAddMilestone} className="space-y-4">
-              <div>
-                <label className="block text-xs font-black text-slate-900 mb-1">Entity / Title</label>
+              <div className="relative">
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-black text-slate-900">Entity / Title</label>
+                  <span className="text-[10px] font-black text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-full border border-slate-900 shadow-[1px_1px_0px_#1E293B]">
+                    Qloo Live Autocomplete
+                  </span>
+                </div>
                 <input
                   type="text"
                   required
                   value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
+                  onChange={(e) => handleNameChange(e.target.value)}
                   placeholder="e.g. Crying in H Mart, Aphex Twin, Solaris"
                   className="w-full px-3.5 py-2.5 bg-white border-2 border-slate-900 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
                 />
+
+                {/* Autocomplete Dropdown */}
+                {qlooSuggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border-2 border-slate-900 rounded-xl shadow-brutal p-1.5 space-y-1">
+                    <div className="text-[9px] font-black uppercase tracking-wider text-slate-400 px-2 py-0.5">
+                      Qloo Live Matches:
+                    </div>
+                    {qlooSuggestions.map((item) => (
+                      <button
+                        key={item.entity_id}
+                        type="button"
+                        onClick={() => handleSelectEntity(item)}
+                        className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#DCFCE7] text-xs font-bold text-slate-900 flex items-center justify-between group transition"
+                      >
+                        <div className="flex items-center space-x-2 truncate">
+                          {item.image_url ? (
+                            <img src={item.image_url} alt="" className="w-5 h-5 rounded-md object-cover border border-slate-900 shrink-0" />
+                          ) : (
+                            <span className="w-5 h-5 rounded-md bg-slate-100 border border-slate-900 flex items-center justify-center text-[10px] shrink-0">🏛️</span>
+                          )}
+                          <span className="truncate">{item.name}</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-mono shrink-0 ml-2">
+                          {item.subtype ? item.subtype.replace('urn:entity:', '') : 'entity'}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-3">
