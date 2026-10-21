@@ -92,12 +92,10 @@ Desktop.ini
 .idea/
 
 # ------------------------------------------------------------------------------
-# 7. Internal Documentation, Planning Files & Audits
+# 7. Internal Planning Files
 # ------------------------------------------------------------------------------
 plan.md
 *.plan
-docs/
-docs/**
 scratch/
 temp/
 tmp/
