@@ -1,0 +1,11 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "python.analysis.extraPaths": [
+    "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages"
+  ],
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingImports": "none",
+    "reportMissingModuleSource": "none"
+  }
+}
