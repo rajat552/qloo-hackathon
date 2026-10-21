@@ -54,10 +54,20 @@ export const ConciergeChat: React.FC = () => {
   const [expandedTraceIds, setExpandedTraceIds] = useState<string[]>(['msg-init']);
   const [addedItemNames, setAddedItemNames] = useState<string[]>([]);
   const [addingItem, setAddingItem] = useState<string | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages, loading]);
 
   const toggleTrace = (msgId: string) => {
@@ -176,7 +186,7 @@ export const ConciergeChat: React.FC = () => {
         {/* Left 8 Cols: Chat Window */}
         <div id="tour-concierge-chat" className="lg:col-span-8 flex flex-col h-[520px] sm:h-[600px] lg:h-[680px] bg-white border-2 border-slate-900 rounded-3xl shadow-brutal overflow-hidden">
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-[#FFFDF9]">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-[#FFFDF9]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -341,7 +351,6 @@ export const ConciergeChat: React.FC = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Prompts Bar */}
