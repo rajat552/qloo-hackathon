@@ -154,13 +154,36 @@ export const CrossDomainSynthesis: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className="brutal-card p-5 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all"
+                    className="brutal-card p-5 space-y-3 hover:-translate-y-1 hover:shadow-brutal-lg transition-all flex flex-col justify-between"
                   >
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${cardPastel} text-slate-900 border border-slate-900 inline-block`}>
-                      {exp.domain}
-                    </span>
-                    <h5 className="font-black text-slate-900 text-sm leading-snug">{exp.title}</h5>
-                    <p className="text-xs text-slate-600 leading-relaxed font-medium">{exp.reasoning}</p>
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${cardPastel} text-slate-900 border border-slate-900 inline-block`}>
+                          {exp.domain}
+                        </span>
+                        {exp.qloo_verified && (
+                          <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] border border-slate-900">
+                            Qloo Live
+                          </span>
+                        )}
+                      </div>
+
+                      {exp.image_url && (
+                        <div className="w-full h-32 rounded-xl overflow-hidden border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B] bg-slate-100">
+                          <img
+                            src={exp.image_url}
+                            alt={exp.title}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              (e.target as HTMLElement).parentElement?.classList.add('hidden');
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      <h5 className="font-black text-slate-900 text-sm leading-snug">{exp.title}</h5>
+                      <p className="text-xs text-slate-600 leading-relaxed font-medium">{exp.reasoning}</p>
+                    </div>
                   </div>
                 );
               })}
