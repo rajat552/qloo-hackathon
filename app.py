@@ -2,23 +2,23 @@ import os
 import sys
 
 # Ensure UTF-8 stdout encoding on Windows
-if hasattr(sys.stdout, 'reconfigure'):
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
-        sys.stdout.reconfigure(encoding='utf-8')
+        reconfig = getattr(sys.stdout, "reconfigure", None)
+        if callable(reconfig):
+            reconfig(encoding="utf-8")
     except Exception:
         pass
 
 import time
-import json
 import uuid
 import requests
 import random
 from typing import List, Optional, Dict, Any
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Body, Query
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
 import google.generativeai as genai
@@ -399,7 +399,14 @@ class TasteGraphMemory:
             }
         }
 
-    def add_node(self, name: str, domain: str, timestamp: str, notes: str, tags: List[str]) -> Dict[str, Any]:
+    def add_node(
+        self,
+        name: str,
+        domain: str,
+        timestamp: Optional[str] = "Present",
+        notes: Optional[str] = "",
+        tags: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
         new_id = f"node-{len(self.nodes) + 1}"
         
         # 1. Search live Qloo API to resolve real entity metadata and imagery
@@ -518,7 +525,7 @@ class TasteGraphMemory:
                 "evening": {
                     "title": f"Gastronomy & Micro-Plates: {p3.get('name')}",
                     "domain": "dining",
-                    "description": p3.get('description') or f"Low-intervention dining and relaxed tasting ambiance matching your natural wine preferences.",
+                    "description": p3.get('description') or "Low-intervention dining and relaxed tasting ambiance matching your natural wine preferences.",
                     "qloo_affinity_match": round(float(p3.get("popularity", 0.95)), 2),
                     "address": p3.get('address') or f"Old Town, {clean_city.title()}",
                     "image_url": p3.get('image_url')
@@ -1321,6 +1328,6 @@ def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", "8000"))
     print(f"Starting Taste-Evolving Concierge FastAPI server on port {port}...")
     uvicorn.run(app, host="0.0.0.0", port=port)
