@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Layout/Header';
 import { TasteGraphView } from './components/Features/TasteGraphView';
 import { ConciergeChat } from './components/Features/ConciergeChat';
@@ -12,6 +12,21 @@ import { Bot, Sparkles, ShieldCheck, Github } from 'lucide-react';
 function App() {
   const [activeSection, setActiveSection] = useState('graph');
   const [showTour, setShowTour] = useState(false);
+
+  // Auto-launch onboarding tour on first visit
+  useEffect(() => {
+    try {
+      const hasCompleted = localStorage.getItem('tastehub_onboarding_completed');
+      if (!hasCompleted) {
+        const timer = setTimeout(() => {
+          setShowTour(true);
+        }, 800);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // Ignore private browsing restrictions
+    }
+  }, []);
 
   const renderActiveSection = () => {
     switch (activeSection) {
