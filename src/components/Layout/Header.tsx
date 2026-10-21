@@ -38,21 +38,21 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
         </div>
 
         {/* Desktop Navigation */}
-        <nav id="tour-header-nav" className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+        <nav id="tour-header-nav" className="hidden md:flex items-center gap-1 xl:gap-1.5">
           {sections.map(({ id, name, icon: Icon }) => {
             const isActive = activeSection === id;
             return (
               <button
                 key={id}
                 onClick={() => onSectionChange(id)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center space-x-1.5 ${
+                className={`h-9 px-3 xl:px-3.5 text-xs font-bold rounded-xl transition-all flex items-center space-x-1.5 whitespace-nowrap border-2 select-none ${
                   isActive
-                    ? 'bg-slate-900 text-white shadow-[2px_2px_0px_#16A34A] -translate-y-0.5'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ? 'bg-slate-900 text-white border-slate-900 shadow-[2px_2px_0px_#16A34A] -translate-y-0.5'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border-transparent'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#22C55E]' : 'text-slate-500'}`} />
-                <span>{name}</span>
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#22C55E]' : 'text-slate-500'}`} />
+                <span className="whitespace-nowrap">{name}</span>
               </button>
             );
           })}
@@ -65,10 +65,10 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
             <button
               id="tour-btn"
               onClick={onStartTour}
-              className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-[#E2F1F8] hover:bg-[#BAE6FD] border border-slate-900 text-[10px] font-black text-slate-900 shadow-[1px_1px_0px_#1E293B] transition shrink-0"
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#E2F1F8] hover:bg-[#BAE6FD] border-2 border-slate-900 text-xs font-black text-slate-900 shadow-[2px_2px_0px_#1E293B] hover:-translate-y-0.5 transition shrink-0 whitespace-nowrap"
               title="Start 10-Step Interactive Onboarding Tour"
             >
-              <Compass className="w-3 h-3 text-slate-800" />
+              <Compass className="w-3.5 h-3.5 text-slate-800 shrink-0" />
               <span>Tour</span>
             </button>
           )}
@@ -76,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
           {/* Live Qloo Connectivity Pulse */}
           <div
             id="tour-qloo-live"
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#DCFCE7] border border-slate-900 text-[10px] font-black text-[#15803D] shadow-[1px_1px_0px_#1E293B] shrink-0"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#DCFCE7] border-2 border-slate-900 text-xs font-black text-[#15803D] shadow-[2px_2px_0px_#1E293B] shrink-0 whitespace-nowrap"
             title="Qloo Cultural Intelligence API: Connected Live"
           >
             <span className="relative flex h-2 w-2">
@@ -86,19 +86,8 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange, 
             <span>Qloo Live</span>
           </div>
 
-          {/* Primary Action (Hidden when already on Concierge to avoid redundancy and save width) */}
-          {activeSection !== 'concierge' && (
-            <button
-              onClick={() => onSectionChange('concierge')}
-              className="hidden sm:inline-flex brutal-btn-primary px-3 py-1.5 text-xs font-bold rounded-xl shadow-[2px_2px_0px_#1E293B] shrink-0"
-            >
-              <Brain className="w-3.5 h-3.5" />
-              <span>Launch Agent</span>
-            </button>
-          )}
-
           {/* Mobile Select Menu */}
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <select
               value={activeSection}
               onChange={(e) => onSectionChange(e.target.value)}
